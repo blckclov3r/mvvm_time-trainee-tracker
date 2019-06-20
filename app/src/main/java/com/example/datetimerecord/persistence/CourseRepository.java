@@ -37,11 +37,15 @@ public class CourseRepository {
 
     }
 
+    public LiveData<List<Course>> retrieveAllCourse(String course) {
+        return  mCourseDao.retrieveAllCourse(course);
+    }
+
     public LiveData<List<Course>> getmAllCourse() {
         return mAllCourse;
     }
 
-    public static class InsertAsyncTask extends AsyncTask<Course,Void,Void>{
+    public static class InsertAsyncTask extends AsyncTask<Course, Void, Void> {
         private CourseDao courseDao;
 
         public InsertAsyncTask(CourseDao courseDao) {
@@ -54,4 +58,7 @@ public class CourseRepository {
             return null;
         }
     }
+
+
+
 }

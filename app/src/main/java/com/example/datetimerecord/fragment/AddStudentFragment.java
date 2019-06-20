@@ -5,20 +5,28 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.datetimerecord.R;
+import com.example.datetimerecord.model.Course;
 import com.example.datetimerecord.model.Student;
+import com.example.datetimerecord.viewmodel.CourseViewModel;
 import com.example.datetimerecord.viewmodel.StudentViewModel;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 public class AddStudentFragment extends Fragment implements View.OnClickListener {
@@ -28,7 +36,10 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
 
     private EditText name_et,course_et,email_et,contact_et,address_et;
     private Button addStudent_Btn;
-    private StudentViewModel mViewModel;
+    private StudentViewModel mStudentViewModel;
+    private Spinner mCourse_spinner;
+    private CourseViewModel mCourseViewModel;
+    private ArrayAdapter<String> mArrayAdapter;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,8 +50,25 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         contact_et = view.findViewById(R.id.contact_editText);
         address_et = view.findViewById(R.id.address_editText);
         addStudent_Btn = view.findViewById(R.id.addStudent_button);
+        mCourse_spinner = view.findViewById(R.id.course_spinner);
+
         addStudent_Btn.setOnClickListener(this);
-        mViewModel = ViewModelProviders.of(this).get(StudentViewModel.class);
+        mStudentViewModel = ViewModelProviders.of(this).get(StudentViewModel.class);
+        mCourseViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
+        mCourseViewModel.getAllCourse().observe(getViewLifecycleOwner(), new Observer<List<Course>>() {
+            @Override
+            public void onChanged(List<Course> courses) {
+                ArrayList<String> arrayList = new ArrayList<>();
+                for(int i =0;i<courses.size();i++){
+                    Course course = courses.get(i);
+                    String course_name = course.getCourse();
+                    arrayList.add(course_name);
+                }
+                mArrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,arrayList);
+                mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                mCourse_spinner.setAdapter(mArrayAdapter);
+            }
+        });
         return view;
     }
 
@@ -55,7 +83,7 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
         String dateFormat = simpleDateFormat.format(new Date());
         Log.d(COMMON_TAG,TAG+" dataFormat: "+dateFormat);
         Student student = new Student(name,course,email,contact,address,dateFormat);
-        mViewModel.insert(student);
+        mStudentViewModel.insert(student);
         Toast.makeText(getActivity(), "Student successfully created", Toast.LENGTH_SHORT).show();
         setClear();
     }
@@ -71,6 +99,7 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mViewModel = null;
+        mStudentViewModel = null;
+        mCourseViewModel = null;
     }
 }

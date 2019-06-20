@@ -25,4 +25,7 @@ public interface CourseDao {
 
     @Query("DELETE FROM course_table")
     void deleteAllCourse();
+
+    @Query("SELECT * FROM course_table WHERE mcourse=:course")
+    LiveData<List<Course>> retrieveAllCourse(String course);
 }
