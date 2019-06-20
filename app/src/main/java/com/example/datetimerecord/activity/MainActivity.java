@@ -1,26 +1,35 @@
-package com.example.datetimerecord;
+package com.example.datetimerecord.activity;
 
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import android.view.View;
-
+import com.example.datetimerecord.R;
+import com.example.datetimerecord.adapter.CourseRecyclerAdapter;
+import com.example.datetimerecord.fragment.AddCourseFragment;
+import com.example.datetimerecord.fragment.AddStudentFragment;
+import com.example.datetimerecord.fragment.CourseListFragment;
+import com.example.datetimerecord.fragment.HomeFragment;
+import com.example.datetimerecord.fragment.StudentListFragment;
+import com.example.datetimerecord.model.Course;
+import com.example.datetimerecord.viewmodel.CourseViewModel;
 import com.google.android.material.navigation.NavigationView;
-
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import android.view.Menu;
 import android.view.MenuItem;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private FragmentManager mFragmentManager;
+    private CourseViewModel mCourseViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,9 +42,22 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
+        mFragmentManager = getSupportFragmentManager();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        if(savedInstanceState == null){
+            FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.main_frameLayout,new HomeFragment()).commit();
+            navigationView.setCheckedItem(R.id.nav_home);
+        }
+
+        mCourseViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
+        mCourseViewModel.getAllCourse().observe(this, new Observer<List<Course>>() {
+            @Override
+            public void onChanged(List<Course> courses) {
+                new CourseRecyclerAdapter().setCourseList(courses);
+            }
+        });
     }
 
     @Override
@@ -69,29 +91,33 @@ public class MainActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        switch (id){
+            case R.id.nav_home:
+                mFragmentManager.beginTransaction().replace(R.id.main_frameLayout,new HomeFragment()).commit();
+                break;
+            case R.id.nav_add:
+                mFragmentManager.beginTransaction().replace(R.id.main_frameLayout,new AddStudentFragment()).commit();
+                break;
+            case R.id.nav_student_list:
+                mFragmentManager.beginTransaction().replace(R.id.main_frameLayout,new StudentListFragment()).commit();
+                break;
+            case R.id.nav_course_list:
+                mFragmentManager.beginTransaction().replace(R.id.main_frameLayout,new CourseListFragment()).commit();
+                break;
+            case R.id.nav_add_course:
+                mFragmentManager.beginTransaction().replace(R.id.main_frameLayout,new AddCourseFragment()).commit();
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }

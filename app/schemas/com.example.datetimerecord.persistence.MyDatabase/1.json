@@ -1,0 +1,108 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "eb4300488a61a7c8ea809aa958403d86",
+    "entities": [
+      {
+        "tableName": "student_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`t_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `course` TEXT, `email` TEXT, `contact` TEXT, `address` TEXT, `created_timestamp` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "t_id",
+            "columnName": "t_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "course",
+            "columnName": "course",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "email",
+            "columnName": "email",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "contact",
+            "columnName": "contact",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "address",
+            "columnName": "address",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "timestamp",
+            "columnName": "created_timestamp",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "t_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "course_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`c_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `mcourse` TEXT, `course_time` INTEGER NOT NULL, `description` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "c_id",
+            "columnName": "c_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "course",
+            "columnName": "mcourse",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "course_time",
+            "columnName": "course_time",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "c_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'eb4300488a61a7c8ea809aa958403d86')"
+    ]
+  }
+}
