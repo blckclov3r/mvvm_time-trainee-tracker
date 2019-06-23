@@ -6,6 +6,7 @@ import com.example.datetimerecord.R;
 import com.example.datetimerecord.adapter.CourseRecyclerAdapter;
 import com.example.datetimerecord.fragment.AddCourseFragment;
 import com.example.datetimerecord.fragment.AddStudentFragment;
+import com.example.datetimerecord.fragment.CourseInfoFragment;
 import com.example.datetimerecord.fragment.CourseListFragment;
 import com.example.datetimerecord.fragment.HomeFragment;
 import com.example.datetimerecord.fragment.StudentListFragment;
@@ -128,6 +129,13 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void OnCourseListFragment(Course course) {
-        Toast.makeText(getApplicationContext(), "click", Toast.LENGTH_SHORT).show();
+        CourseInfoFragment fragment = new CourseInfoFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("selected_course",course);
+        fragment.setArguments(args);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_frameLayout,fragment)
+                .commit();
     }
 }

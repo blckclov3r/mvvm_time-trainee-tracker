@@ -1,5 +1,8 @@
 package com.example.datetimerecord.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -7,7 +10,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "course_table")
-public class Course {
+public class Course implements Parcelable {
     @NonNull
     @PrimaryKey(autoGenerate = true)
     private int c_id;
@@ -26,6 +29,25 @@ public class Course {
         this.course_time = course_time;
         this.description = description;
     }
+
+    protected Course(Parcel in) {
+        c_id = in.readInt();
+        course = in.readString();
+        course_time = in.readInt();
+        description = in.readString();
+    }
+
+    public static final Creator<Course> CREATOR = new Creator<Course>() {
+        @Override
+        public Course createFromParcel(Parcel in) {
+            return new Course(in);
+        }
+
+        @Override
+        public Course[] newArray(int size) {
+            return new Course[size];
+        }
+    };
 
     public int getC_id() {
         return c_id;
@@ -67,5 +89,18 @@ public class Course {
                 ", course_time=" + course_time +
                 ", description='" + description + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(c_id);
+        dest.writeString(course);
+        dest.writeInt(course_time);
+        dest.writeString(description);
     }
 }
