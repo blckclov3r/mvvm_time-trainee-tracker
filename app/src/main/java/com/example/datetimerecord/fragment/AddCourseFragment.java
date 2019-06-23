@@ -39,14 +39,14 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         String course = course_et.getText().toString().trim();
-        int time = Integer.parseInt(time_et.getText().toString().trim());
+        String courseTime = time_et.getText().toString();
         String desc = description_et.getText().toString().trim();
         if(course.isEmpty()){
             Toast.makeText(getActivity(), "Please fill out all fields", Toast.LENGTH_SHORT).show();
             course_et.requestFocus();
             return;
         }
-        if(String.valueOf(time).isEmpty()){
+        if(courseTime.isEmpty()){
             Toast.makeText(getActivity(), "Time is required", Toast.LENGTH_SHORT).show();
             time_et.requestFocus();
             return;
@@ -54,6 +54,7 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener 
         if(desc.isEmpty()){
             desc = "Empty";
         }
+        int time = Integer.parseInt(courseTime);
         mCourse = new Course(course,time,desc);
         mViewModel.insert(mCourse);
         setClear();

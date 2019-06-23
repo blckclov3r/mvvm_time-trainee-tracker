@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.model.Course;
@@ -49,7 +50,7 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
         return courseList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private TextView course_tv,time_tv,description_tv,id_tv;
         private OnCourseClickListener listener;
         public ViewHolder(@NonNull View itemView,OnCourseClickListener listener) {
@@ -61,6 +62,7 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
             description_tv = itemView.findViewById(R.id.description_textView);
 
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
@@ -70,6 +72,12 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
                 Course course = courseList.get(position);
                 listener.onCourseClick(course);
             }
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            Toast.makeText(v.getContext(), "Long click", Toast.LENGTH_SHORT).show();
+            return true;
         }
     }
 
