@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity
         if (mFragment != null) {
             FragmentTransaction ft = mFragmentManager.beginTransaction();
             ft.replace(R.id.main_frameLayout, mFragment);
-            for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
+            for (int i = 0; i < mFragmentManager.getBackStackEntryCount(); i++) {
                 getSupportFragmentManager().popBackStackImmediate();
             }
             ft.commit();
@@ -152,8 +152,8 @@ public class MainActivity extends AppCompatActivity
             FragmentTransaction ft = mFragmentManager.beginTransaction();
             ft.replace(R.id.main_frameLayout, mFragment);
             ft.addToBackStack(null);
-            for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
-                getSupportFragmentManager().popBackStackImmediate();
+            for (int i = 0; i < mFragmentManager.getBackStackEntryCount(); i++) {
+                mFragmentManager.popBackStackImmediate();
             }
             ft.commit();
         }
