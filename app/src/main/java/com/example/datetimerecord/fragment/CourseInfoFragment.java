@@ -15,7 +15,13 @@ import androidx.fragment.app.Fragment;
 
 public class CourseInfoFragment extends Fragment {
 
-
+    public static CourseInfoFragment newInstance(Course course){
+        CourseInfoFragment fragment = new CourseInfoFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("selected_course",course);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Nullable
     @Override

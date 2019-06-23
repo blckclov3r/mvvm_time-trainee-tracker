@@ -129,11 +129,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void OnCourseListFragment(Course course) {
-        CourseInfoFragment fragment = new CourseInfoFragment();
-        Bundle args = new Bundle();
-        args.putParcelable("selected_course",course);
-        fragment.setArguments(args);
-
+        CourseInfoFragment fragment = CourseInfoFragment.newInstance(course);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.main_frameLayout,fragment)
                 .commit();
