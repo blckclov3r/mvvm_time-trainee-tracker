@@ -122,7 +122,9 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
     public void onDetach() {
         super.onDetach();
         Log.d(COMMON_TAG,TAG+" onDetach");
-        listFragmentListener = null;
+        if(listFragmentListener != null) {
+            listFragmentListener = null;
+        }
     }
 
     public void setOnCourseListFragmentListener(OnCourseListFragmentListener listener){

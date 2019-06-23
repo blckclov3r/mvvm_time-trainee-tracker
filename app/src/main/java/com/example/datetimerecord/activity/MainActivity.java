@@ -10,8 +10,10 @@ import com.example.datetimerecord.fragment.course.CourseUpdateFragment;
 import com.example.datetimerecord.fragment.student.AddStudentFragment;
 import com.example.datetimerecord.fragment.course.CourseListFragment;
 import com.example.datetimerecord.fragment.HomeFragment;
+import com.example.datetimerecord.fragment.student.StudentDetailFragment;
 import com.example.datetimerecord.fragment.student.StudentListFragment;
 import com.example.datetimerecord.model.Course;
+import com.example.datetimerecord.model.Student;
 import com.example.datetimerecord.viewmodel.CourseViewModel;
 import com.google.android.material.navigation.NavigationView;
 
@@ -32,7 +34,8 @@ import android.view.MenuItem;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, CourseListFragment.OnCourseListFragmentListener {
+        implements NavigationView.OnNavigationItemSelectedListener, CourseListFragment.OnCourseListFragmentListener,
+        StudentListFragment.OnStudentClickListListener {
 
     private FragmentManager mFragmentManager;
     private CourseViewModel mCourseViewModel;
@@ -145,6 +148,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    //COURSE LIST
     @Override
     public void OnCourseListFragment(Course course) {
         mFragment = CourseDetailFragment.newInstance(course);
@@ -173,9 +177,32 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
+
+    //STUDENT LIST
+    @Override
+    public void onClicklist(Student student) {
+        mFragment = StudentDetailFragment.newInstance(student);
+        if(mFragment!=null){
+            FragmentTransaction ft = mFragmentManager.beginTransaction();
+            ft.replace(R.id.main_frameLayout, mFragment);
+            ft.addToBackStack(null);
+            for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
+                getSupportFragmentManager().popBackStackImmediate();
+            }
+            ft.commit();
+        }
+    }
+
+    @Override
+    public void onLongClick(Student student) {
+
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mCourseViewModel = null;
     }
+
 }

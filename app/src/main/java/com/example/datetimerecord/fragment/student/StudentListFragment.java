@@ -1,5 +1,6 @@
 package com.example.datetimerecord.fragment.student;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,11 +60,41 @@ public class StudentListFragment extends Fragment implements StudentRecyclerAdap
 
     @Override
     public void onClick(Student student) {
-        Toast.makeText(getActivity(), "CLICK", Toast.LENGTH_SHORT).show();
+        if(listener != null){
+            listener.onClicklist(student);
+        }
     }
 
     @Override
     public void onLongClick(Student student) {
-        Toast.makeText(getActivity(), "LONG CLICK", Toast.LENGTH_SHORT).show();
+        if(listener != null){
+            listener.onLongClick(student);
+        }
+    }
+    private OnStudentClickListListener listener;
+    public interface OnStudentClickListListener{
+        void onClicklist(Student student);
+        void onLongClick(Student student);
+    }
+    public void setOnStudentClickListListener(OnStudentClickListListener listener){
+        this.listener = listener;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if(context instanceof OnStudentClickListListener){
+            listener = (OnStudentClickListListener) getActivity();
+        }else{
+            throw new RuntimeException(context.toString()+" must implement OnStudentClickListListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if(listener!=null) {
+            listener = null;
+        }
     }
 }
