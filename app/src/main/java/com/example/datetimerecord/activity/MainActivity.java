@@ -23,10 +23,12 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener , CourseListFragment.OnCourseListFragmentListener {
 
     private FragmentManager mFragmentManager;
     private CourseViewModel mCourseViewModel;
@@ -58,6 +60,10 @@ public class MainActivity extends AppCompatActivity
                 new CourseRecyclerAdapter().setCourseList(courses);
             }
         });
+
+        //course list listener
+        CourseListFragment courseListFragment = new CourseListFragment();
+        courseListFragment.setOnCourseListFragmentListener(this);
     }
 
     @Override
@@ -120,4 +126,8 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    @Override
+    public void OnCourseListFragment(Course course) {
+        Toast.makeText(getApplicationContext(), "click", Toast.LENGTH_SHORT).show();
+    }
 }

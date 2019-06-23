@@ -30,6 +30,8 @@ public class CourseViewModel extends AndroidViewModel {
     }
 
     public Course getCourseTime(String course){
-        return mRepository.getCourseTime(course);
+        synchronized (CourseViewModel.class) {
+            return mRepository.getCourseTime(course);
+        }
     }
 }

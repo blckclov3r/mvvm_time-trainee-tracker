@@ -15,7 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAdapter.ViewHolder> {
+
     private List<Course> courseList = new ArrayList<>();
+    private OnCourseClickListener listener;
 
     public void setCourseList(List<Course> courseList){
         this.courseList = courseList;
@@ -26,7 +28,7 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_list_item,parent,false);
-        return new ViewHolder(view);
+        return new ViewHolder(view,listener);
     }
 
     @Override
@@ -47,14 +49,35 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
         return courseList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView course_tv,time_tv,description_tv,id_tv;
-        public ViewHolder(@NonNull View itemView) {
+        private OnCourseClickListener listener;
+        public ViewHolder(@NonNull View itemView,OnCourseClickListener listener) {
             super(itemView);
+            this.listener = listener;
             id_tv = itemView.findViewById(R.id.course_id_textView);
             course_tv = itemView.findViewById(R.id.course_textView);
             time_tv = itemView.findViewById(R.id.course_time_textView);
             description_tv = itemView.findViewById(R.id.description_textView);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            if(listener!=null && position != RecyclerView.NO_POSITION) {
+                Course course = courseList.get(position);
+                listener.onCourseClick(course);
+            }
         }
     }
+
+    public interface OnCourseClickListener{
+        void onCourseClick(Course course);
+    }
+    public void setOnCourseClickListener(OnCourseClickListener listener){
+        this.listener = listener;
+    }
+
 }

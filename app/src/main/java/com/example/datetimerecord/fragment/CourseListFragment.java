@@ -23,7 +23,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class CourseListFragment extends Fragment {
+public class CourseListFragment extends Fragment implements CourseRecyclerAdapter.OnCourseClickListener {
     private static final String TAG = "CourseListFragment";
     public static final String COMMON_TAG = "mAppLog";
     private RecyclerView mRecyclerView;
@@ -38,8 +38,8 @@ public class CourseListFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setHasFixedSize(true);
         mCourseAdapter = new CourseRecyclerAdapter();
+        mCourseAdapter.setOnCourseClickListener(this);
         mRecyclerView.setAdapter(mCourseAdapter);
-
 
         return view;
     }
@@ -71,5 +71,35 @@ public class CourseListFragment extends Fragment {
         mCourseViewModel = null;
         mRecyclerView = null;
         mCourseAdapter = null;
+    }
+
+
+    @Override
+    public void onCourseClick(Course course) {
+        listFragmentListener.OnCourseListFragment(course);
+    }
+
+    public interface OnCourseListFragmentListener{
+        void OnCourseListFragment(Course course);
+    }
+    private OnCourseListFragmentListener listFragmentListener;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if(context instanceof OnCourseListFragmentListener){
+            listFragmentListener = (OnCourseListFragmentListener) context;
+        }else{
+            throw new RuntimeException(context.toString()+" must implement OnCourseListFragmentListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listFragmentListener = null;
+    }
+    public void setOnCourseListFragmentListener(OnCourseListFragmentListener listener){
+        listFragmentListener = listener;
     }
 }
