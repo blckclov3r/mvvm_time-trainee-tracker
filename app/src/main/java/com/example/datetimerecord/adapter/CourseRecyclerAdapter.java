@@ -27,6 +27,10 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
         notifyDataSetChanged();
     }
 
+    public Course getNoteAt(int pos){
+        return courseList.get(pos);
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

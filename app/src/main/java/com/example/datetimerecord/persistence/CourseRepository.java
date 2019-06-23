@@ -34,7 +34,7 @@ public class CourseRepository {
     }
 
     public void delete(Course course) {
-
+        new DeleteAsyncTask(mCourseDao).execute(course);
     }
 
     public void deleteAllCourse() {
@@ -73,6 +73,20 @@ public class CourseRepository {
         @Override
         protected Void doInBackground(Course... courses) {
             courseDao.update(courses[0]);
+            return null;
+        }
+    }
+
+    private static class DeleteAsyncTask extends AsyncTask<Course,Void,Void>{
+        private CourseDao courseDao;
+
+        public DeleteAsyncTask(CourseDao courseDao) {
+            this.courseDao = courseDao;
+        }
+
+        @Override
+        protected Void doInBackground(Course... courses) {
+            courseDao.delete(courses[0]);
             return null;
         }
     }
