@@ -1,4 +1,4 @@
-package com.example.datetimerecord.fragment;
+package com.example.datetimerecord.fragment.course;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -79,8 +79,14 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
         listFragmentListener.OnCourseListFragment(course);
     }
 
+    @Override
+    public void onCourseLongClick(Course course) {
+       listFragmentListener.OnLongClickCourseListFragment(course);
+    }
+
     public interface OnCourseListFragmentListener{
         void OnCourseListFragment(Course course);
+        void OnLongClickCourseListFragment(Course course);
     }
     private OnCourseListFragmentListener listFragmentListener;
 
@@ -97,8 +103,10 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
     @Override
     public void onDetach() {
         super.onDetach();
+        Log.d(COMMON_TAG,TAG+" onDetach");
         listFragmentListener = null;
     }
+
     public void setOnCourseListFragmentListener(OnCourseListFragmentListener listener){
         listFragmentListener = listener;
     }

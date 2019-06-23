@@ -1,4 +1,4 @@
-package com.example.datetimerecord.fragment;
+package com.example.datetimerecord.fragment.student;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;

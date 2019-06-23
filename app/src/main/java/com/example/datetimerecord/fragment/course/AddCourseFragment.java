@@ -1,4 +1,4 @@
-package com.example.datetimerecord.fragment;
+package com.example.datetimerecord.fragment.course;
 
 import android.app.Application;
 import android.os.Bundle;

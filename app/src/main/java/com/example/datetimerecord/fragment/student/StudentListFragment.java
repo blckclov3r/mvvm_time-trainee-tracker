@@ -1,4 +1,4 @@
-package com.example.datetimerecord.fragment;
+package com.example.datetimerecord.fragment.student;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

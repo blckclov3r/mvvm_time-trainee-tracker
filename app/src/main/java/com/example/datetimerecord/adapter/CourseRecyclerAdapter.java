@@ -1,5 +1,6 @@
 package com.example.datetimerecord.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAdapter.ViewHolder> {
-
+    private static final String COMMON_TAG = "mAppLog";
+    private static final String TAG = "CourseRecyclerAdapter";
     private List<Course> courseList = new ArrayList<>();
     private OnCourseClickListener listener;
 
@@ -67,22 +69,34 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
 
         @Override
         public void onClick(View v) {
+            Log.d(COMMON_TAG,TAG+" onClick");
             int position = getAdapterPosition();
             if(listener!=null && position != RecyclerView.NO_POSITION) {
                 Course course = courseList.get(position);
                 listener.onCourseClick(course);
+            }else{
+                Log.d(COMMON_TAG,TAG+" something went wrong");
             }
         }
 
         @Override
         public boolean onLongClick(View v) {
-            Toast.makeText(v.getContext(), "Long click", Toast.LENGTH_SHORT).show();
-            return true;
+            Log.d(COMMON_TAG,TAG+" onLongClick");
+            int position = getAdapterPosition();
+            if(listener!=null && position != RecyclerView.NO_POSITION){
+                Course course = courseList.get(position);
+                listener.onCourseLongClick(course);
+                return true;
+            }else{
+                Log.d(COMMON_TAG,TAG+" something went wrong");
+            }
+           return false;
         }
     }
 
     public interface OnCourseClickListener{
         void onCourseClick(Course course);
+        void onCourseLongClick(Course course);
     }
     public void setOnCourseClickListener(OnCourseClickListener listener){
         this.listener = listener;
