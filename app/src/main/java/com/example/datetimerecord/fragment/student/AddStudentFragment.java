@@ -43,6 +43,8 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
     private CourseViewModel mCourseViewModel;
     private ArrayAdapter<String> mArrayAdapter;
 
+    public AddStudentFragment(){}
+
     private Course mCourse;
     @Nullable
     @Override

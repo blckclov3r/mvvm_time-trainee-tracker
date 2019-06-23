@@ -30,6 +30,9 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
     private RecyclerView mRecyclerView;
     private CourseRecyclerAdapter mCourseAdapter;
     private CourseViewModel mCourseViewModel;
+
+    public CourseListFragment(){}
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

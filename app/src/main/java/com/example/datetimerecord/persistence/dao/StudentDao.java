@@ -20,7 +20,7 @@ public interface StudentDao {
     @Delete
     void delete(Student student);
 
-    @Query("SELECT * FROM student_table ORDER BY t_id ASC")
+    @Query("SELECT * FROM student_table ORDER BY name ASC")
     LiveData<List<Student>> getAllTrainee();
 
     @Query("DELETE FROM student_table ")

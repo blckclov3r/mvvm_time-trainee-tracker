@@ -23,6 +23,10 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener 
     private Button addCourse_btn;
     private Course mCourse;
     private CourseViewModel mViewModel;
+
+
+    public AddCourseFragment(){}
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

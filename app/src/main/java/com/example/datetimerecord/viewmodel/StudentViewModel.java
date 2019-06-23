@@ -23,6 +23,15 @@ public class StudentViewModel extends AndroidViewModel {
     public void insert(Student student){
         mRepository.insert(student);
     }
+
+    public void update(Student student){
+        mRepository.update(student);
+    }
+
+    public void delete(Student student){
+        mRepository.delete(student);
+    }
+
     public LiveData<List<Student>> getmAllStudents(){
         return mAllStudents;
     }

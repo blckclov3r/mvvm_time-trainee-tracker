@@ -1,5 +1,6 @@
 package com.example.datetimerecord.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class StudentRecyclerAdapter extends RecyclerView.Adapter<StudentRecyclerAdapter.ViewHolder> {
 
+    private static final String COMMON_TAG = "mAppLog";
+    private static final String TAG = "StudentRecyclerAdapter";
+
     private List<Student> mStudentList = new ArrayList<>();
+    private OnStudentClickListener mListener;
+    public interface OnStudentClickListener{
+        void onClick(Student student);
+        void onLongClick(Student student);
+    }
+
+    public void setOnStudentClickListener(OnStudentClickListener listener){
+        mListener = listener;
+    }
 
     public void setmStudentList(List<Student> mStudentList){
         this.mStudentList = mStudentList;
@@ -27,7 +40,7 @@ public class StudentRecyclerAdapter extends RecyclerView.Adapter<StudentRecycler
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.student_list_item,parent,false);
-        return new ViewHolder(view);
+        return new ViewHolder(view,mListener);
     }
 
     @Override
@@ -41,19 +54,43 @@ public class StudentRecyclerAdapter extends RecyclerView.Adapter<StudentRecycler
         return mStudentList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private TextView studentId_tv,name_tv,course_tv;
-        public ViewHolder(@NonNull View itemView) {
+        private OnStudentClickListener listener;
+        public ViewHolder(@NonNull View itemView,OnStudentClickListener listener) {
             super(itemView);
+            this.listener = listener;
             studentId_tv = itemView.findViewById(R.id.student_id_textView);
             name_tv = itemView.findViewById(R.id.studentName_textView);
             course_tv = itemView.findViewById(R.id.course_textView);
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         public void bind(Student student){
             studentId_tv.setText(String.valueOf(student.getT_id()));
             name_tv.setText(student.getName());
             course_tv.setText(student.getCourse());
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            if(listener!=null && position != RecyclerView.NO_POSITION){
+                Student student = mStudentList.get(position);
+                listener.onClick(student);
+            }
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            int position = getAdapterPosition();
+            if(listener!=null && position != RecyclerView.NO_POSITION){
+                Student student = mStudentList.get(position);
+                listener.onLongClick(student);
+                return true;
+            }
+            return false;
         }
     }
 }

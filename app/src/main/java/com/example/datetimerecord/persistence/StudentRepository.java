@@ -26,11 +26,11 @@ public class StudentRepository {
     }
 
     public void update(Student student){
-
+        new UpdateStudentAsyncTask(mStudentDao).execute(student);
     }
 
     public void delete(Student student){
-
+         new DeleteStudentAsyncTask(mStudentDao).execute(student);
     }
 
     public void deleteAllAllStudents(){
@@ -55,4 +55,31 @@ public class StudentRepository {
         }
     }
 
+    private static class UpdateStudentAsyncTask extends AsyncTask<Student,Void,Void>{
+        private StudentDao studentDao;
+
+        public UpdateStudentAsyncTask(StudentDao studentDao) {
+            this.studentDao = studentDao;
+        }
+
+        @Override
+        protected Void doInBackground(Student... students) {
+            studentDao.update(students[0]);
+            return null;
+        }
+    }
+
+    private static class DeleteStudentAsyncTask extends AsyncTask<Student,Void,Void>{
+        private StudentDao studentDao;
+
+        public DeleteStudentAsyncTask(StudentDao studentDao) {
+            this.studentDao = studentDao;
+        }
+
+        @Override
+        protected Void doInBackground(Student... students) {
+            studentDao.delete(students[0]);
+            return null;
+        }
+    }
 }

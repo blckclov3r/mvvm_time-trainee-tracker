@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.adapter.StudentRecyclerAdapter;
@@ -20,13 +21,16 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class StudentListFragment extends Fragment {
+public class StudentListFragment extends Fragment implements StudentRecyclerAdapter.OnStudentClickListener {
 
     private static final String COMMON_TAG = "mAppLog";
     private static final String TAG = "StudentListFragment";
     private RecyclerView mRecyclerView;
     private StudentRecyclerAdapter mAdapter;
     private StudentViewModel mStudentViewModel;
+
+    public StudentListFragment(){}
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -35,6 +39,7 @@ public class StudentListFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setHasFixedSize(true);
         mAdapter = new StudentRecyclerAdapter();
+        mAdapter.setOnStudentClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
 
         return view;
@@ -50,5 +55,15 @@ public class StudentListFragment extends Fragment {
                 mAdapter.setmStudentList(students);
             }
         });
+    }
+
+    @Override
+    public void onClick(Student student) {
+        Toast.makeText(getActivity(), "CLICK", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onLongClick(Student student) {
+        Toast.makeText(getActivity(), "LONG CLICK", Toast.LENGTH_SHORT).show();
     }
 }

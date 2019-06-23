@@ -14,13 +14,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class CourseInfoFragment extends Fragment {
+public class CourseDetailFragment extends Fragment {
     private static final String COMMON_TAG = "mAppLog";
-    private static final String TAG = "CourseInfoFragment";
+    private static final String TAG = "CourseDetailFragment";
     private TextView id_tv,course_tv,time_tv,desc_tv;
 
-    public static CourseInfoFragment newInstance(Course course){
-        CourseInfoFragment fragment = new CourseInfoFragment();
+    public CourseDetailFragment(){}
+
+    public static CourseDetailFragment newInstance(Course course){
+        CourseDetailFragment fragment = new CourseDetailFragment();
         Bundle args = new Bundle();
         args.putParcelable("selected_course",course);
         fragment.setArguments(args);
@@ -30,7 +32,7 @@ public class CourseInfoFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.course_info_fragment,container,false);
+        View view =  inflater.inflate(R.layout.course_detail_fragment,container,false);
         Log.d(COMMON_TAG,TAG+" onCreateView");
         id_tv = view.findViewById(R.id.id_textView);
         course_tv = view.findViewById(R.id.course_textView);

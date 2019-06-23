@@ -5,9 +5,9 @@ import android.os.Bundle;
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.adapter.CourseRecyclerAdapter;
 import com.example.datetimerecord.fragment.course.AddCourseFragment;
+import com.example.datetimerecord.fragment.course.CourseDetailFragment;
 import com.example.datetimerecord.fragment.course.CourseUpdateFragment;
 import com.example.datetimerecord.fragment.student.AddStudentFragment;
-import com.example.datetimerecord.fragment.course.CourseInfoFragment;
 import com.example.datetimerecord.fragment.course.CourseListFragment;
 import com.example.datetimerecord.fragment.HomeFragment;
 import com.example.datetimerecord.fragment.student.StudentListFragment;
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void OnCourseListFragment(Course course) {
-        mFragment = CourseInfoFragment.newInstance(course);
+        mFragment = CourseDetailFragment.newInstance(course);
         if (mFragment != null) {
             FragmentTransaction ft = mFragmentManager.beginTransaction();
             ft.replace(R.id.main_frameLayout, mFragment);

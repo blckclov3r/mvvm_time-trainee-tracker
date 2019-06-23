@@ -30,6 +30,8 @@ public class CourseUpdateFragment extends DialogFragment {
     private Course mCourse;
     private CourseViewModel mCourseViewModel;
 
+    public CourseUpdateFragment(){}
+
     public static CourseUpdateFragment newInstance(Course course){
         CourseUpdateFragment fragment = new CourseUpdateFragment();
         Bundle args = new Bundle();
