@@ -1,5 +1,6 @@
 package com.example.datetimerecord.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,23 +36,25 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
     private static final String TAG = "AddStudentFragment";
     private static final String COMMON_TAG = "mAppLog";
 
-    private EditText name_et,course_et,email_et,contact_et,address_et;
+    private EditText name_et,email_et,contact_et,address_et;
     private Button addStudent_Btn;
     private StudentViewModel mStudentViewModel;
     private Spinner mCourse_spinner;
     private CourseViewModel mCourseViewModel;
     private ArrayAdapter<String> mArrayAdapter;
+
+    private Course mCourse;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.add_student_fragment,container,false);
         name_et = view.findViewById(R.id.name_editText);
-        course_et = view.findViewById(R.id.course_editText);
         email_et = view.findViewById(R.id.email_editText);
         contact_et = view.findViewById(R.id.contact_editText);
         address_et = view.findViewById(R.id.address_editText);
         addStudent_Btn = view.findViewById(R.id.addStudent_button);
         mCourse_spinner = view.findViewById(R.id.course_spinner);
+        mCourse_spinner.setSelection(0);
 
         addStudent_Btn.setOnClickListener(this);
         mStudentViewModel = ViewModelProviders.of(this).get(StudentViewModel.class);
@@ -64,33 +68,38 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
                     String course_name = course.getCourse();
                     arrayList.add(course_name);
                 }
-                mArrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,arrayList);
+                mArrayAdapter = new ArrayAdapter<>(Objects.requireNonNull(getActivity()),android.R.layout.simple_spinner_item,arrayList);
                 mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 mCourse_spinner.setAdapter(mArrayAdapter);
             }
         });
+
         return view;
     }
 
     @Override
     public void onClick(View v) {
         String name = name_et.getText().toString().trim();
-        String course = course_et.getText().toString().trim();
+        String course = mCourse_spinner.getSelectedItem().toString().trim();
         String email = email_et.getText().toString().trim();
         String contact = contact_et.getText().toString().trim();
         String address = address_et.getText().toString().trim();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
         String dateFormat = simpleDateFormat.format(new Date());
+
+        mCourse = mCourseViewModel.getCourseTime(course);
+        int time = mCourse.getCourse_time();
+
         Log.d(COMMON_TAG,TAG+" dataFormat: "+dateFormat);
-        Student student = new Student(name,course,email,contact,address,dateFormat);
+        Student student = new Student(name,course,email,contact,address,dateFormat,time);
         mStudentViewModel.insert(student);
-        Toast.makeText(getActivity(), "Student successfully created", Toast.LENGTH_SHORT).show();
+        Log.d(COMMON_TAG,TAG+" onCLick, status: "+student.toString());
+        Toast.makeText(getActivity(), "Student successfully created", Toast.LENGTH_LONG).show();
         setClear();
     }
 
     public void setClear(){
         name_et.setText("");
-        course_et.setText("");
         email_et.setText("");
         contact_et.setText("");
         address_et.setText("");

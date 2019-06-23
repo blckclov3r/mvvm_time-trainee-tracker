@@ -7,6 +7,9 @@ import com.example.datetimerecord.model.Course;
 import com.example.datetimerecord.persistence.dao.CourseDao;
 
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import androidx.lifecycle.LiveData;
 
@@ -14,11 +17,11 @@ public class CourseRepository {
 
     private CourseDao mCourseDao;
     private LiveData<List<Course>> mAllCourse;
-
     public CourseRepository(Application application) {
         MyDatabase myDatabase = MyDatabase.getInstance(application);
         mCourseDao = myDatabase.mCourseDao();
         mAllCourse = mCourseDao.getAllCourse();
+
     }
 
     public void insert(Course course) {
@@ -37,8 +40,8 @@ public class CourseRepository {
 
     }
 
-    public LiveData<List<Course>> retrieveAllCourse(String course) {
-        return  mCourseDao.retrieveAllCourse(course);
+    public Course getCourseTime(String course) {
+        return mCourseDao.getCourseTime(course);
     }
 
     public LiveData<List<Course>> getmAllCourse() {

@@ -27,6 +27,7 @@ public abstract class MyDatabase extends RoomDatabase {
     public synchronized static MyDatabase getInstance(Context context) {
         if (mInstance == null) {
             mInstance = Room.databaseBuilder(context.getApplicationContext(), MyDatabase.class, MYDATABASE)
+                    .allowMainThreadQueries()
                     .fallbackToDestructiveMigration()
                     .addCallback(courseRoomCallback)
                     .addCallback(studentRoomCallback)

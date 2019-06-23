@@ -14,13 +14,11 @@ import androidx.lifecycle.LiveData;
 public class CourseViewModel extends AndroidViewModel {
     private CourseRepository mRepository;
     private LiveData<List<Course>> allCourse;
-    private LiveData<List<Course>> spinnerCourse;
 
     public CourseViewModel(@NonNull Application application) {
         super(application);
         mRepository = new CourseRepository(application);
         allCourse = mRepository.getmAllCourse();
-        spinnerCourse = mRepository.getmAllCourse();
     }
 
     public void insert(Course course){
@@ -31,7 +29,7 @@ public class CourseViewModel extends AndroidViewModel {
         return allCourse;
     }
 
-    public LiveData<List<Course>> retrieveAllCourse(String course){
-        return spinnerCourse;
+    public Course getCourseTime(String course){
+        return mRepository.getCourseTime(course);
     }
 }

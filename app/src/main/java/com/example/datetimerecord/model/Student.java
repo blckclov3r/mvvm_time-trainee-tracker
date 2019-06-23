@@ -25,9 +25,12 @@ public class Student {
     @ColumnInfo(name = "timestamp")
     private String timestamp;
 
+    private int remaining;
+
     @Ignore
     public Student(){}
 
+    @Ignore
     public Student(String name, String course, String email, String contact, String address, String timestamp) {
         this.name = name;
         this.course = course;
@@ -35,6 +38,24 @@ public class Student {
         this.contact = contact;
         this.address = address;
         this.timestamp = timestamp;
+    }
+
+    public Student(String name, String course, String email, String contact, String address, String timestamp, int remaining) {
+        this.name = name;
+        this.course = course;
+        this.email = email;
+        this.contact = contact;
+        this.address = address;
+        this.timestamp = timestamp;
+        this.remaining = remaining;
+    }
+
+    public int getRemaining() {
+        return remaining;
+    }
+
+    public void setRemaining(int remaining) {
+        this.remaining = remaining;
     }
 
     public int getT_id() {
@@ -91,5 +112,19 @@ public class Student {
 
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "t_id=" + t_id +
+                ", name='" + name + '\'' +
+                ", course='" + course + '\'' +
+                ", email='" + email + '\'' +
+                ", contact='" + contact + '\'' +
+                ", address='" + address + '\'' +
+                ", timestamp='" + timestamp + '\'' +
+                ", remaining=" + remaining +
+                '}';
     }
 }

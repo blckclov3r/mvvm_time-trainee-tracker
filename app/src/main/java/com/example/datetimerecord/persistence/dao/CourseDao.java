@@ -20,12 +20,13 @@ public interface CourseDao {
     @Delete
     void delete(Course course);
 
-    @Query("SELECT * FROM course_table")
+    @Query("SELECT * FROM course_table ORDER BY mcourse ASC")
     LiveData<List<Course>> getAllCourse();
 
     @Query("DELETE FROM course_table")
     void deleteAllCourse();
 
-    @Query("SELECT * FROM course_table WHERE mcourse=:course")
-    LiveData<List<Course>> retrieveAllCourse(String course);
+
+    @Query("SELECT * FROM course_table WHERE mcourse=:course LIMIT 1")
+    Course getCourseTime(String course);
 }
