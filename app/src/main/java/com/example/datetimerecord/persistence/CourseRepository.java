@@ -12,6 +12,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Update;
 
 public class CourseRepository {
 
@@ -29,7 +30,7 @@ public class CourseRepository {
     }
 
     public void update(Course course) {
-
+        new UpdateAsyncTask(mCourseDao).execute(course);
     }
 
     public void delete(Course course) {
@@ -48,7 +49,7 @@ public class CourseRepository {
         return mAllCourse;
     }
 
-    public static class InsertAsyncTask extends AsyncTask<Course, Void, Void> {
+    private static class InsertAsyncTask extends AsyncTask<Course, Void, Void> {
         private CourseDao courseDao;
 
         public InsertAsyncTask(CourseDao courseDao) {
@@ -62,6 +63,19 @@ public class CourseRepository {
         }
     }
 
+    private static class UpdateAsyncTask extends AsyncTask<Course,Void,Void>{
+        private CourseDao courseDao;
+
+        public UpdateAsyncTask(CourseDao courseDao) {
+            this.courseDao = courseDao;
+        }
+
+        @Override
+        protected Void doInBackground(Course... courses) {
+            courseDao.update(courses[0]);
+            return null;
+        }
+    }
 
 
 }
