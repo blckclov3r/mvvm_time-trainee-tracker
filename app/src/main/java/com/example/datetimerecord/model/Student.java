@@ -43,6 +43,15 @@ public class Student implements Parcelable {
         this.timestamp = timestamp;
     }
 
+    @Ignore
+    public Student(String name, String course, String email, String contact, String address) {
+        this.name = name;
+        this.course = course;
+        this.email = email;
+        this.contact = contact;
+        this.address = address;
+    }
+
     public Student(String name, String course, String email, String contact, String address, String timestamp, int remaining) {
         this.name = name;
         this.course = course;

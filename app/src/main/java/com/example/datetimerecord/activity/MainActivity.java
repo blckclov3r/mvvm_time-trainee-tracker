@@ -12,6 +12,7 @@ import com.example.datetimerecord.fragment.course.CourseListFragment;
 import com.example.datetimerecord.fragment.HomeFragment;
 import com.example.datetimerecord.fragment.student.StudentDetailFragment;
 import com.example.datetimerecord.fragment.student.StudentListFragment;
+import com.example.datetimerecord.fragment.student.StudentUpdateFragment;
 import com.example.datetimerecord.model.Course;
 import com.example.datetimerecord.model.Student;
 import com.example.datetimerecord.viewmodel.CourseViewModel;
@@ -196,7 +197,16 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onLongClick(Student student) {
-
+        mFragment = StudentUpdateFragment.newInstance(student);
+        if(mFragment!=null){
+            FragmentTransaction ft = mFragmentManager.beginTransaction();
+            ft.replace(R.id.main_frameLayout, mFragment);
+            ft.addToBackStack(null);
+            for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
+                getSupportFragmentManager().popBackStackImmediate();
+            }
+            ft.commit();
+        }
     }
 
     @Override

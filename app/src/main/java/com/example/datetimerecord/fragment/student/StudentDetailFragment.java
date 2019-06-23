@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class StudentDetailFragment extends Fragment {
+
     private TextView name_tv, course_tv, email_tv, contact_tv, address_tv, timestamp_tv, id_tv,remaining_tv;
     public StudentDetailFragment() {
     }
