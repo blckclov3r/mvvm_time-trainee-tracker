@@ -36,6 +36,10 @@ public class StudentRecyclerAdapter extends RecyclerView.Adapter<StudentRecycler
         notifyDataSetChanged();
     }
 
+    public Student getNoteAt(int position){
+        return mStudentList.get(position);
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

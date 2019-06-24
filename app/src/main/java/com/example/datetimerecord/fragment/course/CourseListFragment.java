@@ -44,7 +44,7 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
         mCourseAdapter = new CourseRecyclerAdapter();
         mCourseAdapter.setOnCourseClickListener(this);
         mRecyclerView.setAdapter(mCourseAdapter);
-
+        mCourseViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -66,7 +66,6 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.d(COMMON_TAG,TAG+" onViewCreated invoked");
-        mCourseViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
         mCourseViewModel.getAllCourse().observe(getViewLifecycleOwner(), new Observer<List<Course>>() {
             @Override
             public void onChanged(List<Course> courses) {
