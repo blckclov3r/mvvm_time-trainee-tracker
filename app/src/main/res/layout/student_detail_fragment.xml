@@ -9,179 +9,217 @@
     android:orientation="vertical">
 
 
-    <TextView
+    <ScrollView
         android:layout_marginTop="32dp"
-        android:text="Student Detail"
-        android:layout_width="wrap_content"
-        android:textColor="@color/textColor"
-        android:layout_height="wrap_content" />
-
-
-    <LinearLayout
-        android:layout_marginTop="7dp"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:textAlignment="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TextView
-            android:text="Id: "
-            android:textColor="@color/textColor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:text="1"
-            android:id="@+id/id_textView"
-            android:textColor="@color/textColor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
 
-   <LinearLayout
-       android:layout_marginTop="7dp"
-       android:orientation="horizontal"
-       android:gravity="center_horizontal"
-       android:textAlignment="center"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content">
-       <TextView
-           android:text="Name: "
-           android:textColor="@color/textColor"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content" />
-       <TextView
-           android:id="@+id/name_textView"
-           android:text="null"
-           android:textColor="@color/textColor"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:paddingBottom="10dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
 
-   </LinearLayout>
+            <TextView
+                android:layout_gravity="center"
+                android:text="Student Detail"
+                android:layout_width="wrap_content"
+                android:textColor="@color/textColor"
+                android:textSize="16sp"
+                android:layout_height="wrap_content" />
 
 
-    <LinearLayout
-        android:layout_marginTop="7dp"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:textAlignment="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:text="Course: "
-            android:textColor="@color/textColor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/course_textView"
-            android:text="null"
-            android:layout_width="wrap_content"
-            android:textColor="@color/textColor"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="7dp"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="Id: "
+                    android:textColor="@color/textColor"
+                    android:layout_width="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="1"
+                    android:textSize="16sp"
+                    android:layout_marginStart="4dp"
+                    android:id="@+id/id_textView"
+                    android:textColor="@color/textColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
-    <LinearLayout
-        android:layout_marginTop="7dp"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:textAlignment="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:text="Email: "
-            android:textColor="@color/textColor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/email_textView"
-            android:text="null"
-            android:textColor="@color/textColor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_marginTop="7dp"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="Name:"
+                    android:textColor="@color/textColor"
+                    android:layout_width="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/name_textView"
+                    android:text="null"
+                    android:textSize="16sp"
+                    android:textColor="@color/textColor"
+                    android:layout_marginStart="4dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginTop="7dp"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:textAlignment="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:text="Contact: "
-            android:textColor="@color/textColor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/contact_textView"
-            android:text="null"
-            android:textColor="@color/textColor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginTop="7dp"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:textAlignment="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:text="Address: "
-            android:layout_width="wrap_content"
-            android:textColor="@color/textColor"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/address_textView"
-            android:text="null"
-            android:textColor="@color/textColor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
+            </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_marginTop="7dp"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:textAlignment="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:text="Time Remaining: "
-            android:textColor="@color/textColor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/remaining_textView"
-            android:textColor="@color/textColor"
-            android:text="null"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_marginTop="7dp"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="Course:"
+                    android:textColor="@color/textColor"
+                    android:layout_width="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/course_textView"
+                    android:text="null"
+                    android:layout_marginStart="4dp"
+                    android:layout_width="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/textColor"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="7dp"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="Email:"
+                    android:textColor="@color/textColor"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/email_textView"
+                    android:text="null"
+                    android:textSize="16sp"
+                    android:layout_marginStart="4dp"
+                    android:textColor="@color/textColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
-    <LinearLayout
-        android:layout_marginTop="7dp"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:textAlignment="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:text="Timestamp: "
-            android:textColor="@color/textColor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/timestamp_textView"
-            android:text="null"
-            android:textColor="@color/textColor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            </LinearLayout>
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="7dp"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="Contact:"
+                    android:textColor="@color/textColor"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/contact_textView"
+                    android:text="null"
+                    android:layout_marginStart="4dp"
+                    android:textColor="@color/textColor"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="7dp"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="Address:"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/textColor"
+                    android:textSize="16sp"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/address_textView"
+                    android:text="null"
+                    android:textColor="@color/textColor"
+                    android:textSize="16sp"
+                    android:layout_marginStart="4dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_marginTop="7dp"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="Time Remaining:"
+                    android:textColor="@color/textColor"
+                    android:layout_width="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/remaining_textView"
+                    android:textColor="@color/textColor"
+                    android:layout_marginStart="4dp"
+                    android:text="null"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="7dp"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="Timestamp:"
+                    android:textSize="16sp"
+                    android:textColor="@color/textColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/timestamp_textView"
+                    android:text="null"
+                    android:textColor="@color/textColor"
+                    android:layout_marginStart="4dp"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>

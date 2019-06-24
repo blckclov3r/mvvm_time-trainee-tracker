@@ -27,6 +27,7 @@ public class StudentListFragment extends Fragment implements StudentRecyclerAdap
 
     private static final String COMMON_TAG = "mAppLog";
     private static final String TAG = "StudentListFragment";
+
     private RecyclerView mRecyclerView;
     private StudentRecyclerAdapter mAdapter;
     private StudentViewModel mStudentViewModel;

@@ -75,6 +75,33 @@ public class Student implements Parcelable {
     }
 
 
+    protected Student(Parcel in) {
+        t_id = in.readInt();
+        name = in.readString();
+        course = in.readString();
+        email = in.readString();
+        contact = in.readString();
+        address = in.readString();
+        timestamp = in.readString();
+        remaining = in.readInt();
+        timein_hour = in.readInt();
+        timein_minute = in.readInt();
+        timeout_hour = in.readInt();
+        timeout_minute = in.readInt();
+    }
+
+    public static final Creator<Student> CREATOR = new Creator<Student>() {
+        @Override
+        public Student createFromParcel(Parcel in) {
+            return new Student(in);
+        }
+
+        @Override
+        public Student[] newArray(int size) {
+            return new Student[size];
+        }
+    };
+
     public int getRemaining() {
         return remaining;
     }
@@ -190,13 +217,12 @@ public class Student implements Parcelable {
                 '}';
     }
 
-    @Ignore
+
     @Override
     public int describeContents() {
         return 0;
     }
 
-    @Ignore
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(t_id);
@@ -207,30 +233,9 @@ public class Student implements Parcelable {
         dest.writeString(address);
         dest.writeString(timestamp);
         dest.writeInt(remaining);
+        dest.writeInt(timein_hour);
+        dest.writeInt(timein_minute);
+        dest.writeInt(timeout_hour);
+        dest.writeInt(timeout_minute);
     }
-
-    @Ignore
-    protected Student(Parcel in) {
-        t_id = in.readInt();
-        name = in.readString();
-        course = in.readString();
-        email = in.readString();
-        contact = in.readString();
-        address = in.readString();
-        timestamp = in.readString();
-        remaining = in.readInt();
-    }
-
-    @Ignore
-    public static final Creator<Student> CREATOR = new Creator<Student>() {
-        @Override
-        public Student createFromParcel(Parcel in) {
-            return new Student(in);
-        }
-
-        @Override
-        public Student[] newArray(int size) {
-            return new Student[size];
-        }
-    };
 }

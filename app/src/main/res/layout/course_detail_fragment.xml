@@ -7,111 +7,200 @@
     android:layout_marginEnd="7dp"
     android:orientation="vertical">
 
-
-    <TextView
-        android:id="@+id/head"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <ScrollView
         android:layout_marginTop="32dp"
-        android:gravity="center_horizontal"
-        android:text="Course Detail"
-        android:textColor="@color/textColor" />
-
-
-    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/head"
-        android:layout_marginTop="7dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/head"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Id: "
+                android:textSize="16sp"
+                android:gravity="center_horizontal"
+                android:text="Course Detail"
                 android:textColor="@color/textColor" />
 
-            <TextView
-                android:id="@+id/id_textView"
-                android:textColor="@color/textColor"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1" />
-        </LinearLayout>
+                android:layout_below="@id/head"
+                android:layout_marginTop="7dp"
+                android:orientation="vertical"
+                android:paddingBottom="10dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Course: "
-                android:textColor="@color/textColor" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="Id:"
+                        android:textColor="@color/textColor" />
 
-            <TextView
-                android:id="@+id/course_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="null"
-                android:textColor="@color/textColor" />
-        </LinearLayout>
+                    <TextView
+                        android:id="@+id/id_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="1"
+                        android:layout_marginStart="4dp"
+                        android:textColor="@color/textColor" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="Course:"
+                        android:textColor="@color/textColor" />
+
+                    <TextView
+                        android:id="@+id/course_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_marginStart="4dp"
+                        android:text="null"
+                        android:textColor="@color/textColor" />
+                </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Time: "
-                android:textColor="@color/textColor" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Time:"
+                        android:textSize="16sp"
+                        android:textColor="@color/textColor" />
 
-            <TextView
-                android:id="@+id/time_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="null"
-                android:textColor="@color/textColor" />
-        </LinearLayout>
+                    <TextView
+                        android:id="@+id/time_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="null"
+                        android:textSize="16sp"
+                        android:textColor="@color/textColor" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="From:"
+                        android:textColor="@color/textColor" />
+
+                    <TextView
+                        android:id="@+id/timein_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="null"
+                        android:textSize="16sp"
+                        android:textColor="@color/textColor" />
+
+                    <TextView
+                        android:id="@+id/timein_term_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="null"
+                        android:textSize="16sp"
+                        android:layout_marginStart="4dp"
+                        android:textColor="@color/textColor" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_height="wrap_content"
+                        android:text="To:"
+                        android:textColor="@color/textColor" />
+
+                    <TextView
+                        android:id="@+id/timeout_textView"
+                        android:layout_marginStart="4dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="null"
+                        android:textSize="16sp"
+                        android:textColor="@color/textColor" />
+
+                    <TextView
+                        android:id="@+id/timeout_term_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="null"
+                        android:textSize="16sp"
+                        android:layout_marginStart="4dp"
+                        android:textColor="@color/textColor" />
+                </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Description: "
-                android:textColor="@color/textColor" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="Description"
+                        android:textColor="@color/textColor" />
 
-            <TextView
-                android:id="@+id/description_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="null"
-                android:textColor="@color/textColor" />
-        </LinearLayout>
+                    <TextView
+                        android:id="@+id/description_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:text="null"
+                        android:textColor="@color/textColor" />
+                </LinearLayout>
 
-    </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+    </ScrollView>
 
 
 </RelativeLayout>

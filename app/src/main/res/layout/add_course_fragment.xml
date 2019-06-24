@@ -61,6 +61,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:textColor="@color/textColor"
                     android:text="From: "
                     android:textSize="16sp" />
 
@@ -69,6 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
+                    android:textColor="@color/textColor"
                     android:text="00"
                     android:textSize="16sp" />
 
@@ -76,14 +78,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" : "
+                    android:textColor="@color/textColor"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/timeIn_minute_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/textColor"
                     android:text="00"
                     android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/timein_term_textView"
+                    android:text="am"
+                    android:layout_marginStart="4dp"
+                    android:textColor="@color/textColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:layout_marginStart="10dp"
@@ -97,6 +109,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:textColor="@color/textColor"
                     android:text="To: "
                     android:textSize="16sp" />
 
@@ -104,12 +117,14 @@
                     android:id="@+id/timeOut_hour_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/textColor"
                     android:layout_marginStart="7dp"
                     android:text="00"
                     android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
+                    android:textColor="@color/textColor"
                     android:layout_height="wrap_content"
                     android:text=" : "
                     android:textSize="16sp" />
@@ -118,8 +133,17 @@
                     android:id="@+id/timeOut_minute_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/textColor"
                     android:text="00"
                     android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/timeout_term_textView"
+                    android:text="am"
+                    android:textColor="@color/textColor"
+                    android:layout_marginStart="4dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 

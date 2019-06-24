@@ -53,26 +53,8 @@ public class Course implements Parcelable {
         this.timeout_minute = timeout_minute;
     }
 
-    @Ignore
-    protected Course(Parcel in) {
-        c_id = in.readInt();
-        course = in.readString();
-        course_time = in.readInt();
-        description = in.readString();
-    }
 
-    @Ignore
-    public static final Creator<Course> CREATOR = new Creator<Course>() {
-        @Override
-        public Course createFromParcel(Parcel in) {
-            return new Course(in);
-        }
 
-        @Override
-        public Course[] newArray(int size) {
-            return new Course[size];
-        }
-    };
 
     public int getC_id() {
         return c_id;
@@ -168,5 +150,34 @@ public class Course implements Parcelable {
         dest.writeString(course);
         dest.writeInt(course_time);
         dest.writeString(description);
+        dest.writeInt(timein_hour);
+        dest.writeInt(timein_minute);
+        dest.writeInt(timeout_hour);
+        dest.writeInt(timeout_minute);
     }
+
+    @Ignore
+    protected Course(Parcel in) {
+        c_id = in.readInt();
+        course = in.readString();
+        course_time = in.readInt();
+        description = in.readString();
+        timein_hour = in.readInt();
+        timein_minute = in.readInt();
+        timeout_hour = in.readInt();
+        timeout_minute = in.readInt();
+    }
+
+    @Ignore
+    public static final Creator<Course> CREATOR = new Creator<Course>() {
+        @Override
+        public Course createFromParcel(Parcel in) {
+            return new Course(in);
+        }
+
+        @Override
+        public Course[] newArray(int size) {
+            return new Course[size];
+        }
+    };
 }
