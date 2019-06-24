@@ -1,7 +1,6 @@
 package com.example.datetimerecord.activity;
 
 import android.os.Bundle;
-
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.adapter.CourseRecyclerAdapter;
 import com.example.datetimerecord.fragment.course.AddCourseFragment;
@@ -17,7 +16,6 @@ import com.example.datetimerecord.model.Course;
 import com.example.datetimerecord.model.Student;
 import com.example.datetimerecord.viewmodel.CourseViewModel;
 import com.google.android.material.navigation.NavigationView;
-
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -28,7 +26,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-
 import android.view.Menu;
 import android.view.MenuItem;
 

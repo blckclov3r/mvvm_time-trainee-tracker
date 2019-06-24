@@ -15,18 +15,16 @@ import androidx.room.Update;
 public interface CourseDao {
     @Insert
     void insert(Course course);
+
     @Update
     void update(Course course);
+
     @Delete
     void delete(Course course);
 
-    @Query("SELECT * FROM course_table ORDER BY mcourse ASC")
+    @Query("SELECT * FROM course_table ORDER BY course ASC")
     LiveData<List<Course>> getAllCourse();
 
-    @Query("DELETE FROM course_table")
-    void deleteAllCourse();
-
-
-    @Query("SELECT * FROM course_table WHERE mcourse=:course LIMIT 1")
+    @Query("SELECT * FROM course_table WHERE course=:course LIMIT 1")
     Course getCourseTime(String course);
 }

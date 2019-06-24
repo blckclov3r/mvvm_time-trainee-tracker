@@ -11,25 +11,28 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "course_table")
 public class Course implements Parcelable {
+
     @NonNull
     @PrimaryKey(autoGenerate = true)
     private int c_id;
-    @ColumnInfo(name = "mcourse")
+    @ColumnInfo(name = "course")
     private String course;
     @ColumnInfo(name = "course_time")
     private int course_time;
     @ColumnInfo(name = "description")
     private String description;
 
-    @Ignore
+
     public Course(){}
 
+    @Ignore
     public Course(String course, int course_time, String description) {
         this.course = course;
         this.course_time = course_time;
         this.description = description;
     }
 
+    @Ignore
     protected Course(Parcel in) {
         c_id = in.readInt();
         course = in.readString();
@@ -37,6 +40,7 @@ public class Course implements Parcelable {
         description = in.readString();
     }
 
+    @Ignore
     public static final Creator<Course> CREATOR = new Creator<Course>() {
         @Override
         public Course createFromParcel(Parcel in) {
@@ -81,6 +85,7 @@ public class Course implements Parcelable {
         this.description = description;
     }
 
+    @Ignore
     @Override
     public String toString() {
         return "Course{" +
@@ -91,11 +96,13 @@ public class Course implements Parcelable {
                 '}';
     }
 
+    @Ignore
     @Override
     public int describeContents() {
         return 0;
     }
 
+    @Ignore
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(c_id);

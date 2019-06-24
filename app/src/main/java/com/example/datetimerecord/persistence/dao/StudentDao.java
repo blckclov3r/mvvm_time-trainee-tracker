@@ -13,6 +13,7 @@ import androidx.room.Update;
 
 @Dao
 public interface StudentDao {
+
     @Insert
     void insert(Student student);
     @Update
@@ -23,6 +24,4 @@ public interface StudentDao {
     @Query("SELECT * FROM student_table ORDER BY name ASC")
     LiveData<List<Student>> getAllTrainee();
 
-    @Query("DELETE FROM student_table ")
-    void deleteAllTrainees();
 }

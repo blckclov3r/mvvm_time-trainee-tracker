@@ -30,7 +30,6 @@ public class Student implements Parcelable {
 
     private int remaining;
 
-    @Ignore
     public Student(){}
 
     @Ignore
@@ -52,6 +51,7 @@ public class Student implements Parcelable {
         this.address = address;
     }
 
+    @Ignore
     public Student(String name, String course, String email, String contact, String address, String timestamp, int remaining) {
         this.name = name;
         this.course = course;
@@ -62,6 +62,7 @@ public class Student implements Parcelable {
         this.remaining = remaining;
     }
 
+    @Ignore
     protected Student(Parcel in) {
         t_id = in.readInt();
         name = in.readString();
@@ -73,6 +74,7 @@ public class Student implements Parcelable {
         remaining = in.readInt();
     }
 
+    @Ignore
     public static final Creator<Student> CREATOR = new Creator<Student>() {
         @Override
         public Student createFromParcel(Parcel in) {
@@ -149,6 +151,7 @@ public class Student implements Parcelable {
         this.timestamp = timestamp;
     }
 
+    @Ignore
     @Override
     public String toString() {
         return "Student{" +
@@ -163,11 +166,13 @@ public class Student implements Parcelable {
                 '}';
     }
 
+    @Ignore
     @Override
     public int describeContents() {
         return 0;
     }
 
+    @Ignore
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(t_id);
