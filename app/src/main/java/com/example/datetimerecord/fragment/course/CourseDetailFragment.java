@@ -40,6 +40,7 @@ public class CourseDetailFragment extends Fragment {
         desc_tv = view.findViewById(R.id.description_textView);
         if(getArguments() != null){
             Course course = getArguments().getParcelable("selected_course");
+            Log.d(COMMON_TAG,TAG+" course detail: "+course.toString());
             id_tv.setText(String.valueOf(course.getC_id()));
             course_tv.setText(" "+course.getCourse());
             time_tv.setText(" "+String.valueOf(course.getCourse_time()));

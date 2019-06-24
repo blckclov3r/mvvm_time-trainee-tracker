@@ -22,6 +22,17 @@ public class Course implements Parcelable {
     @ColumnInfo(name = "description")
     private String description;
 
+    //timein hour and minute
+    @ColumnInfo(name = "timein_hour")
+    private int timein_hour;
+    @ColumnInfo(name = "timein_minute")
+    private int timein_minute;
+
+    //timeout hour and minute
+    @ColumnInfo(name = "timeout_hour")
+    private int timeout_hour;
+    @ColumnInfo(name = "timeout_minute")
+    private int timeout_minute;
 
     public Course(){}
 
@@ -30,6 +41,16 @@ public class Course implements Parcelable {
         this.course = course;
         this.course_time = course_time;
         this.description = description;
+    }
+
+    public Course(String course, int course_time, String description, int timein_hour, int timein_minute, int timeout_hour, int timeout_minute) {
+        this.course = course;
+        this.course_time = course_time;
+        this.description = description;
+        this.timein_hour = timein_hour;
+        this.timein_minute = timein_minute;
+        this.timeout_hour = timeout_hour;
+        this.timeout_minute = timeout_minute;
     }
 
     @Ignore
@@ -85,6 +106,39 @@ public class Course implements Parcelable {
         this.description = description;
     }
 
+    public int getTimein_hour() {
+        return timein_hour;
+    }
+
+    public void setTimein_hour(int timein_hour) {
+        this.timein_hour = timein_hour;
+    }
+
+    public int getTimein_minute() {
+        return timein_minute;
+    }
+
+    public void setTimein_minute(int timein_minute) {
+        this.timein_minute = timein_minute;
+    }
+
+    public int getTimeout_hour() {
+        return timeout_hour;
+    }
+
+    public void setTimeout_hour(int timeout_hour) {
+        this.timeout_hour = timeout_hour;
+    }
+
+    public int getTimeout_minute() {
+        return timeout_minute;
+    }
+
+    public void setTimeout_minute(int timeout_minute) {
+        this.timeout_minute = timeout_minute;
+    }
+
+
     @Ignore
     @Override
     public String toString() {
@@ -93,8 +147,13 @@ public class Course implements Parcelable {
                 ", course='" + course + '\'' +
                 ", course_time=" + course_time +
                 ", description='" + description + '\'' +
+                ", timein_hour=" + timein_hour +
+                ", timein_minute=" + timein_minute +
+                ", timeout_hour=" + timeout_hour +
+                ", timeout_minute=" + timeout_minute +
                 '}';
     }
+
 
     @Ignore
     @Override

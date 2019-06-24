@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "451ddda32bdc43228364a322ccbb068c",
+    "identityHash": "3eb3acf54a37efc28f79af320239eb50",
     "entities": [
       {
         "tableName": "student_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`t_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `course` TEXT, `email` TEXT, `contact` TEXT, `address` TEXT, `timestamp` TEXT, `remaining` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`t_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `course` TEXT, `email` TEXT, `contact` TEXT, `address` TEXT, `timestamp` TEXT, `remaining` INTEGER NOT NULL, `timein_hour` INTEGER NOT NULL, `timein_minute` INTEGER NOT NULL, `timeout_hour` INTEGER NOT NULL, `timeout_minute` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "t_id",
@@ -55,6 +55,30 @@
             "columnName": "remaining",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "timein_hour",
+            "columnName": "timein_hour",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timein_minute",
+            "columnName": "timein_minute",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timeout_hour",
+            "columnName": "timeout_hour",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timeout_minute",
+            "columnName": "timeout_minute",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -68,7 +92,7 @@
       },
       {
         "tableName": "course_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`c_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `course` TEXT, `course_time` INTEGER NOT NULL, `description` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`c_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `course` TEXT, `course_time` INTEGER NOT NULL, `description` TEXT, `timein_hour` INTEGER NOT NULL, `timein_minute` INTEGER NOT NULL, `timeout_hour` INTEGER NOT NULL, `timeout_minute` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "c_id",
@@ -93,6 +117,30 @@
             "columnName": "description",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "timein_hour",
+            "columnName": "timein_hour",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timein_minute",
+            "columnName": "timein_minute",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timeout_hour",
+            "columnName": "timeout_hour",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timeout_minute",
+            "columnName": "timeout_minute",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -108,7 +156,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '451ddda32bdc43228364a322ccbb068c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3eb3acf54a37efc28f79af320239eb50')"
     ]
   }
 }

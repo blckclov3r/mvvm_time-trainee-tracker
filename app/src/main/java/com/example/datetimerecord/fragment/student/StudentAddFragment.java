@@ -31,9 +31,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-public class AddStudentFragment extends Fragment implements View.OnClickListener {
+public class StudentAddFragment extends Fragment implements View.OnClickListener {
 
-    private static final String TAG = "AddStudentFragment";
+    private static final String TAG = "StudentAddFragment";
     private static final String COMMON_TAG = "mAppLog";
 
     private EditText name_et,email_et,contact_et,address_et;
@@ -43,7 +43,7 @@ public class AddStudentFragment extends Fragment implements View.OnClickListener
     private CourseViewModel mCourseViewModel;
     private ArrayAdapter<String> mArrayAdapter;
 
-    public AddStudentFragment(){}
+    public StudentAddFragment(){}
 
     private Course mCourse;
     @Nullable

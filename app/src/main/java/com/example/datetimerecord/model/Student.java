@@ -27,8 +27,20 @@ public class Student implements Parcelable {
     private String address;
     @ColumnInfo(name = "timestamp")
     private String timestamp;
-
+    @ColumnInfo(name = "remaining")
     private int remaining;
+
+    //timein hour and minute
+    @ColumnInfo(name = "timein_hour")
+    private int timein_hour;
+    @ColumnInfo(name = "timein_minute")
+    private int timein_minute;
+
+    //timeout hour and minute
+    @ColumnInfo(name = "timeout_hour")
+    private int timeout_hour;
+    @ColumnInfo(name = "timeout_minute")
+    private int timeout_minute;
 
     public Student(){}
 
@@ -62,30 +74,6 @@ public class Student implements Parcelable {
         this.remaining = remaining;
     }
 
-    @Ignore
-    protected Student(Parcel in) {
-        t_id = in.readInt();
-        name = in.readString();
-        course = in.readString();
-        email = in.readString();
-        contact = in.readString();
-        address = in.readString();
-        timestamp = in.readString();
-        remaining = in.readInt();
-    }
-
-    @Ignore
-    public static final Creator<Student> CREATOR = new Creator<Student>() {
-        @Override
-        public Student createFromParcel(Parcel in) {
-            return new Student(in);
-        }
-
-        @Override
-        public Student[] newArray(int size) {
-            return new Student[size];
-        }
-    };
 
     public int getRemaining() {
         return remaining;
@@ -151,6 +139,38 @@ public class Student implements Parcelable {
         this.timestamp = timestamp;
     }
 
+    public int getTimein_hour() {
+        return timein_hour;
+    }
+
+    public void setTimein_hour(int timein_hour) {
+        this.timein_hour = timein_hour;
+    }
+
+    public int getTimein_minute() {
+        return timein_minute;
+    }
+
+    public void setTimein_minute(int timein_minute) {
+        this.timein_minute = timein_minute;
+    }
+
+    public int getTimeout_hour() {
+        return timeout_hour;
+    }
+
+    public void setTimeout_hour(int timeout_hour) {
+        this.timeout_hour = timeout_hour;
+    }
+
+    public int getTimeout_minute() {
+        return timeout_minute;
+    }
+
+    public void setTimeout_minute(int timeout_minute) {
+        this.timeout_minute = timeout_minute;
+    }
+
     @Ignore
     @Override
     public String toString() {
@@ -163,6 +183,10 @@ public class Student implements Parcelable {
                 ", address='" + address + '\'' +
                 ", timestamp='" + timestamp + '\'' +
                 ", remaining=" + remaining +
+                ", timein_hour=" + timein_hour +
+                ", timein_minute=" + timein_minute +
+                ", timeout_hour=" + timeout_hour +
+                ", timeout_minute=" + timeout_minute +
                 '}';
     }
 
@@ -184,4 +208,29 @@ public class Student implements Parcelable {
         dest.writeString(timestamp);
         dest.writeInt(remaining);
     }
+
+    @Ignore
+    protected Student(Parcel in) {
+        t_id = in.readInt();
+        name = in.readString();
+        course = in.readString();
+        email = in.readString();
+        contact = in.readString();
+        address = in.readString();
+        timestamp = in.readString();
+        remaining = in.readInt();
+    }
+
+    @Ignore
+    public static final Creator<Student> CREATOR = new Creator<Student>() {
+        @Override
+        public Student createFromParcel(Parcel in) {
+            return new Student(in);
+        }
+
+        @Override
+        public Student[] newArray(int size) {
+            return new Student[size];
+        }
+    };
 }

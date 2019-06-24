@@ -3,10 +3,10 @@ package com.example.datetimerecord.activity;
 import android.os.Bundle;
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.adapter.CourseRecyclerAdapter;
-import com.example.datetimerecord.fragment.course.AddCourseFragment;
+import com.example.datetimerecord.fragment.course.CourseAddFragment;
 import com.example.datetimerecord.fragment.course.CourseDetailFragment;
 import com.example.datetimerecord.fragment.course.CourseUpdateFragment;
-import com.example.datetimerecord.fragment.student.AddStudentFragment;
+import com.example.datetimerecord.fragment.student.StudentAddFragment;
 import com.example.datetimerecord.fragment.course.CourseListFragment;
 import com.example.datetimerecord.fragment.HomeFragment;
 import com.example.datetimerecord.fragment.student.StudentDetailFragment;
@@ -35,10 +35,14 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, CourseListFragment.OnCourseListFragmentListener,
         StudentListFragment.OnStudentClickListListener {
 
+    //vars
     private FragmentManager mFragmentManager;
     private CourseViewModel mCourseViewModel;
-    private Toolbar mToolbar;
     private Fragment mFragment = null;
+
+    //component
+    private Toolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +85,9 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if(mFragmentManager.getBackStackEntryCount()>0) {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -117,7 +123,7 @@ public class MainActivity extends AppCompatActivity
                 mFragment = new HomeFragment();
                 break;
             case R.id.nav_add:
-                mFragment = new AddStudentFragment();
+                mFragment = new StudentAddFragment();
                 break;
             case R.id.nav_student_list:
                 mFragment = new StudentListFragment();
@@ -126,7 +132,7 @@ public class MainActivity extends AppCompatActivity
                 mFragment = new CourseListFragment();
                 break;
             case R.id.nav_add_course:
-                mFragment = new AddCourseFragment();
+                mFragment = new CourseAddFragment();
                 break;
             default:
                 break;
