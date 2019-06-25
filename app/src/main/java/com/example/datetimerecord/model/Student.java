@@ -15,6 +15,7 @@ public class Student implements Parcelable {
     @NonNull
     @PrimaryKey(autoGenerate = true)
     private int t_id;
+
     @ColumnInfo(name = "name")
     private String name;
     @ColumnInfo(name = "course")
@@ -29,13 +30,11 @@ public class Student implements Parcelable {
     private String timestamp;
     @ColumnInfo(name = "remaining")
     private int remaining;
-
     //timein hour and minute
     @ColumnInfo(name = "timein_hour")
     private int timein_hour;
     @ColumnInfo(name = "timein_minute")
     private int timein_minute;
-
     //timeout hour and minute
     @ColumnInfo(name = "timeout_hour")
     private int timeout_hour;
@@ -43,6 +42,16 @@ public class Student implements Parcelable {
     private int timeout_minute;
 
     public Student(){}
+
+
+    @Ignore
+    public Student(String name, String course, String email, String contact, String address) {
+        this.name = name;
+        this.course = course;
+        this.email = email;
+        this.contact = contact;
+        this.address = address;
+    }
 
     @Ignore
     public Student(String name, String course, String email, String contact, String address, String timestamp) {
@@ -54,14 +63,7 @@ public class Student implements Parcelable {
         this.timestamp = timestamp;
     }
 
-    @Ignore
-    public Student(String name, String course, String email, String contact, String address) {
-        this.name = name;
-        this.course = course;
-        this.email = email;
-        this.contact = contact;
-        this.address = address;
-    }
+
 
     @Ignore
     public Student(String name, String course, String email, String contact, String address, String timestamp, int remaining) {
@@ -74,33 +76,21 @@ public class Student implements Parcelable {
         this.remaining = remaining;
     }
 
-
-    protected Student(Parcel in) {
-        t_id = in.readInt();
-        name = in.readString();
-        course = in.readString();
-        email = in.readString();
-        contact = in.readString();
-        address = in.readString();
-        timestamp = in.readString();
-        remaining = in.readInt();
-        timein_hour = in.readInt();
-        timein_minute = in.readInt();
-        timeout_hour = in.readInt();
-        timeout_minute = in.readInt();
+    public Student(@NonNull String name, @NonNull String course, @NonNull String email, @NonNull String contact,
+                   @NonNull String address, @NonNull String timestamp, int remaining, int timein_hour, int timein_minute,
+                   int timeout_hour, int timeout_minute) {
+        this.name = name;
+        this.course = course;
+        this.email = email;
+        this.contact = contact;
+        this.address = address;
+        this.timestamp = timestamp;
+        this.remaining = remaining;
+        this.timein_hour = timein_hour;
+        this.timein_minute = timein_minute;
+        this.timeout_hour = timeout_hour;
+        this.timeout_minute = timeout_minute;
     }
-
-    public static final Creator<Student> CREATOR = new Creator<Student>() {
-        @Override
-        public Student createFromParcel(Parcel in) {
-            return new Student(in);
-        }
-
-        @Override
-        public Student[] newArray(int size) {
-            return new Student[size];
-        }
-    };
 
     public int getRemaining() {
         return remaining;
@@ -217,12 +207,42 @@ public class Student implements Parcelable {
                 '}';
     }
 
+    @Ignore
+    protected Student(Parcel in) {
+        t_id = in.readInt();
+        name = in.readString();
+        course = in.readString();
+        email = in.readString();
+        contact = in.readString();
+        address = in.readString();
+        timestamp = in.readString();
+        remaining = in.readInt();
+        timein_hour = in.readInt();
+        timein_minute = in.readInt();
+        timeout_hour = in.readInt();
+        timeout_minute = in.readInt();
+    }
 
+    @Ignore
+    public static final Creator<Student> CREATOR = new Creator<Student>() {
+        @Override
+        public Student createFromParcel(Parcel in) {
+            return new Student(in);
+        }
+
+        @Override
+        public Student[] newArray(int size) {
+            return new Student[size];
+        }
+    };
+
+    @Ignore
     @Override
     public int describeContents() {
         return 0;
     }
 
+    @Ignore
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(t_id);

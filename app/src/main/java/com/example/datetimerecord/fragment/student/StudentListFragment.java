@@ -32,20 +32,35 @@ public class StudentListFragment extends Fragment implements StudentRecyclerAdap
     private StudentRecyclerAdapter mAdapter;
     private StudentViewModel mStudentViewModel;
 
-    public StudentListFragment(){}
+    public StudentListFragment() {
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.student_list_fragment,container,false);
+        View view = inflater.inflate(R.layout.student_list_fragment, container, false);
         mRecyclerView = view.findViewById(R.id.student_recyclerView);
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setHasFixedSize(true);
         mAdapter = new StudentRecyclerAdapter();
         mAdapter.setOnStudentClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
         mStudentViewModel = ViewModelProviders.of(this).get(StudentViewModel.class);
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mStudentViewModel.getmAllStudents().observe(getViewLifecycleOwner(), new Observer<List<Student>>() {
+            @Override
+            public void onChanged(List<Student> students) {
+                mAdapter.setmStudentList(students);
+            }
+        });
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
@@ -54,64 +69,53 @@ public class StudentListFragment extends Fragment implements StudentRecyclerAdap
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
-                if(position!=RecyclerView.NO_POSITION) {
+                if (position != RecyclerView.NO_POSITION) {
                     mStudentViewModel.delete(mAdapter.getNoteAt(position));
                     Toast.makeText(getActivity(), "Student successfully deleted", Toast.LENGTH_SHORT).show();
                 }
             }
         }).attachToRecyclerView(mRecyclerView);
-
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        mStudentViewModel.getmAllStudents().observe(getViewLifecycleOwner(), new Observer<List<Student>>() {
-            @Override
-            public void onChanged(List<Student> students) {
-                mAdapter.setmStudentList(students);
-            }
-        });
     }
 
     @Override
     public void onClick(Student student) {
-        if(listener != null){
+        if (listener != null) {
             listener.onClicklist(student);
         }
     }
 
     @Override
     public void onLongClick(Student student) {
-        if(listener != null){
+        if (listener != null) {
             listener.onLongClick(student);
         }
     }
+
     private OnStudentClickListListener listener;
-    public interface OnStudentClickListListener{
+    public interface OnStudentClickListListener {
         void onClicklist(Student student);
         void onLongClick(Student student);
     }
-    public void setOnStudentClickListListener(OnStudentClickListListener listener){
+
+
+    public void setOnStudentClickListListener(OnStudentClickListListener listener) {
         this.listener = listener;
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if(context instanceof OnStudentClickListListener){
+        if (context instanceof OnStudentClickListListener) {
             listener = (OnStudentClickListListener) getActivity();
-        }else{
-            throw new RuntimeException(context.toString()+" must implement OnStudentClickListListener");
+        } else {
+            throw new RuntimeException(context.toString() + " must implement OnStudentClickListListener");
         }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        if(listener!=null) {
+        if (listener != null) {
             listener = null;
         }
     }

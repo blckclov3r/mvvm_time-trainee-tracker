@@ -85,7 +85,7 @@ public class StudentUpdateFragment extends Fragment {
                         Log.d(COMMON_TAG,TAG+" x: "+x);
                         Student student = getArguments().getParcelable("selected_student");
                         if(x.equals(student.getCourse())){
-                            Log.d(COMMON_TAG,TAG+" x equal: "+x+", student course: "+student.getCourse());
+                            Log.d(COMMON_TAG,TAG+" x equal: "+x+", mStudent course: "+student.getCourse());
                             Log.d(COMMON_TAG,TAG+" mCoursePos: "+ mCoursePos);
                             mCourse_spinner.setSelection(mCoursePos);
                             break;

@@ -1,6 +1,8 @@
 package com.example.datetimerecord.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.adapter.CourseRecyclerAdapter;
 import com.example.datetimerecord.fragment.course.CourseAddFragment;
@@ -11,11 +13,14 @@ import com.example.datetimerecord.fragment.course.CourseListFragment;
 import com.example.datetimerecord.fragment.HomeFragment;
 import com.example.datetimerecord.fragment.student.StudentDetailFragment;
 import com.example.datetimerecord.fragment.student.StudentListFragment;
+import com.example.datetimerecord.fragment.student.StudentTimeUpdateFragment;
 import com.example.datetimerecord.fragment.student.StudentUpdateFragment;
 import com.example.datetimerecord.model.Course;
 import com.example.datetimerecord.model.Student;
 import com.example.datetimerecord.viewmodel.CourseViewModel;
 import com.google.android.material.navigation.NavigationView;
+
+import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -26,6 +31,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -33,11 +39,10 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, CourseListFragment.OnCourseListFragmentListener,
-        StudentListFragment.OnStudentClickListListener {
+        StudentListFragment.OnStudentClickListListener, StudentDetailFragment.setOnUpdateListener {
 
     //vars
     private FragmentManager mFragmentManager;
-    private CourseViewModel mCourseViewModel;
     private Fragment mFragment = null;
 
     //component
@@ -58,25 +63,29 @@ public class MainActivity extends AppCompatActivity
         mFragmentManager = getSupportFragmentManager();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        if (savedInstanceState == null) {
-            mFragment = new HomeFragment();
-            mToolbar.setTitle("Trainee Time Tracker");
-            FragmentTransaction ft = mFragmentManager.beginTransaction();
-            ft.replace(R.id.main_frameLayout, mFragment).commit();
-            navigationView.setCheckedItem(R.id.nav_home);
-        }
-
-        mCourseViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
-        mCourseViewModel.getAllCourse().observe(this, new Observer<List<Course>>() {
-            @Override
-            public void onChanged(List<Course> courses) {
-                new CourseRecyclerAdapter().setCourseList(courses);
-            }
-        });
+        mToolbar.setTitle("Trainee Time Tracker");
 
         //course list listener
         CourseListFragment courseListFragment = new CourseListFragment();
+        StudentListFragment studentListFragment = new StudentListFragment();
         courseListFragment.setOnCourseListFragmentListener(this);
+        studentListFragment.setOnStudentClickListListener(this);
+
+
+        if (savedInstanceState == null) {
+            mFragment = new HomeFragment();
+            FragmentTransaction ft = mFragmentManager.beginTransaction();
+            ft.replace(R.id.main_frameLayout, mFragment).commit();
+            navigationView.setCheckedItem(R.id.nav_home);
+
+        }else{
+            if (mFragment != null) {
+                for (int i = 0; i < mFragmentManager.getBackStackEntryCount(); i++) {
+                    mFragmentManager.popBackStackImmediate();
+                }
+            }
+        }
+
     }
 
     @Override
@@ -85,7 +94,7 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            if(mFragmentManager.getBackStackEntryCount()>0) {
+            if (mFragmentManager.getBackStackEntryCount() > 0 && mFragment != null) {
                 super.onBackPressed();
             }
         }
@@ -100,20 +109,13 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -141,7 +143,7 @@ public class MainActivity extends AppCompatActivity
             FragmentTransaction ft = mFragmentManager.beginTransaction();
             ft.replace(R.id.main_frameLayout, mFragment);
             for (int i = 0; i < mFragmentManager.getBackStackEntryCount(); i++) {
-                getSupportFragmentManager().popBackStackImmediate();
+                mFragmentManager.popBackStackImmediate();
             }
             ft.commit();
         }
@@ -155,67 +157,77 @@ public class MainActivity extends AppCompatActivity
     //COURSE LIST
     @Override
     public void OnCourseListFragment(Course course) {
-        mFragment = CourseDetailFragment.newInstance(course);
         if (mFragment != null) {
-            FragmentTransaction ft = mFragmentManager.beginTransaction();
-            ft.replace(R.id.main_frameLayout, mFragment);
-            ft.addToBackStack(null);
             for (int i = 0; i < mFragmentManager.getBackStackEntryCount(); i++) {
                 mFragmentManager.popBackStackImmediate();
             }
-            ft.commit();
         }
+        mFragment = CourseDetailFragment.newInstance(course);
+        FragmentTransaction ft = mFragmentManager.beginTransaction();
+        ft.replace(R.id.main_frameLayout, mFragment);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 
     @Override
     public void OnLongClickCourseListFragment(Course course) {
-        mFragment = CourseUpdateFragment.newInstance(course);
         if (mFragment != null) {
-            FragmentTransaction ft = mFragmentManager.beginTransaction();
-            ft.replace(R.id.main_frameLayout, mFragment);
-            ft.addToBackStack(null);
-            for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
-                getSupportFragmentManager().popBackStackImmediate();
+            for (int i = 0; i < mFragmentManager.getBackStackEntryCount(); i++) {
+                mFragmentManager.popBackStackImmediate();
             }
-            ft.commit();
         }
-    }
+        mFragment = CourseUpdateFragment.newInstance(course);
+        FragmentTransaction ft = mFragmentManager.beginTransaction();
+        ft.replace(R.id.main_frameLayout, mFragment);
+        ft.addToBackStack(null);
+        ft.commit();
 
+    }
 
 
     //STUDENT LIST
     @Override
     public void onClicklist(Student student) {
-        mFragment = StudentDetailFragment.newInstance(student);
-        if(mFragment!=null){
-            FragmentTransaction ft = mFragmentManager.beginTransaction();
-            ft.replace(R.id.main_frameLayout, mFragment);
-            ft.addToBackStack(null);
-            for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
-                getSupportFragmentManager().popBackStackImmediate();
+        if (mFragment != null) {
+            for (int i = 0; i < mFragmentManager.getBackStackEntryCount(); i++) {
+                mFragmentManager.popBackStackImmediate();
             }
-            ft.commit();
         }
+        mFragment = StudentDetailFragment.newInstance(student);
+        FragmentTransaction ft = mFragmentManager.beginTransaction();
+        ft.replace(R.id.main_frameLayout, mFragment);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 
     @Override
     public void onLongClick(Student student) {
-        mFragment = StudentUpdateFragment.newInstance(student);
-        if(mFragment!=null){
-            FragmentTransaction ft = mFragmentManager.beginTransaction();
-            ft.replace(R.id.main_frameLayout, mFragment);
-            ft.addToBackStack(null);
-            for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
-                getSupportFragmentManager().popBackStackImmediate();
+        if (mFragment != null) {
+            for (int i = 0; i < mFragmentManager.getBackStackEntryCount(); i++) {
+                mFragmentManager.popBackStackImmediate();
             }
-            ft.commit();
         }
+        mFragment = StudentUpdateFragment.newInstance(student);
+        FragmentTransaction ft = mFragmentManager.beginTransaction();
+        ft.replace(R.id.main_frameLayout, mFragment);
+        ft.addToBackStack(null);
+        ft.commit();
+
     }
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mCourseViewModel = null;
+    }
+
+    @Override
+    public void onStudentDetailFragment(Student student) {
+        mFragment = StudentTimeUpdateFragment.newInstance(student);
+        FragmentTransaction ft = mFragmentManager.beginTransaction();
+        ft.replace(R.id.main_frameLayout, mFragment);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 
 }

@@ -59,10 +59,10 @@ public abstract class MyDatabase extends RoomDatabase {
         }
         @Override
         protected Void doInBackground(Void... courses) {
-            courseDao.insert(new Course("Java",300,"Java Programming language"));
-            courseDao.insert(new Course("PHP",200,"PHP programming language"));
-            courseDao.insert(new Course("C++",400,"c++ Programming language"));
-            courseDao.insert(new Course("C#",400,"C# Programming language"));
+            courseDao.insert(new Course("Java",300,"Java Programming language",0,0,0,0));
+            courseDao.insert(new Course("PHP",200,"PHP programming language",0,0,0,0));
+            courseDao.insert(new Course("C++",400,"c++ Programming language",0,0,0,0));
+            courseDao.insert(new Course("C#",400,"C# Programming language",0,0,0,0));
             return null;
         }
     }
@@ -74,9 +74,12 @@ public abstract class MyDatabase extends RoomDatabase {
         }
         @Override
         protected Void doInBackground(Void... voids) {
-            studentDao.insert(new Student("Aljun Abrenica","Java","aljun_abrenica@yahoo.com","09555076271","???","???",100));
-            studentDao.insert(new Student("Nujla Acinerba","C++","blckclov3r@gmail.com","09555076271","???","???",200));
-            studentDao.insert(new Student("Junz D Silenthacker","C#","blckclov3r@gmail.com","09555076271","???","???",300));
+            studentDao.insert(new Student("Aljun Abrenica","Java","aljun_abrenica@yahoo.com",
+                    "09555076271","???","???",100,1,0,3,0));
+            studentDao.insert(new Student("Nujla Acinerba","C++","blckclov3r@gmail.com",
+                    "09555076271","???","???",200,3,0,6,0));
+            studentDao.insert(new Student("Junz D Silenthacker","C#","blckclov3r@gmail.com",
+                    "09555076271","???","???",300,6,0,9,0));
             return null;
         }
     }

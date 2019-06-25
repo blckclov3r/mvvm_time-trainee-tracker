@@ -2,10 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginStart="7dp"
-    android:layout_marginEnd="7dp"
     android:gravity="center_horizontal"
-    android:layout_marginTop="7dp"
     android:orientation="vertical">
 
 
@@ -37,13 +34,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:text="Id: "
+                    android:text="Id:"
                     android:textColor="@color/textColor"
                     android:layout_width="wrap_content"
                     android:textSize="16sp"
                     android:layout_height="wrap_content" />
                 <TextView
-                    android:text="1"
+                    android:text="null"
                     android:textSize="16sp"
                     android:layout_marginStart="4dp"
                     android:id="@+id/id_textView"
@@ -190,43 +187,128 @@
                     android:id="@+id/remaining_textView"
                     android:textColor="@color/textColor"
                     android:layout_marginStart="4dp"
+                    android:textSize="16sp"
                     android:text="null"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
 
+
             <LinearLayout
-                android:layout_marginTop="7dp"
-                android:orientation="horizontal"
-                android:gravity="center_horizontal"
-                android:textAlignment="center"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/timeIn_button"
+                    android:layout_width="42dp"
+                    android:layout_height="40dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:src="@drawable/ic_timer" />
+
                 <TextView
-                    android:text="Timestamp:"
-                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/textColor"
+                    android:text="From: "
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/timeIn_hour_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:textColor="@color/textColor"
+                    android:text="00"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" : "
+                    android:textColor="@color/textColor"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/timeIn_minute_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textColor"
+                    android:text="00"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/timein_term_textView"
+                    android:text="am"
+                    android:layout_marginStart="4dp"
                     android:textColor="@color/textColor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:layout_marginStart="10dp"
+                    android:id="@+id/timeOut_button"
+                    android:layout_width="42dp"
+                    android:layout_height="40dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:src="@drawable/ic_timer" />
+
                 <TextView
-                    android:id="@+id/timestamp_textView"
-                    android:text="null"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/textColor"
+                    android:text="To: "
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/timeOut_hour_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textColor"
+                    android:layout_marginStart="7dp"
+                    android:text="00"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/textColor"
+                    android:layout_height="wrap_content"
+                    android:text=" : "
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/timeOut_minute_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textColor"
+                    android:text="00"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/timeout_term_textView"
+                    android:text="am"
                     android:textColor="@color/textColor"
                     android:layout_marginStart="4dp"
-                    android:textSize="16sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
 
             <Button
-                android:id="@+id/timeUpdate_button"
-                android:layout_width="wrap_content"
+                android:id="@+id/time_elapse_button"
+                android:text="Update"
+                android:textAllCaps="false"
                 android:layout_gravity="center_horizontal"
-                android:text="Set"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="12dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content" />
+
+
         </LinearLayout>
 
 

@@ -180,7 +180,7 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
                     if(timeout_hour.equals("12")){
                         timeout_hour = "0";
                     }else{
-                        timeout_hour = mTimeIn_hour_tv.getText().toString().trim();
+                        timeout_hour = mTimeOut_hour_tv.getText().toString().trim();
                     }
                 }else{
                     if(timeout_hour.equals("12")){
@@ -225,11 +225,11 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
                 }
 
                 mCourse = new Course(course, time, desc,
-                        Integer.parseInt(timein_hour),Integer.parseInt(timein_minute),
-                        Integer.parseInt(timeout_hour),Integer.parseInt(timeout_minute));
+                        Integer.parseInt(timein_hour),Integer.parseInt(timein_minute), Integer.parseInt(timeout_hour),Integer.parseInt(timeout_minute));
                 Log.d(COMMON_TAG,TAG+" mCourse: "+mCourse.toString());
                 mViewModel.insert(mCourse);
                 setClear();
+                Log.d(COMMON_TAG,TAG+" course: "+course.toString());
                 Toast.makeText(getActivity(), "Course successfully created", Toast.LENGTH_SHORT).show();
             }
             break;
@@ -394,7 +394,6 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mViewModel = null;
         course_et = null;
         time_et = null;
         description_et = null;

@@ -1,6 +1,7 @@
 package com.example.datetimerecord.fragment.student;
 
 import android.annotation.SuppressLint;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,7 +46,7 @@ public class StudentAddFragment extends Fragment implements View.OnClickListener
 
     public StudentAddFragment(){}
 
-    private Course mCourse;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -89,11 +90,14 @@ public class StudentAddFragment extends Fragment implements View.OnClickListener
         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
         String dateFormat = simpleDateFormat.format(new Date());
 
-        mCourse = mCourseViewModel.getCourseTime(course);
-        int time = mCourse.getCourse_time();
+        Course lCourse = mCourseViewModel.getCourseTime(course);
+        int time = lCourse.getCourse_time();
+        int timein_hour = lCourse.getTimein_hour();
+        int timein_minute = lCourse.getTimein_minute();
+        int timeout_hour = lCourse.getTimeout_hour();
+        int timeout_minute = lCourse.getTimeout_minute();
 
-        Log.d(COMMON_TAG,TAG+" dataFormat: "+dateFormat);
-        Student student = new Student(name,course,email,contact,address,dateFormat,time);
+        Student student = new Student(name,course,email,contact,address,dateFormat,time,timein_hour,timein_minute,timeout_hour,timeout_minute);
         mStudentViewModel.insert(student);
         Log.d(COMMON_TAG,TAG+" onCLick, status: "+student.toString());
         Toast.makeText(getActivity(), "Student successfully created", Toast.LENGTH_LONG).show();

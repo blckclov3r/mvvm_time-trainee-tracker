@@ -21,13 +21,11 @@ public class Course implements Parcelable {
     private int course_time;
     @ColumnInfo(name = "description")
     private String description;
-
     //timein hour and minute
     @ColumnInfo(name = "timein_hour")
     private int timein_hour;
     @ColumnInfo(name = "timein_minute")
     private int timein_minute;
-
     //timeout hour and minute
     @ColumnInfo(name = "timeout_hour")
     private int timeout_hour;
@@ -43,6 +41,7 @@ public class Course implements Parcelable {
         this.description = description;
     }
 
+    @Ignore
     public Course(String course, int course_time, String description, int timein_hour, int timein_minute, int timeout_hour, int timeout_minute) {
         this.course = course;
         this.course_time = course_time;

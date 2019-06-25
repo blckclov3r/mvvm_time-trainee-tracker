@@ -25,11 +25,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class CourseListFragment extends Fragment implements CourseRecyclerAdapter.OnCourseClickListener {
+
     private static final String TAG = "CourseListFragment";
     public static final String COMMON_TAG = "mAppLog";
+
     private RecyclerView mRecyclerView;
     private CourseRecyclerAdapter mCourseAdapter;
     private CourseViewModel mCourseViewModel;
+    private OnCourseListFragmentListener mListFragmentListener;
 
     public CourseListFragment(){}
 
@@ -45,22 +48,10 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
         mCourseAdapter.setOnCourseClickListener(this);
         mRecyclerView.setAdapter(mCourseAdapter);
         mCourseViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                int position = viewHolder.getAdapterPosition();
-                mCourseViewModel.delete(mCourseAdapter.getNoteAt(position));
-                Toast.makeText(getActivity(), "Course successfully deleted", Toast.LENGTH_SHORT).show();
-            }
-        }).attachToRecyclerView(mRecyclerView);
-
         return view;
     }
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -72,14 +63,22 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
                 mCourseAdapter.setCourseList(courses);
             }
         });
-
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                mCourseViewModel.delete(mCourseAdapter.getNoteAt(position));
+                Toast.makeText(getActivity(), "Course successfully deleted", Toast.LENGTH_SHORT).show();
+            }
+        }).attachToRecyclerView(mRecyclerView);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d(COMMON_TAG,TAG+" onStart invoked");
-    }
+
+
 
     @Override
     public void onDestroy() {
@@ -93,25 +92,25 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
 
     @Override
     public void onCourseClick(Course course) {
-        listFragmentListener.OnCourseListFragment(course);
+        mListFragmentListener.OnCourseListFragment(course);
     }
 
     @Override
     public void onCourseLongClick(Course course) {
-       listFragmentListener.OnLongClickCourseListFragment(course);
+       mListFragmentListener.OnLongClickCourseListFragment(course);
     }
 
     public interface OnCourseListFragmentListener{
         void OnCourseListFragment(Course course);
         void OnLongClickCourseListFragment(Course course);
     }
-    private OnCourseListFragmentListener listFragmentListener;
+
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if(context instanceof OnCourseListFragmentListener){
-            listFragmentListener = (OnCourseListFragmentListener) context;
+            mListFragmentListener = (OnCourseListFragmentListener) context;
         }else{
             throw new RuntimeException(context.toString()+" must implement OnCourseListFragmentListener");
         }
@@ -121,12 +120,12 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
     public void onDetach() {
         super.onDetach();
         Log.d(COMMON_TAG,TAG+" onDetach");
-        if(listFragmentListener != null) {
-            listFragmentListener = null;
+        if(mListFragmentListener != null) {
+            mListFragmentListener = null;
         }
     }
 
     public void setOnCourseListFragmentListener(OnCourseListFragmentListener listener){
-        listFragmentListener = listener;
+        mListFragmentListener = listener;
     }
 }

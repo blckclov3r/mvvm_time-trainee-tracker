@@ -37,6 +37,10 @@ public class StudentRepository {
 
     }
 
+    public void elapse_time(int id,int remaining){
+        new TimeElapseAsyncTask(mStudentDao).execute(id,remaining);
+    }
+
     public LiveData<List<Student>> getmAllStudents(){
         return mAllStudents;
     }
@@ -71,7 +75,6 @@ public class StudentRepository {
 
     private static class DeleteStudentAsyncTask extends AsyncTask<Student,Void,Void>{
         private StudentDao studentDao;
-
         public DeleteStudentAsyncTask(StudentDao studentDao) {
             this.studentDao = studentDao;
         }
@@ -79,6 +82,21 @@ public class StudentRepository {
         @Override
         protected Void doInBackground(Student... students) {
             studentDao.delete(students[0]);
+            return null;
+        }
+    }
+
+    private static class TimeElapseAsyncTask extends AsyncTask<Integer,Void,Void>{
+        private StudentDao studentDao;
+
+        public TimeElapseAsyncTask(StudentDao studentDao) {
+            this.studentDao = studentDao;
+        }
+
+        @Override
+        protected Void doInBackground(Integer... integers) {
+            //integers[0] == id && integers[1] == remaining
+            studentDao.elapse_result(integers[0],integers[1]);
             return null;
         }
     }

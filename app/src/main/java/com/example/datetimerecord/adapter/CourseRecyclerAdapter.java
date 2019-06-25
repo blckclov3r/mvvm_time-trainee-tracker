@@ -75,7 +75,7 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
         public void onClick(View v) {
             Log.d(COMMON_TAG,TAG+" onClick");
             int position = getAdapterPosition();
-            if(listener!=null && position != RecyclerView.NO_POSITION) {
+            if(listener!=null ) {
                 Course course = courseList.get(position);
                 listener.onCourseClick(course);
             }else{
@@ -87,7 +87,7 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
         public boolean onLongClick(View v) {
             Log.d(COMMON_TAG,TAG+" onLongClick");
             int position = getAdapterPosition();
-            if(listener!=null && position != RecyclerView.NO_POSITION){
+            if(listener!=null ){
                 Course course = courseList.get(position);
                 listener.onCourseLongClick(course);
                 return true;

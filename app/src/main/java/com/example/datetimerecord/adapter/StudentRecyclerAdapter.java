@@ -22,29 +22,31 @@ public class StudentRecyclerAdapter extends RecyclerView.Adapter<StudentRecycler
 
     private List<Student> mStudentList = new ArrayList<>();
     private OnStudentClickListener mListener;
-    public interface OnStudentClickListener{
+
+    public interface OnStudentClickListener {
         void onClick(Student student);
+
         void onLongClick(Student student);
     }
 
-    public void setOnStudentClickListener(OnStudentClickListener listener){
+    public void setOnStudentClickListener(OnStudentClickListener listener) {
         mListener = listener;
     }
 
-    public void setmStudentList(List<Student> mStudentList){
+    public void setmStudentList(List<Student> mStudentList) {
         this.mStudentList = mStudentList;
         notifyDataSetChanged();
     }
 
-    public Student getNoteAt(int position){
+    public Student getNoteAt(int position) {
         return mStudentList.get(position);
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.student_list_item,parent,false);
-        return new ViewHolder(view,mListener);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.student_list_item, parent, false);
+        return new ViewHolder(view, mListener);
     }
 
     @Override
@@ -59,9 +61,10 @@ public class StudentRecyclerAdapter extends RecyclerView.Adapter<StudentRecycler
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-        private TextView studentId_tv,name_tv,course_tv;
+        private TextView studentId_tv, name_tv, course_tv;
         private OnStudentClickListener listener;
-        public ViewHolder(@NonNull View itemView,OnStudentClickListener listener) {
+
+        public ViewHolder(@NonNull View itemView, OnStudentClickListener listener) {
             super(itemView);
             this.listener = listener;
             studentId_tv = itemView.findViewById(R.id.student_id_textView);
@@ -71,7 +74,7 @@ public class StudentRecyclerAdapter extends RecyclerView.Adapter<StudentRecycler
             itemView.setOnLongClickListener(this);
         }
 
-        public void bind(Student student){
+        public void bind(Student student) {
             studentId_tv.setText(String.valueOf(student.getT_id()));
             name_tv.setText(student.getName());
             course_tv.setText(student.getCourse());
@@ -80,21 +83,16 @@ public class StudentRecyclerAdapter extends RecyclerView.Adapter<StudentRecycler
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-            if(listener!=null && position != RecyclerView.NO_POSITION){
-                Student student = mStudentList.get(position);
-                listener.onClick(student);
-            }
+            Student student = mStudentList.get(position);
+            listener.onClick(student);
         }
 
         @Override
         public boolean onLongClick(View v) {
             int position = getAdapterPosition();
-            if(listener!=null && position != RecyclerView.NO_POSITION){
-                Student student = mStudentList.get(position);
-                listener.onLongClick(student);
-                return true;
-            }
-            return false;
+            Student student = mStudentList.get(position);
+            listener.onLongClick(student);
+            return true;
         }
     }
 }

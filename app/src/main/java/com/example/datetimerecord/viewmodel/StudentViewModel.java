@@ -15,6 +15,7 @@ public class StudentViewModel extends AndroidViewModel {
     private StudentRepository mRepository;
     private LiveData<List<Student>> mAllStudents;
 
+
     public StudentViewModel(@NonNull Application application) {
         super(application);
         mRepository = new StudentRepository(application);
@@ -35,4 +36,9 @@ public class StudentViewModel extends AndroidViewModel {
     public LiveData<List<Student>> getmAllStudents(){
         return mAllStudents;
     }
+
+    public void time_elapse(int id,int remaining){
+        mRepository.elapse_time(id,remaining);
+    }
+
 }

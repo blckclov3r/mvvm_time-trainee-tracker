@@ -21,25 +21,23 @@ public class CourseViewModel extends AndroidViewModel {
         allCourse = mRepository.getmAllCourse();
     }
 
-    public void insert(Course course){
+    public void insert(Course course) {
         mRepository.insert(course);
     }
 
-    public void update(Course course){
+    public void update(Course course) {
         mRepository.update(course);
     }
 
-    public void delete(Course course){
+    public void delete(Course course) {
         mRepository.delete(course);
     }
 
-    public LiveData<List<Course>> getAllCourse(){
+    public LiveData<List<Course>> getAllCourse() {
         return allCourse;
     }
 
-    public Course getCourseTime(String course){
-        synchronized (CourseViewModel.class) {
-            return mRepository.getCourseTime(course);
-        }
+    public Course getCourseTime(String course) {
+        return mRepository.getCourseTime(course);
     }
 }

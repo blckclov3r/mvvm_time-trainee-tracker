@@ -1,10 +1,14 @@
 package com.example.datetimerecord.fragment.student;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.model.Student;
@@ -14,8 +18,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class StudentDetailFragment extends Fragment {
-
+    private static final String COMMON_TAG = "mAppLog";
+    private static final String TAG = "StudentDetailFragment";
     private TextView name_tv, course_tv, email_tv, contact_tv, address_tv, timestamp_tv, id_tv,remaining_tv;
+    private Button timeUpdate_btn;
     public StudentDetailFragment() {
     }
 
@@ -39,20 +45,60 @@ public class StudentDetailFragment extends Fragment {
         address_tv = view.findViewById(R.id.address_textView);
         timestamp_tv = view.findViewById(R.id.timestamp_textView);
         remaining_tv = view.findViewById(R.id.remaining_textView);
+        timeUpdate_btn = view.findViewById(R.id.timeUpdate_button);
 
-        if(getArguments()!=null){
+        timeUpdate_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(getArguments() != null) {
+                    Student student = getArguments().getParcelable("selected_student");
+                    listener.onStudentDetailFragment(student);
+                }else{
+                    Log.d(COMMON_TAG,TAG+" timeUpdate_btn: something wen't wrong");
+                }
+            }
+        });
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (getArguments() != null) {
             Student student = getArguments().getParcelable("selected_student");
+            Log.d(COMMON_TAG, TAG + " student: " + student.toString());
             id_tv.setText(String.valueOf(student.getT_id()));
-            name_tv.setText(String.valueOf(student.getName()));
-            course_tv.setText(String.valueOf(student.getCourse()));
+            name_tv.setText(student.getName());
+            course_tv.setText(student.getCourse());
             email_tv.setText(student.getEmail());
             contact_tv.setText(String.valueOf(student.getContact()));
-            address_tv.setText(String.valueOf(student.getAddress()));
-            timestamp_tv.setText(String.valueOf(student.getTimestamp()));
+            address_tv.setText(student.getAddress());
+            timestamp_tv.setText(student.getTimestamp());
             remaining_tv.setText(String.valueOf(student.getRemaining()));
         }
+    }
 
 
-        return view;
+    private setOnUpdateListener listener;
+    public interface setOnUpdateListener{
+        void onStudentDetailFragment(Student student);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if(context instanceof setOnUpdateListener){
+            listener = (setOnUpdateListener) getActivity();
+        }else{
+            throw new RuntimeException(context.toString()+" must implement setOnUpdateListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if(listener!=null){
+            listener = null;
+        }
     }
 }

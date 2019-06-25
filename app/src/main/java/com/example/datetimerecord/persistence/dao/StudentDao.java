@@ -24,4 +24,7 @@ public interface StudentDao {
     @Query("SELECT * FROM student_table ORDER BY name ASC")
     LiveData<List<Student>> getAllTrainee();
 
+    @Query("UPDATE student_table SET remaining =:remaining WHERE t_id=:id")
+    void elapse_result(int id,int remaining);
+
 }
