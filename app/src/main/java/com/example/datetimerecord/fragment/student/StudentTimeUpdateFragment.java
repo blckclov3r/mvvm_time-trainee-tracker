@@ -1,5 +1,6 @@
 package com.example.datetimerecord.fragment.student;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,11 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.model.Student;
 import com.example.datetimerecord.viewmodel.StudentViewModel;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -33,7 +34,9 @@ public class StudentTimeUpdateFragment extends Fragment {
     private Student mStudent;
 
     //vars
-    int mTimein_hour, mTimein_minute, mTimeout_hour, mTimeout_minute;
+    private int mStudentId;
+    private volatile int mTimein_hour, mTimein_minute, mTimeout_hour, mTimeout_minute;
+    private volatile int mElapseMinute, mRemaining, mElapseTime, mResult;
 
     public static StudentTimeUpdateFragment newInstance(Student student) {
         StudentTimeUpdateFragment fragment = new StudentTimeUpdateFragment();
@@ -66,9 +69,12 @@ public class StudentTimeUpdateFragment extends Fragment {
         mTimeout_term_tv = view.findViewById(R.id.timeout_term_textView);
 
         mStudentViewModel = ViewModelProviders.of(this).get(StudentViewModel.class);
-
-        if (getArguments().getParcelable("selected_student") != null) {
+        if (getArguments() != null) {
             mStudent = getArguments().getParcelable("selected_student");
+
+            assert mStudent != null;
+            mRemaining = mStudent.getRemaining();
+            mStudentId = mStudent.getT_id();
 
             id_tv.setText(String.valueOf(mStudent.getT_id()));
             name_tv.setText(mStudent.getName());
@@ -77,6 +83,7 @@ public class StudentTimeUpdateFragment extends Fragment {
             contact_tv.setText(mStudent.getContact());
             address_tv.setText(mStudent.getAddress());
             remaining_tv.setText(String.valueOf(mStudent.getRemaining()));
+            mElapseMinute = mStudent.getElapse_minute();
 
             mTimein_hour = mStudent.getTimein_hour();
             mTimeout_hour = mStudent.getTimeout_hour();
@@ -105,63 +112,207 @@ public class StudentTimeUpdateFragment extends Fragment {
                     setElapseTime(Integer.parseInt(timein_hour), mTimein_minute, Integer.parseInt(timeout_hour), mTimeout_minute);
                 }
             });
-
         }
         return view;
     }
 
+
     private void setElapseTime(int timein_hour, int timein_minute, int timeout_hour, int timeout_minute) {
+
         String timein_term = mTimein_term_tv.getText().toString().trim();
         String timeout_term = mTimeout_term_tv.getText().toString().trim();
-        int elapse_time = 0;
+        mElapseTime = 0;
+        mResult = 0;
+        int elapse_minute = 0;
         if (timein_term.equals("am") && timeout_term.equals("am")) {
-            if(timein_hour == timeout_hour){
-                Log.d(COMMON_TAG,TAG+" result: invalid");
+            if (timein_hour == timeout_hour) {
+                Log.d(COMMON_TAG, TAG + " result: invalid");
             }
-            if(timein_hour < timeout_hour){
-                elapse_time = timeout_hour - timein_hour;
+            if (timein_hour < timeout_hour) {
+                elapse_minute = timein_minute + timeout_minute;
+                mElapseMinute = mElapseMinute + elapse_minute;
+                if (mElapseMinute == 60) {
+                    mElapseMinute = 0;
+                    mElapseTime = (timeout_hour - timein_hour) + 1;
+                }
+                if (mElapseMinute > 60) {
+                    mElapseMinute = mElapseMinute - 60;
+                    mElapseTime = (timeout_hour - timein_hour) + 1;
+                }
+                if (mElapseMinute < 60) {
+                    mElapseMinute = mElapseMinute - 60;
+                    mElapseTime = (timeout_hour - timein_hour);
+                }
             }
-            if(timein_hour > timeout_hour){
-                elapse_time= ((24+timeout_hour)-(timein_hour));
+            if (timein_hour > timeout_hour) {
+                elapse_minute = timein_minute + timeout_minute;
+                mElapseMinute = mElapseMinute + elapse_minute;
+                if (mElapseMinute == 60) {
+                    mElapseMinute = 0;
+                    mElapseTime = ((24 + timeout_hour) - (timein_hour)) + 1;
+                }
+                if (mElapseMinute > 60) {
+                    mElapseMinute = mElapseMinute - 60;
+                    mElapseTime = ((24 + timeout_hour) - (timein_hour)) + 1;
+                }
+                if (mElapseMinute < 60) {
+                    mElapseTime = ((24 + timeout_hour) - (timein_hour));
+                }
+            }
+            Log.d(COMMON_TAG, TAG + " elapse_time: " + mElapseTime + ", elapse_minute: "
+                    + elapse_minute + ", mElapseMinute: " + mElapseMinute);
+        } else if (timein_term.equals("pm") && timeout_term.equals("pm")) {
+            if (timein_hour == timeout_hour) {
+                Log.d(COMMON_TAG, TAG + " result: invalid");
+            }
+            if (timein_hour < timeout_hour) {
+                elapse_minute = timein_minute + timeout_minute;
+                mElapseMinute = mElapseMinute + elapse_minute;
+                if (mElapseMinute == 60) {
+                    mElapseMinute = 0;
+                    mElapseTime = (timeout_hour - timein_hour) + 1;
+                }
+                if (mElapseMinute > 60) {
+                    mElapseMinute = mElapseMinute - 60;
+                    mElapseTime = (timeout_hour - timein_hour) + 1;
+                }
+                if (mElapseMinute < 60) {
+                    mElapseMinute = mElapseMinute - 60;
+                    mElapseTime = (timeout_hour - timein_hour);
+                }
+            }
+            if (timein_hour > timeout_hour) {
+                elapse_minute = timein_minute + timeout_minute;
+                mElapseMinute = mElapseMinute + elapse_minute;
+                if (mElapseMinute == 60) {
+                    mElapseMinute = 0;
+                    mElapseTime = ((24 + timeout_hour) - (timein_hour)) + 1;
+                }
+                if (mElapseMinute > 60) {
+                    mElapseMinute = mElapseMinute - 60;
+                    mElapseTime = ((24 + timeout_hour) - (timein_hour)) + 1;
+                }
+                if (mElapseMinute < 60) {
+                    mElapseTime = ((24 + timeout_hour) - (timein_hour));
+                }
+            }
+            Log.d(COMMON_TAG, TAG + " elapse_time: " + mElapseTime + ", elapse_minute: "
+                    + elapse_minute + ", mElapseMinute: " + mElapseMinute);
+        } else if (timein_term.equals("am") && timeout_term.equals("pm")) {
+            mElapseMinute = 0;
+            if (timein_hour == timeout_hour) {
+                elapse_minute = timein_minute + timeout_minute;
+                mElapseMinute = mElapseMinute + elapse_minute;
+                if (mElapseMinute == 60) {
+                    mElapseMinute = 0;
+                    mElapseTime = ((12 + timeout_hour) - (timein_hour)) + 1;
+                }
+                if (mElapseMinute > 60) {
+                    mElapseMinute = mElapseMinute - 60;
+                    mElapseTime = ((12 + timeout_hour) - (timein_hour)) + 1;
+                }
+                if (mElapseMinute < 60) {
+                    mElapseTime = ((12 + timeout_hour) - (timein_hour));
+                }
+            }
+            if (timein_hour < timeout_hour) {
+                elapse_minute = timein_minute + timeout_minute;
+                mElapseMinute = mElapseMinute + elapse_minute;
+                if (mElapseMinute == 60) {
+                    mElapseMinute = 0;
+                    mElapseTime = ((12 + timeout_hour) - (timein_hour)) + 1;
+                }
+                if (mElapseMinute > 60) {
+                    mElapseMinute = mElapseMinute - 60;
+                    mElapseTime = ((12 + timeout_hour) - (timein_hour)) + 1;
+                }
+                if (mElapseMinute < 60) {
+                    mElapseTime = ((12 + timeout_hour) - (timein_hour));
+                }
+            }
+            if (timein_hour > timeout_hour) {
+                elapse_minute = timein_minute + timeout_minute;
+                mElapseMinute = mElapseMinute + elapse_minute;
+                if (mElapseMinute == 60) {
+                    mElapseMinute = 0;
+                    mElapseTime = ((12 + timeout_hour) - (timein_hour)) + 1;
+                }
+                if (mElapseMinute > 60) {
+                    mElapseMinute = mElapseMinute - 60;
+                    mElapseTime = ((12 + timeout_hour) - (timein_hour)) + 1;
+                }
+                if (mElapseMinute < 60) {
+                    mElapseTime = ((12 + timeout_hour) - (timein_hour));
+                }
+            }
 
+            Log.d(COMMON_TAG, TAG + " elapse_time: " + mElapseTime + ", elapse_minute: "
+                    + elapse_minute + ", mElapseMinute: " + mElapseMinute);
+        } else if (timein_term.equals("pm") && timeout_term.equals("am")) {
+            if (timein_hour == timeout_hour) {
+                elapse_minute = timein_minute + timeout_minute;
+                mElapseMinute = mElapseMinute + elapse_minute;
+                if (mElapseMinute == 60) {
+                    mElapseMinute = 0;
+                    mElapseTime = ((12 + timeout_hour) - (timein_hour)) + 1;
+                }
+                if (mElapseMinute > 60) {
+                    mElapseMinute = mElapseMinute - 60;
+                    mElapseTime = ((12 + timeout_hour) - (timein_hour)) + 1;
+                }
+                if (mElapseMinute < 60) {
+                    mElapseTime = ((12 + timeout_hour) - (timein_hour));
+                }
             }
-            Log.d(COMMON_TAG,TAG+" result: "+elapse_time);
+            if (timein_hour < timeout_hour) {
+                elapse_minute = timein_minute + timeout_minute;
+                mElapseMinute = mElapseMinute + elapse_minute;
+                if (mElapseMinute == 60) {
+                    mElapseMinute = 0;
+                    mElapseTime = ((12 + timeout_hour) - (timein_hour)) + 1;
+                }
+                if (mElapseMinute > 60) {
+                    mElapseMinute = mElapseMinute - 60;
+                    mElapseTime = ((12 + timeout_hour) - (timein_hour)) + 1;
+                }
+                if (mElapseMinute < 60) {
+                    mElapseTime = ((12 + timeout_hour) - (timein_hour));
+                }
+            }
+            if (timein_hour > timeout_hour) {
+                elapse_minute = timein_minute + timeout_minute;
+                mElapseMinute = mElapseMinute + elapse_minute;
+                if (mElapseMinute == 60) {
+                    mElapseMinute = 0;
+                    mElapseTime = ((12 + timeout_hour) - (timein_hour)) + 1;
+                }
+                if (mElapseMinute > 60) {
+                    mElapseMinute = mElapseMinute - 60;
+                    mElapseTime = ((12 + timeout_hour) - (timein_hour)) + 1;
+                }
+                if (mElapseMinute < 60) {
+                    mElapseTime = ((12 + timeout_hour) - (timein_hour));
+                }
+            }
+            Log.d(COMMON_TAG, TAG + " elapse_time: " + mElapseTime + ", elapse_minute: "
+                    + elapse_minute + ", mElapseMinute: " + mElapseMinute);
         }
-        else if (timein_term.equals("pm") && timeout_term.equals("pm")){
-            if(timein_hour == timeout_hour){
-                Log.d(COMMON_TAG,TAG+" result: invalid");
-            }
-            if(timein_hour < timeout_hour){
-                elapse_time = timeout_hour - timein_hour;
-            }
-            if(timein_hour > timeout_hour){
-                elapse_time= ((24+timeout_hour)-(timein_hour));
 
-            }
-            Log.d(COMMON_TAG,TAG+" result: "+elapse_time);
+        mResult = mRemaining - mElapseTime;
+        if(mResult <= 0){
+            mResult = 0;
+            remaining_tv.setText(String.valueOf(mResult));
+            Log.d(COMMON_TAG,TAG+" mResult: "+mResult+", mRemaining: "+mRemaining+", mElapseTime: "+mElapseTime);
+            mStudentViewModel.time_elapse(mStudentId, mResult, mElapseMinute);
+        }else {
+            remaining_tv.setText(String.valueOf(mResult));
+            Toast.makeText(getActivity(), "Time Elapse: "+mElapseTime+" hr.", Toast.LENGTH_LONG).show();
+            Log.d(COMMON_TAG,TAG+" mResult: "+mResult+", mRemaining: "+mRemaining+", mElapseTime: "+mElapseTime);
+            mStudentViewModel.time_elapse(mStudentId, mResult, mElapseMinute);
+            elapse_btn.setEnabled(false);
+            elapse_btn.setClickable(false);
+            elapse_btn.setTextColor(Color.GRAY);
         }
-        else if(timein_term.equals("am") && timeout_term.equals("pm")){
-            if(timein_hour == timeout_hour){
-                elapse_time = ((12+timeout_hour)-(timein_hour));
-            }
-            if(timein_hour < timeout_hour){
-                elapse_time = ((12+timeout_hour)-(timein_hour));
-            }
-            if(timein_hour > timeout_hour){
-                elapse_time = ((12+timeout_hour)-(timein_hour));
-            }
-
-            Log.d(COMMON_TAG,TAG+" result: "+elapse_time);
-        }else if(timein_term.equals("pm") && timeout_term.equals("am")){
-            if(timein_hour == timeout_hour){
-                elapse_time = ((12+timeout_hour)-timein_hour);
-            }
-            if(timein_hour < timeout_hour){
-                elapse_time = ((12+timeout_hour)-(timein_hour));
-            }
-            Log.d(COMMON_TAG,TAG+" result: "+elapse_time);
-        }
-
     }
 
 

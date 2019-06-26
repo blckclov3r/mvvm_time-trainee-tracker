@@ -27,9 +27,14 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
         notifyDataSetChanged();
     }
 
-    public Course getNoteAt(int pos){
+    public Course getCourseAt(int pos){
         return courseList.get(pos);
     }
+
+    public void notifyCourse(){
+        notifyDataSetChanged();
+    }
+
 
     @NonNull
     @Override

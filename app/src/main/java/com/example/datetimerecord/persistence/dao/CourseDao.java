@@ -1,9 +1,7 @@
 package com.example.datetimerecord.persistence.dao;
 
 import com.example.datetimerecord.model.Course;
-
 import java.util.List;
-
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -26,5 +24,8 @@ public interface CourseDao {
     LiveData<List<Course>> getAllCourse();
 
     @Query("SELECT * FROM course_table WHERE course=:course LIMIT 1")
-    Course getCourseTime(String course);
+    Course getCourse(String course);
+
+    @Query("SELECT * FROM course_table")
+    List<Course> getCourse();
 }

@@ -37,7 +37,11 @@ public class CourseViewModel extends AndroidViewModel {
         return allCourse;
     }
 
-    public Course getCourseTime(String course) {
-        return mRepository.getCourseTime(course);
+    public Course getCourse(String course) {
+        return mRepository.getCourse(course);
+    }
+
+    public List<Course> getCourse(){
+        return mRepository.getCourse();
     }
 }

@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "3eb3acf54a37efc28f79af320239eb50",
+    "identityHash": "b0ea876b2e7b6dc160521666555da1f1",
     "entities": [
       {
         "tableName": "student_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`t_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `course` TEXT, `email` TEXT, `contact` TEXT, `address` TEXT, `timestamp` TEXT, `remaining` INTEGER NOT NULL, `timein_hour` INTEGER NOT NULL, `timein_minute` INTEGER NOT NULL, `timeout_hour` INTEGER NOT NULL, `timeout_minute` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`t_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `course` TEXT, `email` TEXT, `contact` TEXT, `address` TEXT, `timestamp` TEXT, `remaining` INTEGER NOT NULL, `timein_hour` INTEGER NOT NULL, `timein_minute` INTEGER NOT NULL, `timeout_hour` INTEGER NOT NULL, `timeout_minute` INTEGER NOT NULL, `elapse_minute` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "t_id",
@@ -77,6 +77,12 @@
           {
             "fieldPath": "timeout_minute",
             "columnName": "timeout_minute",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "elapse_minute",
+            "columnName": "elapse_minute",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -156,7 +162,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3eb3acf54a37efc28f79af320239eb50')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b0ea876b2e7b6dc160521666555da1f1')"
     ]
   }
 }

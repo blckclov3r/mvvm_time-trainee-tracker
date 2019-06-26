@@ -19,7 +19,7 @@ public class StudentViewModel extends AndroidViewModel {
     public StudentViewModel(@NonNull Application application) {
         super(application);
         mRepository = new StudentRepository(application);
-        mAllStudents = mRepository.getmAllStudents();
+        mAllStudents = mRepository.getAllStudents();
     }
     public void insert(Student student){
         mRepository.insert(student);
@@ -37,8 +37,11 @@ public class StudentViewModel extends AndroidViewModel {
         return mAllStudents;
     }
 
-    public void time_elapse(int id,int remaining){
-        mRepository.elapse_time(id,remaining);
+    public void time_elapse(int id,int remaining,int elapse_minute){
+        mRepository.time_elapse(id,remaining,elapse_minute);
     }
 
+    public List<Student> getStudent(){
+        return mRepository.getStudentId();
+    }
 }

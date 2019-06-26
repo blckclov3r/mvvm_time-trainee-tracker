@@ -40,6 +40,8 @@ public class Student implements Parcelable {
     private int timeout_hour;
     @ColumnInfo(name = "timeout_minute")
     private int timeout_minute;
+    @ColumnInfo(name = "elapse_minute")
+    private int elapse_minute;
 
     public Student(){}
 
@@ -76,6 +78,7 @@ public class Student implements Parcelable {
         this.remaining = remaining;
     }
 
+    @Ignore
     public Student(@NonNull String name, @NonNull String course, @NonNull String email, @NonNull String contact,
                    @NonNull String address, @NonNull String timestamp, int remaining, int timein_hour, int timein_minute,
                    int timeout_hour, int timeout_minute) {
@@ -90,6 +93,23 @@ public class Student implements Parcelable {
         this.timein_minute = timein_minute;
         this.timeout_hour = timeout_hour;
         this.timeout_minute = timeout_minute;
+    }
+
+    @Ignore
+    public Student(String name, String course, String email, String contact, String address, String timestamp,
+                   int remaining, int timein_hour, int timein_minute, int timeout_hour, int timeout_minute, int elapse_minute) {
+        this.name = name;
+        this.course = course;
+        this.email = email;
+        this.contact = contact;
+        this.address = address;
+        this.timestamp = timestamp;
+        this.remaining = remaining;
+        this.timein_hour = timein_hour;
+        this.timein_minute = timein_minute;
+        this.timeout_hour = timeout_hour;
+        this.timeout_minute = timeout_minute;
+        this.elapse_minute = elapse_minute;
     }
 
     public int getRemaining() {
@@ -188,7 +208,64 @@ public class Student implements Parcelable {
         this.timeout_minute = timeout_minute;
     }
 
-    @Ignore
+    public int getElapse_minute() {
+        return elapse_minute;
+    }
+
+    public void setElapse_minute(int elapse_minute) {
+        this.elapse_minute = elapse_minute;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(t_id);
+        dest.writeString(name);
+        dest.writeString(course);
+        dest.writeString(email);
+        dest.writeString(contact);
+        dest.writeString(address);
+        dest.writeString(timestamp);
+        dest.writeInt(remaining);
+        dest.writeInt(timein_hour);
+        dest.writeInt(timein_minute);
+        dest.writeInt(timeout_hour);
+        dest.writeInt(timeout_minute);
+        dest.writeInt(elapse_minute);
+    }
+
+    protected Student(Parcel in) {
+        t_id = in.readInt();
+        name = in.readString();
+        course = in.readString();
+        email = in.readString();
+        contact = in.readString();
+        address = in.readString();
+        timestamp = in.readString();
+        remaining = in.readInt();
+        timein_hour = in.readInt();
+        timein_minute = in.readInt();
+        timeout_hour = in.readInt();
+        timeout_minute = in.readInt();
+        elapse_minute = in.readInt();
+    }
+
+    public static final Creator<Student> CREATOR = new Creator<Student>() {
+        @Override
+        public Student createFromParcel(Parcel in) {
+            return new Student(in);
+        }
+
+        @Override
+        public Student[] newArray(int size) {
+            return new Student[size];
+        }
+    };
+
     @Override
     public String toString() {
         return "Student{" +
@@ -204,58 +281,7 @@ public class Student implements Parcelable {
                 ", timein_minute=" + timein_minute +
                 ", timeout_hour=" + timeout_hour +
                 ", timeout_minute=" + timeout_minute +
+                ", elapse_minute=" + elapse_minute +
                 '}';
-    }
-
-    @Ignore
-    protected Student(Parcel in) {
-        t_id = in.readInt();
-        name = in.readString();
-        course = in.readString();
-        email = in.readString();
-        contact = in.readString();
-        address = in.readString();
-        timestamp = in.readString();
-        remaining = in.readInt();
-        timein_hour = in.readInt();
-        timein_minute = in.readInt();
-        timeout_hour = in.readInt();
-        timeout_minute = in.readInt();
-    }
-
-    @Ignore
-    public static final Creator<Student> CREATOR = new Creator<Student>() {
-        @Override
-        public Student createFromParcel(Parcel in) {
-            return new Student(in);
-        }
-
-        @Override
-        public Student[] newArray(int size) {
-            return new Student[size];
-        }
-    };
-
-    @Ignore
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Ignore
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(t_id);
-        dest.writeString(name);
-        dest.writeString(course);
-        dest.writeString(email);
-        dest.writeString(contact);
-        dest.writeString(address);
-        dest.writeString(timestamp);
-        dest.writeInt(remaining);
-        dest.writeInt(timein_hour);
-        dest.writeInt(timein_minute);
-        dest.writeInt(timeout_hour);
-        dest.writeInt(timeout_minute);
     }
 }

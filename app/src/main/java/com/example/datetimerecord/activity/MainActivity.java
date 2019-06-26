@@ -78,12 +78,6 @@ public class MainActivity extends AppCompatActivity
             ft.replace(R.id.main_frameLayout, mFragment).commit();
             navigationView.setCheckedItem(R.id.nav_home);
 
-        }else{
-            if (mFragment != null) {
-                for (int i = 0; i < mFragmentManager.getBackStackEntryCount(); i++) {
-                    mFragmentManager.popBackStackImmediate();
-                }
-            }
         }
 
     }
@@ -227,6 +221,11 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction ft = mFragmentManager.beginTransaction();
         ft.replace(R.id.main_frameLayout, mFragment);
         ft.addToBackStack(null);
+        if (mFragment != null) {
+            for (int i = 0; i < mFragmentManager.getBackStackEntryCount(); i++) {
+                mFragmentManager.popBackStackImmediate();
+            }
+        }
         ft.commit();
     }
 

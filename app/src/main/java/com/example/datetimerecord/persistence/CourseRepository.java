@@ -7,12 +7,8 @@ import com.example.datetimerecord.model.Course;
 import com.example.datetimerecord.persistence.dao.CourseDao;
 
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import androidx.lifecycle.LiveData;
-import androidx.room.Update;
 
 public class CourseRepository {
 
@@ -37,17 +33,38 @@ public class CourseRepository {
         new DeleteAsyncTask(mCourseDao).execute(course);
     }
 
-    public void deleteAllCourse() {
 
-    }
 
-    public Course getCourseTime(String course) {
-        return mCourseDao.getCourseTime(course);
+    public Course getCourse(String course) {
+        return mCourseDao.getCourse(course);
     }
 
     public LiveData<List<Course>> getmAllCourse() {
         return mAllCourse;
     }
+
+
+    public List<Course> getCourse(){
+        return mCourseDao.getCourse();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private static class InsertAsyncTask extends AsyncTask<Course, Void, Void> {
         private CourseDao courseDao;

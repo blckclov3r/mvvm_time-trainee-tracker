@@ -11,8 +11,11 @@ import android.widget.Toast;
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.adapter.CourseRecyclerAdapter;
 import com.example.datetimerecord.model.Course;
+import com.example.datetimerecord.model.Student;
 import com.example.datetimerecord.viewmodel.CourseViewModel;
+import com.example.datetimerecord.viewmodel.StudentViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -33,57 +36,86 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
     private CourseRecyclerAdapter mCourseAdapter;
     private CourseViewModel mCourseViewModel;
     private OnCourseListFragmentListener mListFragmentListener;
+    private StudentViewModel mStudentViewModel;
 
-    public CourseListFragment(){}
+    private boolean mCheck = false;
+    List<Student> mStudents;
+
+    public CourseListFragment() {
+    }
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.course_list_fragment,container,false);
-        Log.d(COMMON_TAG,TAG+" onCreateView invoked");
+        View view = inflater.inflate(R.layout.course_list_fragment, container, false);
+        Log.d(COMMON_TAG, TAG + " onCreateView invoked");
         mRecyclerView = view.findViewById(R.id.course_recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setHasFixedSize(true);
         mCourseAdapter = new CourseRecyclerAdapter();
         mCourseAdapter.setOnCourseClickListener(this);
         mRecyclerView.setAdapter(mCourseAdapter);
+        mStudentViewModel = ViewModelProviders.of(this).get(StudentViewModel.class);
         mCourseViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
         return view;
     }
 
 
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.d(COMMON_TAG,TAG+" onViewCreated invoked");
+        Log.d(COMMON_TAG, TAG + " onViewCreated invoked");
+
+        mStudents = new ArrayList<>(mStudentViewModel.getStudent());
+
         mCourseViewModel.getAllCourse().observe(getViewLifecycleOwner(), new Observer<List<Course>>() {
             @Override
             public void onChanged(List<Course> courses) {
                 mCourseAdapter.setCourseList(courses);
             }
         });
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
+
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
             }
+
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                mCheck = false;
                 int position = viewHolder.getAdapterPosition();
-                mCourseViewModel.delete(mCourseAdapter.getNoteAt(position));
-                Toast.makeText(getActivity(), "Course successfully deleted", Toast.LENGTH_SHORT).show();
+                if(position != -1) {
+                    for (int i = 0; i < mStudents.size(); i++) {
+                        Student student = mStudents.get(i);
+                        if (student.getCourse().equals(mCourseAdapter.getCourseAt(position).getCourse())) {
+                            mCheck = true;
+                            break;
+                        }
+                    }
+
+                    if (!mCheck) {
+                        mCourseViewModel.delete(mCourseAdapter.getCourseAt(position));
+                        Toast.makeText(getActivity(), "Course successfully deleted", Toast.LENGTH_SHORT).show();
+                        Log.d(COMMON_TAG,TAG+" mCheck invoked: "+mCheck);
+                    } else {
+                        Toast.makeText(getActivity(), "Please delete all students who enrolled this course", Toast.LENGTH_SHORT).show();
+                        Log.d(COMMON_TAG,TAG+" mCheck invoked: "+mCheck);
+                        mCourseAdapter.notifyCourse();
+                    }
+                    mCheck = false;
+                }
             }
         }).attachToRecyclerView(mRecyclerView);
     }
 
 
-
-
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(COMMON_TAG,TAG+" onDestroy invoked");
+        Log.d(COMMON_TAG, TAG + " onDestroy invoked");
         mCourseViewModel = null;
         mRecyclerView = null;
         mCourseAdapter = null;
@@ -97,11 +129,12 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
 
     @Override
     public void onCourseLongClick(Course course) {
-       mListFragmentListener.OnLongClickCourseListFragment(course);
+        mListFragmentListener.OnLongClickCourseListFragment(course);
     }
 
-    public interface OnCourseListFragmentListener{
+    public interface OnCourseListFragmentListener {
         void OnCourseListFragment(Course course);
+
         void OnLongClickCourseListFragment(Course course);
     }
 
@@ -109,23 +142,23 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if(context instanceof OnCourseListFragmentListener){
+        if (context instanceof OnCourseListFragmentListener) {
             mListFragmentListener = (OnCourseListFragmentListener) context;
-        }else{
-            throw new RuntimeException(context.toString()+" must implement OnCourseListFragmentListener");
+        } else {
+            throw new RuntimeException(context.toString() + " must implement OnCourseListFragmentListener");
         }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d(COMMON_TAG,TAG+" onDetach");
-        if(mListFragmentListener != null) {
+        Log.d(COMMON_TAG, TAG + " onDetach");
+        if (mListFragmentListener != null) {
             mListFragmentListener = null;
         }
     }
 
-    public void setOnCourseListFragmentListener(OnCourseListFragmentListener listener){
+    public void setOnCourseListFragmentListener(OnCourseListFragmentListener listener) {
         mListFragmentListener = listener;
     }
 }

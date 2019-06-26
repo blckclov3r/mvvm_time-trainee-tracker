@@ -1,5 +1,6 @@
 package com.example.datetimerecord.persistence.dao;
 
+import com.example.datetimerecord.model.Course;
 import com.example.datetimerecord.model.Student;
 
 import java.util.List;
@@ -24,7 +25,9 @@ public interface StudentDao {
     @Query("SELECT * FROM student_table ORDER BY name ASC")
     LiveData<List<Student>> getAllTrainee();
 
-    @Query("UPDATE student_table SET remaining =:remaining WHERE t_id=:id")
-    void elapse_result(int id,int remaining);
+    @Query("UPDATE student_table SET remaining =:remaining,elapse_minute =:elapse_minute WHERE t_id=:id")
+    void time_elapse(int id,int remaining,int elapse_minute);
 
+    @Query("SELECT * FROM student_table")
+    List<Student> getStudentId();
 }

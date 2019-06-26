@@ -66,7 +66,7 @@ public class StudentDetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         if (getArguments() != null) {
             Student student = getArguments().getParcelable("selected_student");
-            Log.d(COMMON_TAG, TAG + " student: " + student.toString());
+//            Log.d(COMMON_TAG, TAG + " student: " + student.toString());
             id_tv.setText(String.valueOf(student.getT_id()));
             name_tv.setText(student.getName());
             course_tv.setText(student.getCourse());

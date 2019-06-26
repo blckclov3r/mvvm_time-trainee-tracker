@@ -33,15 +33,15 @@ public class StudentRepository {
          new DeleteStudentAsyncTask(mStudentDao).execute(student);
     }
 
-    public void deleteAllAllStudents(){
-
+    public void time_elapse(int id,int remaining,int minute){
+        new TimeElapseAsyncTask(mStudentDao).execute(id,remaining,minute);
     }
 
-    public void elapse_time(int id,int remaining){
-        new TimeElapseAsyncTask(mStudentDao).execute(id,remaining);
+    public List<Student> getStudentId(){
+        return mStudentDao.getStudentId();
     }
 
-    public LiveData<List<Student>> getmAllStudents(){
+    public LiveData<List<Student>> getAllStudents(){
         return mAllStudents;
     }
 
@@ -86,6 +86,8 @@ public class StudentRepository {
         }
     }
 
+
+
     private static class TimeElapseAsyncTask extends AsyncTask<Integer,Void,Void>{
         private StudentDao studentDao;
 
@@ -95,8 +97,7 @@ public class StudentRepository {
 
         @Override
         protected Void doInBackground(Integer... integers) {
-            //integers[0] == id && integers[1] == remaining
-            studentDao.elapse_result(integers[0],integers[1]);
+            studentDao.time_elapse(integers[0],integers[1],integers[2]);
             return null;
         }
     }

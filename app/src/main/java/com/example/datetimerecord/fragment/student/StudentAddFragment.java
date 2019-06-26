@@ -1,7 +1,6 @@
 package com.example.datetimerecord.fragment.student;
 
 import android.annotation.SuppressLint;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +20,6 @@ import com.example.datetimerecord.viewmodel.StudentViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -90,7 +88,7 @@ public class StudentAddFragment extends Fragment implements View.OnClickListener
         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
         String dateFormat = simpleDateFormat.format(new Date());
 
-        Course lCourse = mCourseViewModel.getCourseTime(course);
+        Course lCourse = mCourseViewModel.getCourse(course);
         int time = lCourse.getCourse_time();
         int timein_hour = lCourse.getTimein_hour();
         int timein_minute = lCourse.getTimein_minute();
