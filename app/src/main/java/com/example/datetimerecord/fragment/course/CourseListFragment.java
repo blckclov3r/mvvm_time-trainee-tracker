@@ -44,18 +44,19 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
     public CourseListFragment() {
     }
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.course_list_fragment, container, false);
         Log.d(COMMON_TAG, TAG + " onCreateView invoked");
+
         mRecyclerView = view.findViewById(R.id.course_recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setHasFixedSize(true);
         mCourseAdapter = new CourseRecyclerAdapter();
         mCourseAdapter.setOnCourseClickListener(this);
         mRecyclerView.setAdapter(mCourseAdapter);
+
         mStudentViewModel = ViewModelProviders.of(this).get(StudentViewModel.class);
         mCourseViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
         return view;
@@ -87,7 +88,7 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 mCheck = false;
                 int position = viewHolder.getAdapterPosition();
-                if(position != -1) {
+                if (position != -1) {
                     for (int i = 0; i < mStudents.size(); i++) {
                         Student student = mStudents.get(i);
                         if (student.getCourse().equals(mCourseAdapter.getCourseAt(position).getCourse())) {
@@ -99,10 +100,10 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
                     if (!mCheck) {
                         mCourseViewModel.delete(mCourseAdapter.getCourseAt(position));
                         Toast.makeText(getActivity(), "Course successfully deleted", Toast.LENGTH_SHORT).show();
-                        Log.d(COMMON_TAG,TAG+" mCheck invoked: "+mCheck);
+                        Log.d(COMMON_TAG, TAG + " mCheck invoked: " + mCheck);
                     } else {
-                        Toast.makeText(getActivity(), "Please delete all students who enrolled this course", Toast.LENGTH_SHORT).show();
-                        Log.d(COMMON_TAG,TAG+" mCheck invoked: "+mCheck);
+                        Toast.makeText(getActivity(), "Please delete all student who enrolled this course", Toast.LENGTH_SHORT).show();
+                        Log.d(COMMON_TAG, TAG + " mCheck invoked: " + mCheck);
                         mCourseAdapter.notifyCourse();
                     }
                     mCheck = false;
@@ -115,10 +116,11 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(COMMON_TAG, TAG + " onDestroy invoked");
-        mCourseViewModel = null;
         mRecyclerView = null;
         mCourseAdapter = null;
+        mCourseViewModel = null;
+        mListFragmentListener = null;
+        mStudentViewModel = null;
     }
 
 

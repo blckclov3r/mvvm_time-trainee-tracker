@@ -119,4 +119,12 @@ public class StudentListFragment extends Fragment implements StudentRecyclerAdap
             listener = null;
         }
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+         mRecyclerView=null;
+        mAdapter=null;
+        mStudentViewModel=null;
+    }
 }

@@ -27,10 +27,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 public class CourseAddFragment extends Fragment implements View.OnClickListener {
-    
+
     private static final String COMMON_TAG = "mAppLog";
     private static final String TAG = "CourseAddFragment";
-    
+
     //components
     private EditText course_et, time_et, description_et;
     private Button addCourse_btn;
@@ -38,7 +38,7 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
     private CourseViewModel mViewModel;
     private AppCompatImageButton mTimeIn_btn, mTimeOut_btn;
     private TextView mTimeIn_hour_tv, mTimeInMinute_tv, mTimeOut_hour_tv, mTimeOut_minute_tv;
-    private TextView mTimein_term_tv,mTimeout_term_tv;
+    private TextView mTimein_term_tv, mTimeout_term_tv;
 
     //vars
     private volatile int mHour;
@@ -101,24 +101,24 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
                     time_et.requestFocus();
                     return;
                 }
-                if(timein_hour.equals("00") || timein_hour.equals("0")){
+                if (timein_hour.equals("00") || timein_hour.equals("0")) {
                     mTimeIn_hour_tv.setText("00");
                     Toast.makeText(getActivity(), "Timein hour is invalid", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(timein_minute.equals("00") || timein_minute.equals("0")){
+                if (timein_minute.equals("00") || timein_minute.equals("0")) {
                     mTimeInMinute_tv.setText("00");
                 }
-                if(timeout_minute.equals("00") || timeout_minute.equals("0")){
+                if (timeout_minute.equals("00") || timeout_minute.equals("0")) {
                     mTimeOut_minute_tv.setText("00");
                 }
 
-                if(timeout_hour.equals("00") || timeout_hour.equals("0")){
+                if (timeout_hour.equals("00") || timeout_hour.equals("0")) {
                     mTimeOut_hour_tv.setText("00");
                     Toast.makeText(getActivity(), "Timeout hour is invalid", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                
+
                 int time = Integer.parseInt(courseTime);
                 if (desc.isEmpty()) {
                     desc = "Empty";
@@ -126,110 +126,110 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
 
                 //timein reverse <-> 12hr to 24hr
                 String timein_AMPM = mTimein_term_tv.getText().toString().trim();
-                if(timein_AMPM.equals("am")){
-                    if(timein_hour.equals("12")){
+                if (timein_AMPM.equals("am")) {
+                    if (timein_hour.equals("12")) {
                         timein_hour = "0";
-                    }else{
+                    } else {
                         timein_hour = mTimeIn_hour_tv.getText().toString().trim();
                     }
-                }else{
-                    if(timein_hour.equals("12")){
+                } else {
+                    if (timein_hour.equals("12")) {
                         timein_hour = "12";
                     }
-                    if(timein_hour.equals("1")){
+                    if (timein_hour.equals("1")) {
                         timein_hour = "13";
                     }
-                    if(timein_hour.equals("2")){
+                    if (timein_hour.equals("2")) {
                         timein_hour = "14";
                     }
-                    if(timein_hour.equals("3")){
+                    if (timein_hour.equals("3")) {
                         timein_hour = "15";
                     }
-                    if(timein_hour.equals("4")){
+                    if (timein_hour.equals("4")) {
                         timein_hour = "16";
                     }
-                    if(timein_hour.equals("5")){
+                    if (timein_hour.equals("5")) {
                         timein_hour = "17";
                     }
-                    if(timein_hour.equals("6")){
+                    if (timein_hour.equals("6")) {
                         timein_hour = "18";
                     }
-                    if(timein_hour.equals("7")){
+                    if (timein_hour.equals("7")) {
                         timein_hour = "19";
                     }
-                    if(timein_hour.equals("8")){
+                    if (timein_hour.equals("8")) {
                         timein_hour = "20";
                     }
-                    if(timein_hour.equals("9")){
+                    if (timein_hour.equals("9")) {
                         timein_hour = "21";
                     }
-                    if(timein_hour.equals("10")){
+                    if (timein_hour.equals("10")) {
                         timein_hour = "22";
                     }
-                    if(timein_hour.equals("11")){
+                    if (timein_hour.equals("11")) {
                         timein_hour = "23";
                     }
-                    if(timein_hour.equals("12")){
+                    if (timein_hour.equals("12")) {
                         timein_hour = "24";
                     }
                 }
 
                 //timeout reverse <-> 12hr to 24hr
                 String timeout_AMPM = mTimeout_term_tv.getText().toString().trim();
-                if(timeout_AMPM.equals("am")){
-                    if(timeout_hour.equals("12")){
+                if (timeout_AMPM.equals("am")) {
+                    if (timeout_hour.equals("12")) {
                         timeout_hour = "0";
-                    }else{
+                    } else {
                         timeout_hour = mTimeOut_hour_tv.getText().toString().trim();
                     }
-                }else{
-                    if(timeout_hour.equals("12")){
+                } else {
+                    if (timeout_hour.equals("12")) {
                         timeout_hour = "12";
                     }
-                    if(timeout_hour.equals("1")){
+                    if (timeout_hour.equals("1")) {
                         timeout_hour = "13";
                     }
-                    if(timeout_hour.equals("2")){
+                    if (timeout_hour.equals("2")) {
                         timeout_hour = "14";
                     }
-                    if(timeout_hour.equals("3")){
+                    if (timeout_hour.equals("3")) {
                         timeout_hour = "15";
                     }
-                    if(timeout_hour.equals("4")){
+                    if (timeout_hour.equals("4")) {
                         timeout_hour = "16";
                     }
-                    if(timeout_hour.equals("5")){
+                    if (timeout_hour.equals("5")) {
                         timeout_hour = "17";
                     }
-                    if(timeout_hour.equals("6")){
+                    if (timeout_hour.equals("6")) {
                         timeout_hour = "18";
                     }
-                    if(timeout_hour.equals("7")){
+                    if (timeout_hour.equals("7")) {
                         timeout_hour = "19";
                     }
-                    if(timeout_hour.equals("8")){
+                    if (timeout_hour.equals("8")) {
                         timeout_hour = "20";
                     }
-                    if(timeout_hour.equals("9")){
+                    if (timeout_hour.equals("9")) {
                         timeout_hour = "21";
                     }
-                    if(timeout_hour.equals("10")){
+                    if (timeout_hour.equals("10")) {
                         timeout_hour = "22";
                     }
-                    if(timeout_hour.equals("11")){
+                    if (timeout_hour.equals("11")) {
                         timeout_hour = "23";
                     }
-                    if(timeout_hour.equals("12")){
+                    if (timeout_hour.equals("12")) {
                         timeout_hour = "24";
                     }
                 }
 
                 mCourse = new Course(course, time, desc,
-                        Integer.parseInt(timein_hour),Integer.parseInt(timein_minute), Integer.parseInt(timeout_hour),Integer.parseInt(timeout_minute));
-                Log.d(COMMON_TAG,TAG+" mCourse: "+mCourse.toString());
+                        Integer.parseInt(timein_hour), Integer.parseInt(timein_minute), Integer.parseInt(timeout_hour), Integer.parseInt(timeout_minute));
+                Log.d(COMMON_TAG, TAG + " mCourse: " + mCourse.toString());
                 mViewModel.insert(mCourse);
                 setClear();
-                Log.d(COMMON_TAG,TAG+" course: "+course.toString());
+                Log.d(COMMON_TAG, TAG + " course: " + course.toString());
                 Toast.makeText(getActivity(), "Course successfully created", Toast.LENGTH_SHORT).show();
             }
             break;
@@ -256,61 +256,61 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 mHour = hourOfDay;
                 mMinute = minute;
-                if(mHour>=12 ){
+                if (mHour >= 12) {
                     mTimein_term_tv.setText("pm");
-                    if(mHour == 12){
+                    if (mHour == 12) {
                         mTimeIn_hour_tv.setText("12");
                     }
-                    if(mHour == 13){
+                    if (mHour == 13) {
                         mTimeIn_hour_tv.setText("1");
                     }
-                    if(mHour == 14){
+                    if (mHour == 14) {
                         mTimeIn_hour_tv.setText("2");
                     }
-                    if(mHour == 15){
+                    if (mHour == 15) {
                         mTimeIn_hour_tv.setText("3");
                     }
-                    if(mHour == 16){
+                    if (mHour == 16) {
                         mTimeIn_hour_tv.setText("4");
                     }
-                    if(mHour == 17){
+                    if (mHour == 17) {
                         mTimeIn_hour_tv.setText("5");
                     }
-                    if(mHour == 18){
+                    if (mHour == 18) {
                         mTimeIn_hour_tv.setText("6");
                     }
-                    if(mHour == 19){
+                    if (mHour == 19) {
                         mTimeIn_hour_tv.setText("7");
                     }
-                    if(mHour == 20){
+                    if (mHour == 20) {
                         mTimeIn_hour_tv.setText("8");
                     }
-                    if(mHour == 21){
+                    if (mHour == 21) {
                         mTimeIn_hour_tv.setText("9");
                     }
-                    if(mHour == 22){
+                    if (mHour == 22) {
                         mTimeIn_hour_tv.setText("10");
                     }
-                    if(mHour == 23){
+                    if (mHour == 23) {
                         mTimeIn_hour_tv.setText("11");
                     }
-                    if(mHour == 24){
+                    if (mHour == 24) {
                         mTimeIn_hour_tv.setText("12");
                     }
 
-                }else{
+                } else {
                     mTimein_term_tv.setText("am");
-                    if(mHour == 0){
+                    if (mHour == 0) {
                         mTimeIn_hour_tv.setText("12");
-                    }else{
+                    } else {
                         mTimeIn_hour_tv.setText(String.valueOf(mHour));
                     }
                 }
 
 
-                if(mMinute == 0){
+                if (mMinute == 0) {
                     mTimeInMinute_tv.setText("00");
-                }else {
+                } else {
                     mTimeInMinute_tv.setText(String.valueOf(mMinute));
                 }
 
@@ -329,60 +329,60 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 mHour = hourOfDay;
                 mMinute = minute;
-                if(mHour>=12 ){
+                if (mHour >= 12) {
                     mTimeout_term_tv.setText("pm");
-                    if(mHour == 12){
+                    if (mHour == 12) {
                         mTimeOut_hour_tv.setText("12");
                     }
-                    if(mHour == 13){
+                    if (mHour == 13) {
                         mTimeOut_hour_tv.setText("1");
                     }
-                    if(mHour == 14){
+                    if (mHour == 14) {
                         mTimeOut_hour_tv.setText("2");
                     }
-                    if(mHour == 15){
+                    if (mHour == 15) {
                         mTimeOut_hour_tv.setText("3");
                     }
-                    if(mHour == 16){
+                    if (mHour == 16) {
                         mTimeOut_hour_tv.setText("4");
                     }
-                    if(mHour == 17){
+                    if (mHour == 17) {
                         mTimeOut_hour_tv.setText("5");
                     }
-                    if(mHour == 18){
+                    if (mHour == 18) {
                         mTimeOut_hour_tv.setText("6");
                     }
-                    if(mHour == 19){
+                    if (mHour == 19) {
                         mTimeOut_hour_tv.setText("7");
                     }
-                    if(mHour == 20){
+                    if (mHour == 20) {
                         mTimeOut_hour_tv.setText("8");
                     }
-                    if(mHour == 21){
+                    if (mHour == 21) {
                         mTimeOut_hour_tv.setText("9");
                     }
-                    if(mHour == 22){
+                    if (mHour == 22) {
                         mTimeOut_hour_tv.setText("10");
                     }
-                    if(mHour == 23){
+                    if (mHour == 23) {
                         mTimeOut_hour_tv.setText("11");
                     }
-                    if(mHour == 24){
+                    if (mHour == 24) {
                         mTimeOut_hour_tv.setText("12");
                     }
 
-                }else{
+                } else {
                     mTimeout_term_tv.setText("am");
-                    if(mHour == 0){
+                    if (mHour == 0) {
                         mTimeOut_hour_tv.setText("12");
-                    }else{
+                    } else {
                         mTimeOut_hour_tv.setText(String.valueOf(mHour));
                     }
                 }
 
-                if(mMinute == 0){
+                if (mMinute == 0) {
                     mTimeOut_minute_tv.setText("00");
-                }else {
+                } else {
                     mTimeOut_minute_tv.setText(String.valueOf(mMinute));
                 }
             }
@@ -397,6 +397,17 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
         course_et = null;
         time_et = null;
         description_et = null;
+        addCourse_btn = null;
+        mCourse = null;
+        mViewModel = null;
+        mTimeIn_btn = null;
+        mTimeOut_btn = null;
+        mTimeIn_hour_tv = null;
+        mTimeInMinute_tv = null;
+        mTimeOut_hour_tv = null;
+        mTimeOut_minute_tv = null;
+        mTimein_term_tv = null;
+        mTimeout_term_tv = null;
     }
 
     public void setClear() {

@@ -4,7 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_marginTop="7dp"
     android:layout_marginLeft="7dp"
     android:layout_marginRight="7dp"
     android:layout_marginStart="7dp"
@@ -48,6 +47,8 @@
         android:id="@+id/addStudent_button"
         android:layout_width="match_parent"
         android:text="Submit"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
         android:textAllCaps="false"
         android:layout_marginTop="12dp"
         android:layout_height="wrap_content" />
