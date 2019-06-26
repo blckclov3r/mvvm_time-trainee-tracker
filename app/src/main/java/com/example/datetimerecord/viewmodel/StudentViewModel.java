@@ -44,4 +44,8 @@ public class StudentViewModel extends AndroidViewModel {
     public List<Student> getStudent(){
         return mRepository.getStudentId();
     }
+
+    public List<Student> getStudentCourse(String course){
+        return mRepository.getStudentCourse(course);
+    }
 }

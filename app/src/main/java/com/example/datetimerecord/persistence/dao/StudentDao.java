@@ -30,4 +30,9 @@ public interface StudentDao {
 
     @Query("SELECT * FROM student_table")
     List<Student> getStudentId();
+
+    @Query("SELECT * FROM student_table WHERE course=:course")
+    List<Student> getStudentCourse(String course);
+
+
 }

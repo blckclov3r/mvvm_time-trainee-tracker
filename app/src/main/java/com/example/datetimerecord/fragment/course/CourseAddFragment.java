@@ -56,13 +56,12 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
         time_et = view.findViewById(R.id.time_editText);
         description_et = view.findViewById(R.id.description_editText);
         addCourse_btn = view.findViewById(R.id.addCourse_button);
+
         mTimeIn_btn = view.findViewById(R.id.timeIn_button);
         mTimeOut_btn = view.findViewById(R.id.timeOut_button);
         mTimeIn_hour_tv = view.findViewById(R.id.timeIn_hour_textView);
         mTimein_term_tv = view.findViewById(R.id.timein_term_textView);
         mTimeout_term_tv = view.findViewById(R.id.timeout_term_textView);
-
-        //time in & out
         mTimeInMinute_tv = view.findViewById(R.id.timeIn_minute_textView);
         mTimeOut_hour_tv = view.findViewById(R.id.timeOut_hour_textView);
         mTimeOut_minute_tv = view.findViewById(R.id.timeOut_minute_textView);

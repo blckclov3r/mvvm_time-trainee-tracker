@@ -45,6 +45,10 @@ public class StudentRepository {
         return mAllStudents;
     }
 
+    public List<Student> getStudentCourse(String course){
+        return mStudentDao.getStudentCourse(course);
+    }
+
     private static class InsertStudentAsyncTask extends AsyncTask<Student,Void,Void>{
         private StudentDao studentDao;
 
