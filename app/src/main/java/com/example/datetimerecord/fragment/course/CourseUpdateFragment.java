@@ -12,17 +12,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.model.Course;
 import com.example.datetimerecord.model.Student;
 import com.example.datetimerecord.viewmodel.CourseViewModel;
 import com.example.datetimerecord.viewmodel.StudentViewModel;
-
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;

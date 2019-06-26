@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity
             for (int i = 0; i < mFragmentManager.getBackStackEntryCount(); i++) {
                 mFragmentManager.popBackStackImmediate();
             }
-            ft.commit();
+            ft.commitNow();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

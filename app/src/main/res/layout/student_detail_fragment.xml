@@ -5,18 +5,17 @@
     android:layout_marginStart="7dp"
     android:layout_marginEnd="7dp"
     android:gravity="center_horizontal"
-    android:layout_marginTop="7dp"
     android:orientation="vertical">
 
 
     <ScrollView
-        android:layout_marginTop="32dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:paddingBottom="10dp"
+            android:layout_marginTop="32dp"
             android:orientation="vertical"
             android:layout_height="wrap_content">
 
@@ -222,10 +221,12 @@
 
             <Button
                 android:id="@+id/timeUpdate_button"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_gravity="center_horizontal"
                 android:text="Set"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 

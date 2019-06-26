@@ -12,14 +12,17 @@ import com.example.datetimerecord.R;
 import com.example.datetimerecord.adapter.CourseRecyclerAdapter;
 import com.example.datetimerecord.model.Course;
 import com.example.datetimerecord.model.Student;
+import com.example.datetimerecord.persistence.CourseRepository;
 import com.example.datetimerecord.viewmodel.CourseViewModel;
 import com.example.datetimerecord.viewmodel.StudentViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -39,8 +42,9 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
     private StudentViewModel mStudentViewModel;
 
     private boolean mCheck = false;
-    List<Student> mStudents;
-
+    private List<Student> mStudents;
+    private CourseRepository mCourseRepository;
+    private SearchView searchView;
     public CourseListFragment() {
     }
 
@@ -51,6 +55,7 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
         Log.d(COMMON_TAG, TAG + " onCreateView invoked");
 
         mRecyclerView = view.findViewById(R.id.course_recyclerView);
+        searchView = view.findViewById(R.id.course_searchView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setHasFixedSize(true);
         mCourseAdapter = new CourseRecyclerAdapter();
@@ -59,6 +64,19 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
 
         mStudentViewModel = ViewModelProviders.of(this).get(StudentViewModel.class);
         mCourseViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
+
+        mCourseRepository = new CourseRepository(Objects.requireNonNull(getActivity()).getApplication());
+
+        mCourseViewModel.getAllCourse().observe(getViewLifecycleOwner(), new Observer<List<Course>>() {
+            @Override
+            public void onChanged(List<Course> courses) {
+                if(courses.size() > 0) {
+                    mCourseAdapter.setCourseList(courses);
+                }
+
+            }
+        });
+
         return view;
     }
 
@@ -70,13 +88,34 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
 
         mStudents = new ArrayList<>(mStudentViewModel.getStudent());
 
-        mCourseViewModel.getAllCourse().observe(getViewLifecycleOwner(), new Observer<List<Course>>() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onChanged(List<Course> courses) {
-                mCourseAdapter.setCourseList(courses);
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if(!newText.isEmpty()) {
+                    mCourseRepository.setSearch(newText).observe(getViewLifecycleOwner(), new Observer<List<Course>>() {
+                        @Override
+                        public void onChanged(List<Course> courses) {
+                            mCourseAdapter.setCourseList(courses);
+                        }
+                    });
+                }else{
+                    mCourseViewModel.getAllCourse().observe(getViewLifecycleOwner(), new Observer<List<Course>>() {
+                        @Override
+                        public void onChanged(List<Course> courses) {
+                            if(courses.size() > 0) {
+                                mCourseAdapter.setCourseList(courses);
+                            }
+                        }
+                    });
+                }
+                return false;
             }
         });
-
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override

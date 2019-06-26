@@ -20,8 +20,8 @@ public interface CourseDao {
     @Delete
     void delete(Course course);
 
-    @Query("SELECT * FROM course_table ORDER BY course ASC")
-    LiveData<List<Course>> getAllCourse();
+    @Query("SELECT * FROM course_table WHERE course LIKE :name ORDER BY course ASC ")
+    LiveData<List<Course>> getAllCourse(String name);
 
     @Query("SELECT * FROM course_table WHERE course=:course LIMIT 1")
     Course getCourse(String course);

@@ -51,7 +51,7 @@ public class StudentAddFragment extends Fragment implements View.OnClickListener
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.add_student_fragment, container, false);
+        View view = inflater.inflate(R.layout.student_add_fragment, container, false);
         mName_et = view.findViewById(R.id.name_editText);
         mEmail_et = view.findViewById(R.id.email_editText);
         mContact_et = view.findViewById(R.id.contact_editText);

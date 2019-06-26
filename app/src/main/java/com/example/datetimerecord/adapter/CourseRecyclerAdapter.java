@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.model.Course;
+import com.example.datetimerecord.persistence.CourseRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
         this.courseList = courseList;
         notifyDataSetChanged();
     }
+
 
     public Course getCourseAt(int pos){
         return courseList.get(pos);

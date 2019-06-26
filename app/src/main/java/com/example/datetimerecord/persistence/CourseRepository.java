@@ -14,10 +14,11 @@ public class CourseRepository {
 
     private CourseDao mCourseDao;
     private LiveData<List<Course>> mAllCourse;
+
     public CourseRepository(Application application) {
         MyDatabase myDatabase = MyDatabase.getInstance(application);
         mCourseDao = myDatabase.mCourseDao();
-        mAllCourse = mCourseDao.getAllCourse();
+        mAllCourse = mCourseDao.getAllCourse("%");
 
     }
 
@@ -34,7 +35,6 @@ public class CourseRepository {
     }
 
 
-
     public Course getCourse(String course) {
         return mCourseDao.getCourse(course);
     }
@@ -43,25 +43,15 @@ public class CourseRepository {
         return mAllCourse;
     }
 
-
-    public List<Course> getCourse(){
-        return mCourseDao.getCourse();
+    public LiveData<List<Course>> setSearch(String course){
+        mAllCourse = mCourseDao.getAllCourse(course+"%");
+        return mAllCourse;
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public List<Course> getCourse() {
+        return mCourseDao.getCourse();
+    }
 
 
 
@@ -80,7 +70,7 @@ public class CourseRepository {
         }
     }
 
-    private static class UpdateAsyncTask extends AsyncTask<Course,Void,Void>{
+    private static class UpdateAsyncTask extends AsyncTask<Course, Void, Void> {
         private CourseDao courseDao;
 
         public UpdateAsyncTask(CourseDao courseDao) {
@@ -94,7 +84,7 @@ public class CourseRepository {
         }
     }
 
-    private static class DeleteAsyncTask extends AsyncTask<Course,Void,Void>{
+    private static class DeleteAsyncTask extends AsyncTask<Course, Void, Void> {
         private CourseDao courseDao;
 
         public DeleteAsyncTask(CourseDao courseDao) {
