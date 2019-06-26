@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.model.Student;
 import com.example.datetimerecord.viewmodel.StudentViewModel;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -35,8 +36,8 @@ public class StudentTimeUpdateFragment extends Fragment {
 
     //vars
     private int mStudentId;
-    private  int mTimein_hour, mTimein_minute, mTimeout_hour, mTimeout_minute;
-    private  int mElapseMinute, mRemaining, mElapseTime;
+    private int mTimein_hour, mTimein_minute, mTimeout_hour, mTimeout_minute;
+    private int mElapseMinute, mRemaining, mElapseTime;
 
     public static StudentTimeUpdateFragment newInstance(Student student) {
         StudentTimeUpdateFragment fragment = new StudentTimeUpdateFragment();
@@ -69,8 +70,14 @@ public class StudentTimeUpdateFragment extends Fragment {
         mTimeout_term_tv = view.findViewById(R.id.timeout_term_textView);
 
         mStudentViewModel = ViewModelProviders.of(this).get(StudentViewModel.class);
-        if (getArguments() != null) {
 
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (getArguments() != null) {
             mStudent = getArguments().getParcelable("selected_student");
             if (mStudent != null) {
                 mTimein_minute = mStudent.getTimein_minute();
@@ -116,15 +123,13 @@ public class StudentTimeUpdateFragment extends Fragment {
                 }
             });
         }
-        return view;
     }
-
 
     private void setElapseTime(int timein_hour, int timein_minute, int timeout_hour, int timeout_minute) {
 
         String timein_term = mTimein_term_tv.getText().toString().trim();
         String timeout_term = mTimeout_term_tv.getText().toString().trim();
-        int elapse_minute = timein_minute+timeout_minute;
+        int elapse_minute = timein_minute + timeout_minute;
         mElapseMinute = mElapseMinute + elapse_minute; //20
         if (timein_term.equals("am") && timeout_term.equals("am")) {
             if (timein_hour == timeout_hour) {
@@ -135,14 +140,14 @@ public class StudentTimeUpdateFragment extends Fragment {
                     mElapseMinute = mElapseMinute - 60;
                     mElapseTime = (timeout_hour - timein_hour) + 1;
                 }
-                if (mElapseMinute < 60 ) {
+                if (mElapseMinute < 60) {
                     mElapseTime = (timeout_hour - timein_hour);
                 }
                 if (mElapseMinute == 60) {
                     mElapseMinute = 0;
                     mElapseTime = ((timeout_hour - timein_hour) + 1);
                 }
-                Log.d(COMMON_TAG,TAG+" timein < timeout");
+                Log.d(COMMON_TAG, TAG + " timein < timeout");
             }
             if (timein_hour > timeout_hour) {
                 if (mElapseMinute > 60) {
@@ -157,7 +162,7 @@ public class StudentTimeUpdateFragment extends Fragment {
                     mElapseTime = ((24 + timeout_hour) - (timein_hour)) + 1;
                 }
             }
-            Log.d(COMMON_TAG,TAG+" mElapseMite: "+mElapseMinute);
+            Log.d(COMMON_TAG, TAG + " mElapseMite: " + mElapseMinute);
         }
         if (timein_term.equals("pm") && timeout_term.equals("pm")) {
             if (timein_hour == timeout_hour) {
@@ -167,16 +172,16 @@ public class StudentTimeUpdateFragment extends Fragment {
                 if (mElapseMinute > 60) {
                     mElapseMinute = (mElapseMinute - 60);
                     mElapseTime = (timeout_hour - timein_hour) + 1;
-                    Log.d(COMMON_TAG,TAG+" mElapseMinute > 60");
+                    Log.d(COMMON_TAG, TAG + " mElapseMinute > 60");
                 }
                 if (mElapseMinute < 60) {
                     mElapseTime = (timeout_hour - timein_hour);
-                    Log.d(COMMON_TAG,TAG+" mElapseMinute < 60");
+                    Log.d(COMMON_TAG, TAG + " mElapseMinute < 60");
                 }
                 if (mElapseMinute == 60) {
                     mElapseMinute = 0;
                     mElapseTime = (timeout_hour - timein_hour) + 1;
-                    Log.d(COMMON_TAG,TAG+" mElapseMinute == 60");
+                    Log.d(COMMON_TAG, TAG + " mElapseMinute == 60");
                 }
             }
             if (timein_hour > timeout_hour) {
@@ -191,7 +196,7 @@ public class StudentTimeUpdateFragment extends Fragment {
                     mElapseMinute = 0;
                     mElapseTime = ((24 + timeout_hour) - (timein_hour)) + 1;
                 }
-                Log.d(COMMON_TAG,TAG+" timein > timeout");
+                Log.d(COMMON_TAG, TAG + " timein > timeout");
             }
         }
         if (timein_term.equals("am") && timeout_term.equals("pm")) {
@@ -200,7 +205,7 @@ public class StudentTimeUpdateFragment extends Fragment {
                     mElapseMinute = mElapseMinute - 60;
                     mElapseTime = ((12 + timeout_hour) - (timein_hour)) + 1;
                 }
-                if (mElapseMinute < 60 ) {
+                if (mElapseMinute < 60) {
                     mElapseTime = ((12 + timeout_hour) - (timein_hour));
                 }
                 if (mElapseMinute == 60) {
@@ -278,15 +283,15 @@ public class StudentTimeUpdateFragment extends Fragment {
         }
 
         int result = mRemaining - mElapseTime;
-        if(result <= 0){
+        if (result <= 0) {
             result = 0;
             remaining_tv.setText(String.valueOf(result));
-            Log.d(COMMON_TAG,TAG+" mResult: "+result+", mRemaining: "+mRemaining+", mElapseTime: "+mElapseTime+", elapse minute: "+mElapseMinute);
+            Log.d(COMMON_TAG, TAG + " mResult: " + result + ", mRemaining: " + mRemaining + ", mElapseTime: " + mElapseTime + ", elapse minute: " + mElapseMinute);
             mStudentViewModel.time_elapse(mStudentId, result, mElapseMinute);
-        }else {
+        } else {
             remaining_tv.setText(String.valueOf(result));
-            Toast.makeText(getActivity(), "Time Elapse: "+mElapseTime+" hr. and "+mElapseMinute+" min.", Toast.LENGTH_LONG).show();
-            Log.d(COMMON_TAG,TAG+" mResult: "+result+", mRemaining: "+mRemaining+", mElapseTime: "+mElapseTime+", elapse minute: "+mElapseMinute);
+            Toast.makeText(getActivity(), "Time Elapse: " + mElapseTime + " hr. and " + mElapseMinute + " min.", Toast.LENGTH_LONG).show();
+            Log.d(COMMON_TAG, TAG + " mResult: " + result + ", mRemaining: " + mRemaining + ", mElapseTime: " + mElapseTime + ", elapse minute: " + mElapseMinute);
             mStudentViewModel.time_elapse(mStudentId, result, mElapseMinute);
             elapse_btn.setEnabled(false);
             elapse_btn.setClickable(false);
@@ -401,4 +406,24 @@ public class StudentTimeUpdateFragment extends Fragment {
 
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        name_tv = null;
+        course_tv = null;
+        email_tv = null;
+        contact_tv = null;
+        address_tv = null;
+        id_tv = null;
+        remaining_tv = null;
+        mTimeIn_hour_tv = null;
+        mTimeInMinute_tv = null;
+        mTimeOut_hour_tv = null;
+        mTimeOut_minute_tv = null;
+        mTimein_term_tv = null;
+        mTimeout_term_tv = null;
+        elapse_btn = null;
+        mStudentViewModel = null;
+        mStudent = null;
+    }
 }

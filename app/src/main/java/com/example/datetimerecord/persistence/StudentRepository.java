@@ -18,7 +18,7 @@ public class StudentRepository {
     public StudentRepository(Context context){
         myDatabase = MyDatabase.getInstance(context);
         mStudentDao = myDatabase.mStudentDao();
-        mAllStudents = mStudentDao.getAllTrainee();
+        mAllStudents = mStudentDao.getAllTrainee("%");
     }
 
     public void insert(Student student){
@@ -48,6 +48,15 @@ public class StudentRepository {
     public List<Student> getStudentCourse(String course){
         return mStudentDao.getStudentCourse(course);
     }
+
+    public LiveData<List<Student>> setSearch(String student){
+        mAllStudents = mStudentDao.getAllTrainee(student+"%");
+        return mAllStudents;
+    }
+
+
+
+
 
     private static class InsertStudentAsyncTask extends AsyncTask<Student,Void,Void>{
         private StudentDao studentDao;

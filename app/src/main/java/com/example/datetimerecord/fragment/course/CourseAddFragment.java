@@ -1,7 +1,6 @@
 package com.example.datetimerecord.fragment.course;
 
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -245,7 +244,6 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
         }
     }
 
-
     private void setTimeIn_btn() {
         Calendar calendar = Calendar.getInstance();
         mHour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -318,7 +316,6 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
         timePickerDialog.show();
     }
 
-
     private void setTimeOut_btn() {
         Calendar calendar = Calendar.getInstance();
         mHour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -388,7 +385,6 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
         }, mHour, mMinute, DateFormat.is24HourFormat(getActivity()));
         timePickerDialog.show();
     }
-
 
     @Override
     public void onDestroy() {

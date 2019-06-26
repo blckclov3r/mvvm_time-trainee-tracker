@@ -4,10 +4,19 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/student_searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/student_recyclerView"
         tools:listitem="@layout/student_list_item"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    
 </LinearLayout>

@@ -16,6 +16,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -31,6 +32,7 @@ public class StudentListFragment extends Fragment implements StudentRecyclerAdap
     private RecyclerView mRecyclerView;
     private StudentRecyclerAdapter mAdapter;
     private StudentViewModel mStudentViewModel;
+    private SearchView searchView;
 
     public StudentListFragment() {
     }
@@ -40,7 +42,7 @@ public class StudentListFragment extends Fragment implements StudentRecyclerAdap
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.student_list_fragment, container, false);
         mRecyclerView = view.findViewById(R.id.student_recyclerView);
-
+        searchView = view.findViewById(R.id.student_searchView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setHasFixedSize(true);
         mAdapter = new StudentRecyclerAdapter();
@@ -57,7 +59,9 @@ public class StudentListFragment extends Fragment implements StudentRecyclerAdap
         mStudentViewModel.getmAllStudents().observe(getViewLifecycleOwner(), new Observer<List<Student>>() {
             @Override
             public void onChanged(List<Student> students) {
-                mAdapter.setmStudentList(students);
+                if(students.size() > 0) {
+                    mAdapter.setmStudentList(students);
+                }
             }
         });
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -75,6 +79,37 @@ public class StudentListFragment extends Fragment implements StudentRecyclerAdap
                 }
             }
         }).attachToRecyclerView(mRecyclerView);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if(!newText.isEmpty()) {
+                    mStudentViewModel.setSearch(newText).observe(getViewLifecycleOwner(), new Observer<List<Student>>() {
+                        @Override
+                        public void onChanged(List<Student> students) {
+                            if(students.size() > 0) {
+                                mAdapter.setmStudentList(students);
+                            }
+                        }
+                    });
+                }else{
+                    mStudentViewModel.getmAllStudents().observe(getViewLifecycleOwner(), new Observer<List<Student>>() {
+                        @Override
+                        public void onChanged(List<Student> students) {
+                            if(students.size() > 0) {
+                                mAdapter.setmStudentList(students);
+                            }
+                        }
+                    });
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -92,8 +127,10 @@ public class StudentListFragment extends Fragment implements StudentRecyclerAdap
     }
 
     private OnStudentClickListListener listener;
+
     public interface OnStudentClickListListener {
         void onClicklist(Student student);
+
         void onLongClick(Student student);
     }
 
@@ -123,8 +160,9 @@ public class StudentListFragment extends Fragment implements StudentRecyclerAdap
     @Override
     public void onDestroy() {
         super.onDestroy();
-         mRecyclerView=null;
-        mAdapter=null;
-        mStudentViewModel=null;
+        mRecyclerView = null;
+        mAdapter = null;
+        mStudentViewModel = null;
+        searchView = null;
     }
 }

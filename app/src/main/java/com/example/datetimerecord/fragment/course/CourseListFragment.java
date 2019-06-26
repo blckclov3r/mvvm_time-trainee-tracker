@@ -36,6 +36,7 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
     public static final String COMMON_TAG = "mAppLog";
 
     private RecyclerView mRecyclerView;
+    private SearchView searchView;
     private CourseRecyclerAdapter mCourseAdapter;
     private CourseViewModel mCourseViewModel;
     private OnCourseListFragmentListener mListFragmentListener;
@@ -44,7 +45,7 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
     private boolean mCheck = false;
     private List<Student> mStudents;
     private CourseRepository mCourseRepository;
-    private SearchView searchView;
+
     public CourseListFragment() {
     }
 
@@ -160,6 +161,9 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
         mCourseViewModel = null;
         mListFragmentListener = null;
         mStudentViewModel = null;
+        searchView = null;
+        mCourseRepository = null;
+        mStudents = null;
     }
 
 
@@ -202,4 +206,6 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
     public void setOnCourseListFragmentListener(OnCourseListFragmentListener listener) {
         mListFragmentListener = listener;
     }
+
+
 }

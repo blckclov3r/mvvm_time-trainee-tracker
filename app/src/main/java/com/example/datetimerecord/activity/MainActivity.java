@@ -1,41 +1,32 @@
 package com.example.datetimerecord.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.datetimerecord.R;
-import com.example.datetimerecord.adapter.CourseRecyclerAdapter;
+import com.example.datetimerecord.fragment.HomeFragment;
 import com.example.datetimerecord.fragment.course.CourseAddFragment;
 import com.example.datetimerecord.fragment.course.CourseDetailFragment;
+import com.example.datetimerecord.fragment.course.CourseListFragment;
 import com.example.datetimerecord.fragment.course.CourseUpdateFragment;
 import com.example.datetimerecord.fragment.student.StudentAddFragment;
-import com.example.datetimerecord.fragment.course.CourseListFragment;
-import com.example.datetimerecord.fragment.HomeFragment;
 import com.example.datetimerecord.fragment.student.StudentDetailFragment;
 import com.example.datetimerecord.fragment.student.StudentListFragment;
 import com.example.datetimerecord.fragment.student.StudentTimeUpdateFragment;
 import com.example.datetimerecord.fragment.student.StudentUpdateFragment;
 import com.example.datetimerecord.model.Course;
 import com.example.datetimerecord.model.Student;
-import com.example.datetimerecord.viewmodel.CourseViewModel;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.annotation.Nullable;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
-import android.view.Menu;
-import android.view.MenuItem;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, CourseListFragment.OnCourseListFragmentListener,

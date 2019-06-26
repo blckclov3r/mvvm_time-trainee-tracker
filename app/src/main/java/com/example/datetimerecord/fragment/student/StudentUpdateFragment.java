@@ -10,17 +10,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.model.Course;
 import com.example.datetimerecord.model.Student;
 import com.example.datetimerecord.viewmodel.CourseViewModel;
 import com.example.datetimerecord.viewmodel.StudentViewModel;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -38,7 +35,7 @@ public class StudentUpdateFragment extends Fragment {
     private Spinner mCourse_spinner;
 
     //vars
-    private volatile int mCoursePos =0;
+    private int mCoursePos = 0;
     private CourseViewModel mCourseViewModel;
     private StudentViewModel mStudentViewModel;
     private ArrayAdapter<String> mArrayAdapter;
@@ -66,10 +63,27 @@ public class StudentUpdateFragment extends Fragment {
         mCourse_spinner = view.findViewById(R.id.course_spinner);
         mStudentViewModel = ViewModelProviders.of(this).get(StudentViewModel.class);
         mCourseViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
+
+        if (getArguments() != null) {
+            Student student = getArguments().getParcelable("selected_student");
+            name_et.setText(Objects.requireNonNull(student).getName());
+            email_et.setText(student.getEmail());
+            contact_et.setText(String.valueOf(student.getContact()));
+            address_et.setText(student.getAddress());
+        }
+
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         mCourseViewModel.getAllCourse().observe(getViewLifecycleOwner(), new Observer<List<Course>>() {
             @Override
             public void onChanged(List<Course> courses) {
-                List<String> mCourseArrayList  = new ArrayList<>();
+                List<String> mCourseArrayList = new ArrayList<>();
                 mCoursePos = 0;
                 for (int i = 0; i < courses.size(); i++) {
                     Course course = courses.get(i);
@@ -80,56 +94,47 @@ public class StudentUpdateFragment extends Fragment {
                 mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 mCourse_spinner.setAdapter(mArrayAdapter);
 
-                if(getArguments()!=null){
-                    for(String x : mCourseArrayList){
-                        Log.d(COMMON_TAG,TAG+" x: "+x);
+                if (getArguments() != null) {
+                    for (String x : mCourseArrayList) {
+                        Log.d(COMMON_TAG, TAG + " x: " + x);
                         Student student = getArguments().getParcelable("selected_student");
-                        if(x.equals(student.getCourse())){
-                            Log.d(COMMON_TAG,TAG+" x equal: "+x+", mStudent course: "+student.getCourse());
-                            Log.d(COMMON_TAG,TAG+" mCoursePos: "+ mCoursePos);
+                        if (x.equals(Objects.requireNonNull(student).getCourse())) {
+                            Log.d(COMMON_TAG, TAG + " x equal: " + x + ", mStudent course: " + student.getCourse());
+                            Log.d(COMMON_TAG, TAG + " mCoursePos: " + mCoursePos);
                             mCourse_spinner.setSelection(mCoursePos);
                             break;
                         }
                         mCoursePos++;
                     }
-                }else{
+                } else {
                     mCourse_spinner.setSelection(mCoursePos);
                 }
             }
         });
 
-        if (getArguments() != null) {
-            Student student = getArguments().getParcelable("selected_student");
-            name_et.setText(student.getName());
-            email_et.setText(student.getEmail());
-            contact_et.setText(String.valueOf(student.getContact()));
-            address_et.setText(student.getAddress());
-        }
-
         studentUpdate_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
-                if(getArguments()!=null){
+
+                if (getArguments() != null) {
                     Student pStudent = getArguments().getParcelable("selected_student");
                     String name = name_et.getText().toString().trim();
                     String course = mCourse_spinner.getSelectedItem().toString();
                     String email = email_et.getText().toString().trim();
-                    String contact =contact_et.getText().toString().trim();
-                    String address =address_et.getText().toString().trim();
-                    String timestamp = pStudent.getTimestamp();
+                    String contact = contact_et.getText().toString().trim();
+                    String address = address_et.getText().toString().trim();
+                    String timestamp = Objects.requireNonNull(pStudent).getTimestamp();
                     int remaining = pStudent.getRemaining();
-                    Student student =new Student(name,course,email,contact,address,timestamp,remaining);
+                    Student student = new Student(name, course, email, contact, address, timestamp, remaining);
                     student.setT_id(pStudent.getT_id());
                     mStudentViewModel.update(student);
                     Toast.makeText(getActivity(), "Student successfully updated", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     Toast.makeText(getActivity(), "something wen't wrong", Toast.LENGTH_SHORT).show();
                 }
-              
+
             }
         });
-        return view;
     }
 
     @Override
@@ -137,5 +142,7 @@ public class StudentUpdateFragment extends Fragment {
         super.onDestroy();
         mCourseViewModel = null;
         mStudentViewModel = null;
+        mCourse_spinner = null;
+        mArrayAdapter = null;
     }
 }

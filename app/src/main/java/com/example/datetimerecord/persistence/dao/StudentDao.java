@@ -22,8 +22,8 @@ public interface StudentDao {
     @Delete
     void delete(Student student);
 
-    @Query("SELECT * FROM student_table ORDER BY name ASC")
-    LiveData<List<Student>> getAllTrainee();
+    @Query("SELECT * FROM student_table WHERE name LIKE :student ORDER BY name ASC")
+    LiveData<List<Student>> getAllTrainee(String student);
 
     @Query("UPDATE student_table SET remaining =:remaining,elapse_minute =:elapse_minute WHERE t_id=:id")
     void time_elapse(int id,int remaining,int elapse_minute);

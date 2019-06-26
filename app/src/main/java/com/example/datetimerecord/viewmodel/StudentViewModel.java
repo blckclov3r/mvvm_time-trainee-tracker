@@ -48,4 +48,8 @@ public class StudentViewModel extends AndroidViewModel {
     public List<Student> getStudentCourse(String course){
         return mRepository.getStudentCourse(course);
     }
+
+    public LiveData<List<Student>> setSearch(String search){
+        return mRepository.setSearch(search);
+    }
 }
