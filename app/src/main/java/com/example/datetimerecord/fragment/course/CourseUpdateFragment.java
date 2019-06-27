@@ -1,6 +1,7 @@
 package com.example.datetimerecord.fragment.course;
 
 import android.app.TimePickerDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.model.Course;
 import com.example.datetimerecord.model.Student;
+import com.example.datetimerecord.utils.LineEditText;
 import com.example.datetimerecord.viewmodel.CourseViewModel;
 import com.example.datetimerecord.viewmodel.StudentViewModel;
 
@@ -35,7 +37,7 @@ public class CourseUpdateFragment extends DialogFragment {
 
     private EditText course_et;
     private EditText time_et;
-    private EditText description_et;
+    private LineEditText description_et;
     private Button update_btn;
     private Course mCourse;
     private CourseViewModel mCourseViewModel;
@@ -245,6 +247,9 @@ public class CourseUpdateFragment extends DialogFragment {
         if (mCourse.getC_id() > 0) {
             c.setC_id(mCourse.getC_id()); //must include the id
             mCourseViewModel.update(c);
+            update_btn.setClickable(false);
+            update_btn.setEnabled(false);
+            update_btn.setTextColor(Color.GRAY);
             Toast.makeText(getActivity(), "Successfully Updated", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getActivity(), "Something wen't wrong", Toast.LENGTH_SHORT).show();

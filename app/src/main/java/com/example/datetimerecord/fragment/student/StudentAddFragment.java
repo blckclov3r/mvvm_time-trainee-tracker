@@ -1,6 +1,7 @@
 package com.example.datetimerecord.fragment.student;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -18,6 +19,7 @@ import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.model.Course;
 import com.example.datetimerecord.model.Student;
+import com.example.datetimerecord.utils.LineEditText;
 import com.example.datetimerecord.viewmodel.CourseViewModel;
 import com.example.datetimerecord.viewmodel.StudentViewModel;
 
@@ -32,13 +34,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class StudentAddFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = "StudentAddFragment";
     private static final String COMMON_TAG = "mAppLog";
 
-    private EditText mName_et, mEmail_et, mContact_et, mAddress_et;
+    private EditText mName_et, mEmail_et, mContact_et;
+    private LineEditText mAddress_et;
     private Button addStudent_Btn;
 
     //vars
@@ -74,7 +78,7 @@ public class StudentAddFragment extends Fragment implements View.OnClickListener
             @Override
             public void onChanged(List<Course> courses) {
                 mArrayList = new ArrayList<>();
-                if (courses.size()>0) {
+                if (courses.size() > 0) {
                     for (int i = 0; i < courses.size(); i++) {
                         Course course = courses.get(i);
                         String course_name = course.getCourse();
@@ -94,7 +98,7 @@ public class StudentAddFragment extends Fragment implements View.OnClickListener
         mCourse_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position != -1) {
+                if (position != -1) {
                     mCourse = mArrayList.get(position);
                 }
             }
@@ -111,14 +115,14 @@ public class StudentAddFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        String name = mName_et.getText().toString().trim();
-        Log.d(COMMON_TAG,TAG+" mCourse: "+mCourse);
-        String email = mEmail_et.getText().toString().trim();
-        String contact = mContact_et.getText().toString().trim();
-        String address = mAddress_et.getText().toString().trim();
+        final String name = mName_et.getText().toString().trim();
+        Log.d(COMMON_TAG, TAG + " mCourse: " + mCourse);
+        final String email = mEmail_et.getText().toString().trim();
+        final String contact = mContact_et.getText().toString().trim();
+        final String address = mAddress_et.getText().toString().trim();
 
 
-        if(mCourse == null){
+        if (mCourse == null) {
             Toast("Course is required");
             return;
         }
@@ -149,21 +153,46 @@ public class StudentAddFragment extends Fragment implements View.OnClickListener
             return;
         }
 
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
-        String dateFormat = simpleDateFormat.format(new Date());
+        new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.CUSTOM_IMAGE_TYPE)
+                .setTitleText("Add Student")
+                .setContentText("Are you sure?")
+                .setConfirmText("Yes")
+                .setCustomImage(R.drawable._user_xml)
+                .setCancelText("No")
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.dismissWithAnimation();
+                        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+                        String dateFormat = simpleDateFormat.format(new Date());
+                        Course lCourse = mCourseViewModel.getCourse(mCourse);
+                        if(lCourse!=null) {
+                            int time = lCourse.getCourse_time();
+                            int timein_hour = lCourse.getTimein_hour();
+                            int timein_minute = lCourse.getTimein_minute();
+                            int timeout_hour = lCourse.getTimeout_hour();
+                            int timeout_minute = lCourse.getTimeout_minute();
 
-        Course lCourse = mCourseViewModel.getCourse(mCourse);
-        int time = lCourse.getCourse_time();
-        int timein_hour = lCourse.getTimein_hour();
-        int timein_minute = lCourse.getTimein_minute();
-        int timeout_hour = lCourse.getTimeout_hour();
-        int timeout_minute = lCourse.getTimeout_minute();
-
-        Student student = new Student(name, mCourse, email, contact, address, dateFormat, time, timein_hour, timein_minute, timeout_hour, timeout_minute);
-        mStudentViewModel.insert(student);
-        Log.d(COMMON_TAG, TAG + " onCLick, status: " + student.toString());
-        Toast.makeText(getActivity(), "Student successfully created", Toast.LENGTH_LONG).show();
-        setClear();
+                            Student student = new Student(name, mCourse, email, contact, address, dateFormat, time, timein_hour, timein_minute, timeout_hour, timeout_minute);
+                            mStudentViewModel.insert(student);
+                            Log.d(COMMON_TAG, TAG + " onCLick, status: " + student.toString());
+                            addStudent_Btn.setClickable(false);
+                            addStudent_Btn.setEnabled(false);
+                            addStudent_Btn.setTextColor(Color.GRAY);
+                            new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.SUCCESS_TYPE)
+                                    .setTitleText("Success")
+                                    .setContentText("Student successfully created")
+                                    .show();
+                            setClear();
+                        }else{
+                            new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.ERROR_TYPE)
+                                    .setTitleText("Error")
+                                    .setContentText("Student not created")
+                                    .show();
+                        }
+                    }
+                })
+                .show();
     }
 
     public void setClear() {

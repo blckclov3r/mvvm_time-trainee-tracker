@@ -71,11 +71,12 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
         mCourseViewModel.getAllCourse().observe(getViewLifecycleOwner(), new Observer<List<Course>>() {
             @Override
             public void onChanged(List<Course> courses) {
-                if(courses.size() > 0) {
+                if (courses.size() > 0) {
                     mCourseAdapter.setCourseList(courses);
-                }else{
+                } else {
                     Toast("List is empty");
                 }
+                Log.d(COMMON_TAG,TAG+" onChanged");
 
             }
         });
@@ -83,8 +84,8 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
         return view;
     }
 
-    private void Toast(String s){
-        Toast.makeText(getActivity(),s,Toast.LENGTH_LONG).show();
+    private void Toast(String s) {
+        Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -107,22 +108,24 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if(!newText.isEmpty()) {
+                if (!newText.isEmpty()) {
                     mCourseRepository.setSearch(newText).observe(getViewLifecycleOwner(), new Observer<List<Course>>() {
                         @Override
                         public void onChanged(List<Course> courses) {
                             mCourseAdapter.setCourseList(courses);
                         }
                     });
-                }else{
+                    Log.d(COMMON_TAG,TAG+" onChanged: if, onQueryTextChange");
+                } else {
                     mCourseViewModel.getAllCourse().observe(getViewLifecycleOwner(), new Observer<List<Course>>() {
                         @Override
                         public void onChanged(List<Course> courses) {
-                            if(courses.size() > 0) {
+                            if (courses.size() > 0) {
                                 mCourseAdapter.setCourseList(courses);
                             }
                         }
                     });
+                    Log.d(COMMON_TAG,TAG+" onChanged: else, onQueryTextChange");
                 }
                 return false;
             }

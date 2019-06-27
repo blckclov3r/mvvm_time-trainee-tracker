@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity
         mFragmentManager = getSupportFragmentManager();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setItemIconTintList(null);
 
         //course list listener
         CourseListFragment courseListFragment = new CourseListFragment();
@@ -156,12 +157,18 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
         if (mFragment != null) {
-            FragmentTransaction ft = mFragmentManager.beginTransaction();
-            ft.replace(R.id.main_frameLayout, mFragment);
-            for (int i = 0; i < mFragmentManager.getBackStackEntryCount(); i++) {
-                mFragmentManager.popBackStackImmediate();
-            }
-            ft.commitNow();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    FragmentTransaction ft = mFragmentManager.beginTransaction();
+                    ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+                    ft.replace(R.id.main_frameLayout, mFragment);
+                    for (int i = 0; i < mFragmentManager.getBackStackEntryCount(); i++) {
+                        mFragmentManager.popBackStackImmediate();
+                    }
+                    ft.commitNow();
+                }
+            },500);
         }
         hideSoftKeyboard();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -180,6 +187,7 @@ public class MainActivity extends AppCompatActivity
         }
         mFragment = CourseDetailFragment.newInstance(course);
         FragmentTransaction ft = mFragmentManager.beginTransaction();
+        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         ft.replace(R.id.main_frameLayout, mFragment);
         ft.addToBackStack(null);
         ft.commit();
@@ -194,6 +202,7 @@ public class MainActivity extends AppCompatActivity
         }
         mFragment = CourseUpdateFragment.newInstance(course);
         FragmentTransaction ft = mFragmentManager.beginTransaction();
+        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         ft.replace(R.id.main_frameLayout, mFragment);
         ft.addToBackStack(null);
         ft.commit();
@@ -211,6 +220,7 @@ public class MainActivity extends AppCompatActivity
         }
         mFragment = StudentDetailFragment.newInstance(student);
         FragmentTransaction ft = mFragmentManager.beginTransaction();
+        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         ft.replace(R.id.main_frameLayout, mFragment);
         ft.addToBackStack(null);
         ft.commit();
@@ -225,6 +235,7 @@ public class MainActivity extends AppCompatActivity
         }
         mFragment = StudentUpdateFragment.newInstance(student);
         FragmentTransaction ft = mFragmentManager.beginTransaction();
+        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         ft.replace(R.id.main_frameLayout, mFragment);
         ft.addToBackStack(null);
         ft.commit();
@@ -243,6 +254,7 @@ public class MainActivity extends AppCompatActivity
     public void onStudentDetailFragment(Student student) {
         mFragment = StudentTimeUpdateFragment.newInstance(student);
         FragmentTransaction ft = mFragmentManager.beginTransaction();
+        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         ft.replace(R.id.main_frameLayout, mFragment);
         ft.addToBackStack(null);
         if (mFragment != null) {

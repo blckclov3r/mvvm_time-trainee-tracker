@@ -9,11 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.model.Student;
 import com.example.datetimerecord.viewmodel.StudentViewModel;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -87,6 +85,11 @@ public class StudentTimeUpdateFragment extends Fragment {
                 mTimeout_hour = mStudent.getTimeout_hour();
                 mRemaining = mStudent.getRemaining();
                 mStudentId = mStudent.getT_id();
+                if(mRemaining <= 0){
+                    elapse_btn.setEnabled(false);
+                    elapse_btn.setClickable(false);
+                    elapse_btn.setTextColor(Color.GRAY);
+                }
             }
 
 
@@ -292,18 +295,18 @@ public class StudentTimeUpdateFragment extends Fragment {
         if (result <= 0) {
             result = 0;
             remaining_tv.setText(String.valueOf(result));
-            Log.d(COMMON_TAG, TAG + " mResult: " + result + ", mRemaining: " + mRemaining + ", mElapseTime: " + mElapseTime + ", elapse minute: " + mElapseMinute);
             mStudentViewModel.time_elapse(mStudentId, result, mElapseMinute);
         } else {
             remaining_tv.setText(String.valueOf(result));
             Toast.makeText(getActivity(), "Time Elapse: " + mElapseTime + " hr. and " + mElapseMinute + " min.", Toast.LENGTH_LONG).show();
-            Log.d(COMMON_TAG, TAG + " mResult: " + result + ", mRemaining: " + mRemaining + ", mElapseTime: " + mElapseTime + ", elapse minute: " + mElapseMinute);
             mStudentViewModel.time_elapse(mStudentId, result, mElapseMinute);
-            elapse_btn.setEnabled(false);
-            elapse_btn.setClickable(false);
-            elapse_btn.setTextColor(Color.GRAY);
         }
+        elapse_btn.setEnabled(false);
+        elapse_btn.setClickable(false);
+        elapse_btn.setTextColor(Color.GRAY);
+        Log.d(COMMON_TAG, TAG + " mResult: " + result + ", mRemaining: " + mRemaining + ", mElapseTime: " + mElapseTime + ", elapse minute: " + mElapseMinute);
     }
+
 
 
     private void timein_timeout_hour(int timein_hour, int timeout_hour) {

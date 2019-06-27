@@ -1,5 +1,6 @@
 package com.example.datetimerecord.fragment.student;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,23 +9,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.datetimerecord.R;
-import com.example.datetimerecord.model.Course;
 import com.example.datetimerecord.model.Student;
-import com.example.datetimerecord.viewmodel.CourseViewModel;
+import com.example.datetimerecord.utils.LineEditText;
 import com.example.datetimerecord.viewmodel.StudentViewModel;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 public class StudentUpdateFragment extends Fragment {
@@ -33,7 +29,8 @@ public class StudentUpdateFragment extends Fragment {
     private static final String TAG = "StudentUpdateFragment";
 
     //components
-    private EditText name_et, email_et, contact_et, address_et, course_et;
+    private EditText name_et, email_et, contact_et, course_et;
+    private LineEditText address_et;
     private Button studentUpdate_btn;
 
     //vars
@@ -104,6 +101,9 @@ public class StudentUpdateFragment extends Fragment {
                     Student student = new Student(name, course, email, contact, address, timestamp, remaining,timein_hour,timein_minute,timeout_hour,timeout_minute);
                     student.setT_id(pStudent.getT_id());
                     mStudentViewModel.update(student);
+                    studentUpdate_btn.setClickable(false);
+                    studentUpdate_btn.setEnabled(false);
+                    studentUpdate_btn.setTextColor(Color.GRAY);
                     Toast.makeText(getActivity(), "Student successfully updated", Toast.LENGTH_SHORT).show();
                     Log.d(COMMON_TAG, TAG + " student update log: " + student.toString());
                 } else {

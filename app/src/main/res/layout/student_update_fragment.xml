@@ -94,18 +94,18 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <EditText
+                <com.example.datetimerecord.utils.LineEditText
                     android:id="@+id/address_editText"
                     android:textSize="16sp"
-                    android:drawableEnd="@drawable/map_xml"
                     android:maxLength="499"
                     android:fontFamily="sans-serif"
+                    android:gravity="start"
                     android:layout_width="match_parent"
                     android:inputType="textMultiLine"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
                     android:hint="Address" />
             </com.google.android.material.textfield.TextInputLayout>
 

@@ -48,7 +48,7 @@
                     app:smsp_itemListHintBackgroundColor="#808080"
                     app:smsp_itemListHintColor="#FFFFFF"
                     app:smsp_multilineError="false"
-                    app:smsp_searchHeaderBackgroundColor="@color/colorPrimaryDark"
+                    app:smsp_searchHeaderBackgroundColor="@color/colorAccent"
                     app:smsp_searchHeaderText="Course Search"
                     app:smsp_searchHint="Search..."
                     app:smsp_selectedItemListColor="#1E438F" />
@@ -112,13 +112,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp">
 
-                <EditText
+                <com.example.datetimerecord.utils.LineEditText
                     android:id="@+id/address_editText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
                     android:fontFamily="sans-serif"
                     android:hint="Address"
-                    android:drawableEnd="@drawable/map_xml"
+                    android:gravity="start"
                     android:maxLength="499"
                     android:inputType="textMultiLine"
                     android:textSize="16sp" />

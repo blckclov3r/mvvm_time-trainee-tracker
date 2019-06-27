@@ -12,6 +12,13 @@
     <FrameLayout
         android:id="@+id/main_frameLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" >
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:background="@drawable/building_fifty"
+            android:scaleType="fitXY"
+            android:alpha=".3"
+            android:layout_height="match_parent" />
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

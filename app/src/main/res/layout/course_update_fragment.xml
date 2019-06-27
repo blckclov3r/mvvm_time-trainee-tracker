@@ -55,10 +55,10 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="12dp"
                 android:layout_height="wrap_content">
 
-                <EditText
+                <com.example.datetimerecord.utils.LineEditText
                     android:id="@+id/description_editText"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
@@ -186,7 +186,7 @@
                 android:background="@drawable/transparent_btn"
                 android:textColor="@color/textColor"
                 android:fontFamily="sans-serif"
-                android:text="Create"
+                android:text="Update"
                 android:textAllCaps="false" />
         </LinearLayout>
 

@@ -15,15 +15,18 @@ import android.widget.Toast;
 
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.model.Course;
+import com.example.datetimerecord.utils.LineEditText;
 import com.example.datetimerecord.viewmodel.CourseViewModel;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class CourseAddFragment extends Fragment implements View.OnClickListener {
 
@@ -31,7 +34,8 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
     private static final String TAG = "CourseAddFragment";
 
     //components
-    private EditText course_et, time_et, description_et;
+    private EditText course_et, time_et;
+    private LineEditText description_et;
     private Button addCourse_btn;
     private Course mCourse;
     private CourseViewModel mViewModel;
@@ -80,14 +84,14 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.addCourse_button: {
-                String course = course_et.getText().toString().trim();
+                final String course = course_et.getText().toString().trim();
                 String courseTime = time_et.getText().toString();
                 String desc = description_et.getText().toString().trim();
                 //timein & timeout vars
                 String timein_hour = mTimeIn_hour_tv.getText().toString().trim();
-                String timein_minute = mTimeInMinute_tv.getText().toString().trim();
+                final String timein_minute = mTimeInMinute_tv.getText().toString().trim();
                 String timeout_hour = mTimeOut_hour_tv.getText().toString().trim();
-                String timeout_minute = mTimeOut_minute_tv.getText().toString().trim();
+                final String timeout_minute = mTimeOut_minute_tv.getText().toString().trim();
 
                 if (course.isEmpty()) {
                     Toast.makeText(getActivity(), "Please fill out all fields", Toast.LENGTH_SHORT).show();
@@ -117,7 +121,7 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
                     return;
                 }
 
-                int time = Integer.parseInt(courseTime);
+                final int time = Integer.parseInt(courseTime);
                 if (desc.isEmpty()) {
                     desc = "Empty";
                 }
@@ -222,13 +226,38 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
                     }
                 }
 
-                mCourse = new Course(course, time, desc,
-                        Integer.parseInt(timein_hour), Integer.parseInt(timein_minute), Integer.parseInt(timeout_hour), Integer.parseInt(timeout_minute));
-                Log.d(COMMON_TAG, TAG + " mCourse: " + mCourse.toString());
-                mViewModel.insert(mCourse);
-                setClear();
-                Log.d(COMMON_TAG, TAG + " course: " + course.toString());
-                Toast.makeText(getActivity(), "Course successfully created", Toast.LENGTH_SHORT).show();
+                final String finalTimein_hour = timein_hour;
+                final String finalDesc = desc;
+                final String finalTimeout_hour = timeout_hour;
+                new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.CUSTOM_IMAGE_TYPE)
+                        .setTitleText("Add Course")
+                        .setContentText("Are you sure?")
+                        .setConfirmText("Yes")
+                        .setCustomImage(R.drawable.books_xml)
+                        .setCancelText("No")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.dismissWithAnimation();
+                                mCourse = new Course(course, time, finalDesc,
+                                        Integer.parseInt(finalTimein_hour), Integer.parseInt(timein_minute), Integer.parseInt(finalTimeout_hour), Integer.parseInt(timeout_minute));
+                                if(mCourse != null) {
+                                    Log.d(COMMON_TAG, TAG + " mCourse: " + mCourse.toString());
+                                    mViewModel.insert(mCourse);
+                                    setClear();
+                                    new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.SUCCESS_TYPE)
+                                            .setTitleText("Success")
+                                            .setContentText("Course successfully created")
+                                            .show();
+                                }else{
+                                    new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.ERROR_TYPE)
+                                            .setTitleText("Error")
+                                            .setContentText("Course not created")
+                                            .show();
+                                }
+                            }
+                        })
+                        .show();
             }
             break;
 
