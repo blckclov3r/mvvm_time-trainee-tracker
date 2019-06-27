@@ -28,7 +28,10 @@
             android:text="Name"
             android:id="@+id/studentName_textView"
             android:textSize="21sp"
+            android:ellipsize="end"
+            android:layout_marginEnd="4dp"
             android:textColor="#333"
+            android:singleLine="true"
             android:layout_toStartOf="@+id/student_id_textView"
             android:layout_alignParentStart="true"
             android:layout_width="wrap_content"
@@ -37,6 +40,8 @@
         <TextView
             android:id="@+id/course_textView"
             android:layout_below="@id/studentName_textView"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:text="Course"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

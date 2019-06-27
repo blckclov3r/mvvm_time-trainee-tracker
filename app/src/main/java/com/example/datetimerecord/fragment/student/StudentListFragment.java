@@ -53,6 +53,10 @@ public class StudentListFragment extends Fragment implements StudentRecyclerAdap
         return view;
     }
 
+    private void Toast(String s){
+        Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -61,6 +65,8 @@ public class StudentListFragment extends Fragment implements StudentRecyclerAdap
             public void onChanged(List<Student> students) {
                 if(students.size() > 0) {
                     mAdapter.setmStudentList(students);
+                }else{
+                   Toast("Empty");
                 }
             }
         });

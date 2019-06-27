@@ -2,17 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginStart="7dp"
-    android:layout_marginTop="7dp"
-    android:layout_marginEnd="7dp"
     android:orientation="vertical">
 
     <ScrollView
-        android:layout_marginTop="32dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <RelativeLayout
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="32dp"
+            android:paddingBottom="12dp"
+            android:layout_marginEnd="7dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -22,6 +22,8 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:gravity="center_horizontal"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-light"
                 android:text="Course Detail"
                 android:textColor="@color/textColor" />
 
@@ -42,6 +44,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+
                         android:textSize="16sp"
                         android:text="Id:"
                         android:textColor="@color/textColor" />
@@ -50,7 +54,9 @@
                         android:id="@+id/id_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textStyle="bold"
                         android:textSize="16sp"
+                        android:fontFamily="sans-serif-light"
                         android:text="1"
                         android:layout_marginStart="4dp"
                         android:textColor="@color/textColor" />
@@ -68,13 +74,16 @@
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
                         android:text="Course:"
+                        android:fontFamily="sans-serif-light"
                         android:textColor="@color/textColor" />
 
                     <TextView
                         android:id="@+id/course_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textStyle="bold"
                         android:textSize="16sp"
+                        android:fontFamily="sans-serif-light"
                         android:layout_marginStart="4dp"
                         android:text="null"
                         android:textColor="@color/textColor" />
@@ -91,6 +100,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
                         android:text="Time:"
                         android:textSize="16sp"
                         android:textColor="@color/textColor" />
@@ -100,6 +110,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif-light"
                         android:text="null"
                         android:textSize="16sp"
                         android:textColor="@color/textColor" />
@@ -115,6 +127,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
                         android:textSize="16sp"
                         android:text="From:"
                         android:textColor="@color/textColor" />
@@ -123,7 +136,9 @@
                         android:id="@+id/timein_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textStyle="bold"
                         android:layout_marginStart="4dp"
+                        android:fontFamily="sans-serif-light"
                         android:text="null"
                         android:textSize="16sp"
                         android:textColor="@color/textColor" />
@@ -131,6 +146,8 @@
                     <TextView
                         android:id="@+id/timein_term_textView"
                         android:layout_width="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:textStyle="bold"
                         android:layout_height="wrap_content"
                         android:text="null"
                         android:textSize="16sp"
@@ -149,6 +166,7 @@
                         android:layout_width="wrap_content"
                         android:textSize="16sp"
                         android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
                         android:text="To:"
                         android:textColor="@color/textColor" />
 
@@ -157,8 +175,10 @@
                         android:layout_marginStart="4dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textStyle="bold"
                         android:text="null"
                         android:textSize="16sp"
+                        android:fontFamily="sans-serif-light"
                         android:textColor="@color/textColor" />
 
                     <TextView
@@ -166,7 +186,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="null"
+                        android:textStyle="bold"
                         android:textSize="16sp"
+                        android:fontFamily="sans-serif-light"
                         android:layout_marginStart="4dp"
                         android:textColor="@color/textColor" />
                 </LinearLayout>
@@ -175,22 +197,25 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="7dp"
                     android:gravity="center_horizontal"
+                    android:layout_marginBottom="12dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:text="Description"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Extra"
                         android:textColor="@color/textColor" />
 
                     <TextView
                         android:id="@+id/description_textView"
                         android:layout_width="wrap_content"
-                        android:layout_marginTop="2dp"
                         android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:textStyle="bold"
                         android:textSize="16sp"
                         android:gravity="center"
                         android:text="null"

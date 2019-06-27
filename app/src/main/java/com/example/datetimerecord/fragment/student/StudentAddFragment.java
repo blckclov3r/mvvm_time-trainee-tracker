@@ -7,12 +7,14 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.model.Course;
 import com.example.datetimerecord.model.Student;
@@ -38,11 +40,14 @@ public class StudentAddFragment extends Fragment implements View.OnClickListener
 
     private EditText mName_et, mEmail_et, mContact_et, mAddress_et;
     private Button addStudent_Btn;
+
+    //vars
     private StudentViewModel mStudentViewModel;
-    private Spinner mCourse_spinner;
+    private SmartMaterialSpinner mCourse_spinner;
     private CourseViewModel mCourseViewModel;
     private ArrayAdapter<String> mArrayAdapter;
-    ArrayList<String> mArrayList;
+    private List<String> mArrayList;
+    private String mCourse;
 
     public StudentAddFragment() {
     }
@@ -80,8 +85,23 @@ public class StudentAddFragment extends Fragment implements View.OnClickListener
                     mArrayList.add(course_name);
                 }
                 mArrayAdapter = new ArrayAdapter<>(Objects.requireNonNull(getActivity()), android.R.layout.simple_spinner_item, mArrayList);
-                mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 mCourse_spinner.setAdapter(mArrayAdapter);
+            }
+        });
+
+        mCourse_spinner.setSearchable(true);
+        mCourse_spinner.setEnableSearchHeader(true);
+        mCourse_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position != -1) {
+                    mCourse = mArrayList.get(position);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
@@ -92,19 +112,24 @@ public class StudentAddFragment extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View v) {
         String name = mName_et.getText().toString().trim();
-        String course = mCourse_spinner.getSelectedItem().toString().trim();
+        Log.d(COMMON_TAG,TAG+" mCourse: "+mCourse);
         String email = mEmail_et.getText().toString().trim();
         String contact = mContact_et.getText().toString().trim();
         String address = mAddress_et.getText().toString().trim();
 
 
+        if(mCourse == null){
+            Toast("Course is required");
+            return;
+        }
+        if (mCourse.isEmpty() || mCourse.equals("Empty")) {
+            Toast("Course is required");
+            return;
+        }
+
         if (name.isEmpty()) {
             mName_et.requestFocus();
             Toast("Name is required");
-            return;
-        }
-        if (course.isEmpty() || course.equals("Empty")) {
-            Toast("Course is required");
             return;
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
@@ -127,14 +152,14 @@ public class StudentAddFragment extends Fragment implements View.OnClickListener
         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
         String dateFormat = simpleDateFormat.format(new Date());
 
-        Course lCourse = mCourseViewModel.getCourse(course);
+        Course lCourse = mCourseViewModel.getCourse(mCourse);
         int time = lCourse.getCourse_time();
         int timein_hour = lCourse.getTimein_hour();
         int timein_minute = lCourse.getTimein_minute();
         int timeout_hour = lCourse.getTimeout_hour();
         int timeout_minute = lCourse.getTimeout_minute();
 
-        Student student = new Student(name, course, email, contact, address, dateFormat, time, timein_hour, timein_minute, timeout_hour, timeout_minute);
+        Student student = new Student(name, mCourse, email, contact, address, dateFormat, time, timein_hour, timein_minute, timeout_hour, timeout_minute);
         mStudentViewModel.insert(student);
         Log.d(COMMON_TAG, TAG + " onCLick, status: " + student.toString());
         Toast.makeText(getActivity(), "Student successfully created", Toast.LENGTH_LONG).show();

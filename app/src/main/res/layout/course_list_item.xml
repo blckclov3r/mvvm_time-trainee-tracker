@@ -32,6 +32,7 @@
             android:ellipsize="end"
             android:layout_alignParentStart="true"
             android:textSize="21sp"
+            android:layout_marginEnd="4dp"
             android:textColor="#333"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -47,6 +48,8 @@
             android:id="@+id/description_textView"
             android:text="Description"
             android:layout_width="wrap_content"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:layout_below="@id/course_time_textView"
             android:layout_height="wrap_content" />
     </RelativeLayout>

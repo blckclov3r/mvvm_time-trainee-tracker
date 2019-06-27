@@ -4,56 +4,116 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_marginLeft="7dp"
-    android:layout_marginRight="7dp"
-    android:layout_marginStart="7dp"
-    android:layout_marginEnd="7dp"
     android:layout_height="match_parent">
 
 
-    <Spinner
-        android:id="@+id/course_spinner"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/name_editText"
-        android:layout_marginTop="12dp"
-        android:layout_width="match_parent"
-        android:inputType="textPersonName"
-        android:hint="name"
-        android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="32dp"
+            android:paddingBottom="12dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginEnd="7dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/email_editText"
-        android:hint="email"
-        android:inputType="textEmailAddress"
-        android:layout_width="match_parent"
-        android:layout_marginTop="4dp"
-        android:layout_height="wrap_content" />
+            <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                android:id="@+id/course_spinner"
+                android:layout_width="match_parent"
+                app:smsp_hint="Selected course"
+                app:smsp_hintColor="@color/colorPrimaryDark"
+                app:smsp_itemColor="#333"
+                app:smsp_searchHeaderBackgroundColor="@color/colorPrimaryDark"
+                app:smsp_searchHeaderText="Course Search"
+                app:smsp_searchHint="Search..."
+                app:smsp_itemListColor="#333"
+                app:smsp_isReSelectable="true"
+                app:smsp_itemListHintBackgroundColor="#808080"
+                app:smsp_itemListHintColor="#FFFFFF"
+                app:smsp_multilineError="false"
+                app:smsp_selectedItemListColor="#1E438F"
+                android:layout_height="wrap_content"/>
 
-    <EditText
-        android:id="@+id/contact_editText"
-        android:hint="contact"
-        android:inputType="phone"
-        android:layout_marginTop="4dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/name_editText"
+                    android:layout_width="match_parent"
+                    android:inputType="textPersonName"
+                    android:fontFamily="sans-serif"
+                    android:textSize="16sp"
+                    android:hint="Fullname"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/address_editText"
-        android:hint="Address"
-        android:layout_width="match_parent"
-        android:inputType="textMultiLine"
-        android:layout_height="wrap_content" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="4dp"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/email_editText"
+                    android:hint="Email"
+                    android:fontFamily="sans-serif"
+                    android:inputType="textEmailAddress"
+                    android:textSize="16sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/addStudent_button"
-        android:layout_width="match_parent"
-        android:text="Submit"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        android:textAllCaps="false"
-        android:layout_marginTop="12dp"
-        android:layout_height="wrap_content" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="4dp"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/contact_editText"
+                    android:hint="Contact"
+                    android:fontFamily="sans-serif"
+                    android:inputType="phone"
+                    android:textSize="16sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="4dp"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/address_editText"
+                    android:hint="Address"
+                    android:layout_width="match_parent"
+                    android:fontFamily="sans-serif"
+                    android:textSize="16sp"
+                    android:inputType="textMultiLine"
+
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/addStudent_button"
+                    android:layout_width="match_parent"
+                    android:text="Submit"
+                    android:fontFamily="sans-serif"
+                    android:textAllCaps="false"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
 </LinearLayout>

@@ -73,6 +73,8 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
             public void onChanged(List<Course> courses) {
                 if(courses.size() > 0) {
                     mCourseAdapter.setCourseList(courses);
+                }else{
+                    Toast("Empty");
                 }
 
             }
@@ -81,6 +83,9 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
         return view;
     }
 
+    private void Toast(String s){
+        Toast.makeText(getActivity(),s,Toast.LENGTH_LONG).show();
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

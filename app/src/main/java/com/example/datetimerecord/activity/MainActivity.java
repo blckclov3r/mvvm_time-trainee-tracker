@@ -206,6 +206,7 @@ public class MainActivity extends AppCompatActivity
         super.onDestroy();
         mFragmentManager=null;
         mFragment = null;
+        mToolbar = null;
     }
 
     @Override

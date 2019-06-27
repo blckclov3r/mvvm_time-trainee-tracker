@@ -2,9 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_marginStart="7dp"
-    android:layout_marginEnd="7dp">
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -14,41 +12,64 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginEnd="7dp"
             android:orientation="vertical"
             android:paddingBottom="12dp">
 
-
-            <EditText
-                android:id="@+id/course_editText"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:hint="Course" />
+                android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/time_editText"
+                <EditText
+                    android:id="@+id/course_editText"
+                    android:layout_width="match_parent"
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif"
+                    android:layout_height="wrap_content"
+                    android:hint="Course" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:maxLength="4"
-                android:enabled="false"
-                android:clickable="false"
-                android:hint="Time"
-                android:inputType="number" />
+                android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/description_editText"
+                <EditText
+                    android:id="@+id/time_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif"
+                    android:maxLength="4"
+                    android:enabled="false"
+                    android:clickable="false"
+                    android:hint="Time"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="12dp"
-                android:gravity="start"
-                android:hint="Description"
-                android:textAlignment="textStart" />
+                android:layout_marginTop="4dp"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/description_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:gravity="start"
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif"
+                    android:hint="Extra"
+                    android:textAlignment="textStart" />
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="12dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -153,9 +174,9 @@
                 android:id="@+id/update_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:fontFamily="sans-serif"
                 android:text="Create"
                 android:textAllCaps="false" />
         </LinearLayout>
