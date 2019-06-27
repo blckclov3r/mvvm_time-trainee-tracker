@@ -21,4 +21,7 @@ public interface LogDao {
 
     @Query("SELECT * FROM log_table ORDER BY log_id DESC")
     LiveData<List<AppLog>> getAllLog();
+
+    @Query("DELETE FROM log_table")
+    void deleteAllLog();
 }

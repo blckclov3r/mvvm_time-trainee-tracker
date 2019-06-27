@@ -35,6 +35,24 @@ public class LogRepository {
         return mAllLog;
     }
 
+    public void deleteAllLog(){
+        new DeleteAllLogAsyncTask(mLogDao).execute();
+    }
+
+    private static class DeleteAllLogAsyncTask extends AsyncTask<Void,Void,Void>{
+        private LogDao logDao;
+
+        public DeleteAllLogAsyncTask(LogDao logDao) {
+            this.logDao = logDao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            logDao.deleteAllLog();
+            return null;
+        }
+    }
+
     private static class InsertAsyncTask extends AsyncTask<AppLog,Void,Void>{
         private LogDao logDao;
 

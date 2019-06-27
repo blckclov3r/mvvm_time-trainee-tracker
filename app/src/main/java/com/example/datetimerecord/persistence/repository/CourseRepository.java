@@ -54,6 +54,23 @@ public class CourseRepository {
         return mCourseDao.getCourse();
     }
 
+    public void deleteAllCourse(){
+        new DeleteAllCourse(mCourseDao).execute();
+    }
+
+    public static class DeleteAllCourse extends AsyncTask<Void,Void,Void>{
+        private CourseDao courseDao;
+
+        public DeleteAllCourse(CourseDao courseDao) {
+            this.courseDao = courseDao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            courseDao.deleteAllCourse();
+            return null;
+        }
+    }
 
 
 

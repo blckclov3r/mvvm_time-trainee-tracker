@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.example.datetimerecord.R;
+import com.example.datetimerecord.activity.dialog.DeleteCustomDialog;
 import com.example.datetimerecord.fragment.HomeFragment;
 import com.example.datetimerecord.fragment.course.CourseAddFragment;
 import com.example.datetimerecord.fragment.course.CourseDetailFragment;
@@ -109,7 +110,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.delete_menu) {
+            DeleteCustomDialog dialog = new DeleteCustomDialog();
+             dialog.show(getSupportFragmentManager(),null);
             return true;
         }
         if(id == R.id.log_menu){

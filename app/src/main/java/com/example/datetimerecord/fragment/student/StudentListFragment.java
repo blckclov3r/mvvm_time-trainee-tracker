@@ -78,8 +78,9 @@ public class StudentListFragment extends Fragment implements StudentRecyclerAdap
                 if (students.size() > 0) {
                     mAdapter.setmStudentList(students);
                 } else {
-                    new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.WARNING_TYPE)
+                    new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.CUSTOM_IMAGE_TYPE)
                             .setTitleText("Empty")
+                            .setCustomImage(R.drawable.user)
                             .setContentText("Student list is empty")
                             .show();
                 }

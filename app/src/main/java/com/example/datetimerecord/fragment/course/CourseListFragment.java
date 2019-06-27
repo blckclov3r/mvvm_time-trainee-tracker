@@ -82,8 +82,9 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
                 if (courses.size() > 0) {
                     mCourseAdapter.setCourseList(courses);
                 } else {
-                    new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.WARNING_TYPE)
+                    new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.CUSTOM_IMAGE_TYPE)
                             .setTitleText("Empty")
+                            .setCustomImage(R.drawable.books)
                             .setContentText("Course list is empty")
                             .show();
                 }

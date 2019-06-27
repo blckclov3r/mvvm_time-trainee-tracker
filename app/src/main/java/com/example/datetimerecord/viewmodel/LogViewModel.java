@@ -33,4 +33,8 @@ public class LogViewModel extends AndroidViewModel {
     public LiveData<List<AppLog>> getAllLog(){
         return mAllLog;
     }
+
+    public void deleteAllLog(){
+        mRepository.deleteAllLog();
+    }
 }

@@ -93,7 +93,7 @@ public class StudentUpdateFragment extends Fragment {
                         .setTitleText("Student Update")
                         .setContentText("Are you sure?")
                         .setConfirmText("Yes")
-                        .setCustomImage(R.drawable.user)
+                        .setCustomImage(R.drawable.database_refresh)
                         .setCancelText("No")
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
@@ -133,7 +133,7 @@ public class StudentUpdateFragment extends Fragment {
                                     Log.d(COMMON_TAG, TAG + " student update log: " + student.toString());
                                     @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
                                     String dateFormat = simpleDateFormat.format(new Date());
-                                    mLogViewModel.insert(new AppLog("Student successfully Updated id: "+pStudent.getT_id(),dateFormat));
+                                    mLogViewModel.insert(new AppLog("Student successfully Updated, student id: "+pStudent.getT_id(),dateFormat));
 
                                 } else {
                                     Toast.makeText(getActivity(), "something wen't wrong", Toast.LENGTH_SHORT).show();

@@ -3,17 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/building_fifty"
     android:layout_height="match_parent"
     tools:context=".activity.SplashActivity">
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:background="@drawable/building_fifty"
+        android:layout_width="match_parent"
+        android:scaleType="fitXY"
+        android:alpha=".3"
+        android:layout_height="match_parent" />
 
     <TextView
-        android:text="Trainee Time Tracker"
+        android:text="Lorem Ipsum"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:textColor="#000"
-        android:textSize="21sp"
+        android:layout_marginTop="60dp"
+        android:textColor="#333"
+        android:textSize="30dp"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+
+
+
 </RelativeLayout>

@@ -52,4 +52,7 @@ public class StudentViewModel extends AndroidViewModel {
     public LiveData<List<Student>> setSearch(String search){
         return mRepository.setSearch(search);
     }
+    public void deleteAllStudent(){
+        mRepository.deleteAllStudents();
+    }
 }

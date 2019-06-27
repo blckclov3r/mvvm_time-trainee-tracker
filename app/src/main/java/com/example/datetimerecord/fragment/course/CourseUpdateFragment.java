@@ -125,7 +125,22 @@ public class CourseUpdateFragment extends DialogFragment {
         update_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setUpdate_btn();
+
+                new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.CUSTOM_IMAGE_TYPE)
+                        .setTitleText("Course Update")
+                        .setContentText("Are you sure?")
+                        .setConfirmText("Yes")
+                        .setCustomImage(R.drawable.database_refresh)
+                        .setCancelText("No")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.dismissWithAnimation();
+                                setUpdate_btn();
+                            }
+                        })
+                        .show();
+
             }
         });
     }
@@ -140,18 +155,18 @@ public class CourseUpdateFragment extends DialogFragment {
         String timeout_minute = mTimeOut_minute_tv.getText().toString().trim();
 
 
-        if(course.isEmpty()){
+        if (course.isEmpty()) {
             course_et.requestFocus();
             return;
         }
-        if(time.isEmpty() || timein_hour.isEmpty() || timein_minute.isEmpty() || timeout_hour.isEmpty() || timeout_minute.isEmpty()){
+        if (time.isEmpty() || timein_hour.isEmpty() || timein_minute.isEmpty() || timeout_hour.isEmpty() || timeout_minute.isEmpty()) {
             new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.ERROR_TYPE)
                     .setTitleText("Error")
                     .setContentText("Something went wrong")
                     .show();
             @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
             String dateFormat = simpleDateFormat.format(new Date());
-            mLogViewModel.insert(new AppLog("There's something wrong in course update fragment",dateFormat));
+            mLogViewModel.insert(new AppLog("There's something wrong in course update fragment", dateFormat));
             return;
         }
 
@@ -283,7 +298,7 @@ public class CourseUpdateFragment extends DialogFragment {
                     .show();
             @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
             String dateFormat = simpleDateFormat.format(new Date());
-            mLogViewModel.insert(new AppLog("Course successfuly update, name: "+course,dateFormat));
+            mLogViewModel.insert(new AppLog("Course successfuly update, name: " + course, dateFormat));
         } else {
             new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.ERROR_TYPE)
                     .setTitleText("Error")
@@ -291,7 +306,7 @@ public class CourseUpdateFragment extends DialogFragment {
                     .show();
             @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
             String dateFormat = simpleDateFormat.format(new Date());
-            mLogViewModel.insert(new AppLog("There's something wrong in course update fragment"+course,dateFormat));
+            mLogViewModel.insert(new AppLog("There's something wrong in course update fragment" + course, dateFormat));
             return;
         }
     }
@@ -549,20 +564,20 @@ public class CourseUpdateFragment extends DialogFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        course_et=null;
-        time_et=null;
-        description_et=null;
-        update_btn=null;
-        mCourse=null;
-        mCourseViewModel=null;
-        mTimeIn_btn=null;
-        mTimeOut_btn=null;
-        mTimeIn_hour_tv=null;
-        mTimeInMinute_tv=null;
-        mTimeOut_hour_tv=null;
-        mTimeOut_minute_tv=null;
-        mTimein_term_tv=null;
-        mTimeout_term_tv=null;
-        mStudentViewModel=null;
+        course_et = null;
+        time_et = null;
+        description_et = null;
+        update_btn = null;
+        mCourse = null;
+        mCourseViewModel = null;
+        mTimeIn_btn = null;
+        mTimeOut_btn = null;
+        mTimeIn_hour_tv = null;
+        mTimeInMinute_tv = null;
+        mTimeOut_hour_tv = null;
+        mTimeOut_minute_tv = null;
+        mTimein_term_tv = null;
+        mTimeout_term_tv = null;
+        mStudentViewModel = null;
     }
 }

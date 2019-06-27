@@ -34,5 +34,7 @@ public interface StudentDao {
     @Query("SELECT * FROM student_table WHERE course=:course")
     List<Student> getStudentCourse(String course);
 
+    @Query("DELETE FROM student_table")
+    void deleteAllStudents();
 
 }
