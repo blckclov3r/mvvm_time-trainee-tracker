@@ -1,8 +1,13 @@
 package com.example.datetimerecord.activity;
 
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.fragment.HomeFragment;
@@ -18,6 +23,8 @@ import com.example.datetimerecord.fragment.student.StudentUpdateFragment;
 import com.example.datetimerecord.model.Course;
 import com.example.datetimerecord.model.Student;
 import com.google.android.material.navigation.NavigationView;
+
+import java.io.File;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,24 +44,26 @@ public class MainActivity extends AppCompatActivity
     private Fragment mFragment = null;
 
     //component
-    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
 
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+                WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         mFragmentManager = getSupportFragmentManager();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        mToolbar.setTitle("Trainee Time Tracker");
 
         //course list listener
         CourseListFragment courseListFragment = new CourseListFragment();
@@ -101,25 +110,44 @@ public class MainActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.nav_home:
+            case R.id.nav_home: {
                 mFragment = new HomeFragment();
-                break;
-            case R.id.nav_add:
+            }
+            break;
+            case R.id.nav_add: {
                 mFragment = new StudentAddFragment();
-                break;
-            case R.id.nav_student_list:
+            }
+            break;
+            case R.id.nav_student_list: {
                 mFragment = new StudentListFragment();
-                break;
-            case R.id.nav_course_list:
+            }
+            break;
+            case R.id.nav_course_list: {
                 mFragment = new CourseListFragment();
-                break;
-            case R.id.nav_add_course:
+            }
+            break;
+            case R.id.nav_add_course: {
                 mFragment = new CourseAddFragment();
+            }
+            break;
+            case R.id.nav_share:
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        ApplicationInfo app = getApplicationContext().getApplicationInfo();
+                        String filePath = app.sourceDir;
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("*/*");
+                        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(filePath)));
+                        startActivity(Intent.createChooser(intent, "Share app via"));
+                    }
+                });
                 break;
             default:
                 break;
@@ -204,9 +232,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mFragmentManager=null;
+        mFragmentManager = null;
         mFragment = null;
-        mToolbar = null;
     }
 
     @Override

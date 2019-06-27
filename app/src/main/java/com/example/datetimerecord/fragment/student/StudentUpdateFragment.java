@@ -83,6 +83,8 @@ public class StudentUpdateFragment extends Fragment {
             public void onClick(View v) {
 
                 if (getArguments() != null) {
+                    int timein_hour,timein_minute;
+                    int timeout_hour,timeout_minute;
                     Student pStudent = getArguments().getParcelable("selected_student");
                     String name = name_et.getText().toString().trim();
                     String course = course_et.getText().toString().trim();
@@ -91,7 +93,15 @@ public class StudentUpdateFragment extends Fragment {
                     String address = address_et.getText().toString().trim();
                     String timestamp = Objects.requireNonNull(pStudent).getTimestamp();
                     int remaining = pStudent.getRemaining();
-                    Student student = new Student(name, course, email, contact, address, timestamp, remaining);
+
+                    //timein and timeout
+                    timein_hour = pStudent.getTimein_hour();
+                    timein_minute = pStudent.getTimein_minute();
+                    timeout_hour = pStudent.getTimeout_hour();
+                    timeout_minute = pStudent.getTimeout_minute();
+
+
+                    Student student = new Student(name, course, email, contact, address, timestamp, remaining,timein_hour,timein_minute,timeout_hour,timeout_minute);
                     student.setT_id(pStudent.getT_id());
                     mStudentViewModel.update(student);
                     Toast.makeText(getActivity(), "Student successfully updated", Toast.LENGTH_SHORT).show();

@@ -98,19 +98,18 @@
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+
+            <Button
+                android:id="@+id/addStudent_button"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/transparent_btn"
                 android:layout_width="match_parent"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
-                android:layout_height="wrap_content">
-                <Button
-                    android:id="@+id/addStudent_button"
-                    android:layout_width="match_parent"
-                    android:text="Submit"
-                    android:fontFamily="sans-serif"
-                    android:textAllCaps="false"
-                    android:layout_height="wrap_content" />
-            </com.google.android.material.textfield.TextInputLayout>
+                android:textColor="@color/textColor"
+                android:text="Submit"
+                android:fontFamily="sans-serif"
+                android:textAllCaps="false"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
     </ScrollView>

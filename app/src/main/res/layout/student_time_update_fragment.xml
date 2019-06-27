@@ -347,10 +347,12 @@
                 android:text="Update"
                 android:textAllCaps="false"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="16dp"
                 android:layout_width="match_parent"
+                android:background="@drawable/transparent_btn"
+                android:textColor="@color/textColor"
                 android:fontFamily="sans-serif"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="30dp"
                 android:layout_height="wrap_content" />
 
 

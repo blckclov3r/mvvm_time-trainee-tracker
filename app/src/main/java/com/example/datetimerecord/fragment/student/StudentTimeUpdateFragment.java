@@ -122,7 +122,13 @@ public class StudentTimeUpdateFragment extends Fragment {
                     setElapseTime(Integer.parseInt(timein_hour), mTimein_minute, Integer.parseInt(timeout_hour), mTimeout_minute);
                 }
             });
+        }else{
+            Toast("Something went wrong");
         }
+    }
+
+    private void Toast(String s){
+        Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();;
     }
 
     private void setElapseTime(int timein_hour, int timein_minute, int timeout_hour, int timeout_minute) {

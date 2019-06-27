@@ -98,20 +98,18 @@
                     android:hint="Address" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+
+            <Button
+                android:id="@+id/studentUpdatet_button"
                 android:layout_width="match_parent"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
-                android:layout_height="wrap_content">
-                <Button
-                    android:id="@+id/studentUpdatet_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif"
-                    android:layout_marginTop="12dp"
-                    android:text="Update"
-                    android:textAllCaps="false" />
-            </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/transparent_btn"
+                android:textColor="@color/textColor"
+                android:text="Update"
+                android:textAllCaps="false" />
         </LinearLayout>
     </ScrollView>
 

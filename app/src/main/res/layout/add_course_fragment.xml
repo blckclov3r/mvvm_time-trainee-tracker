@@ -42,7 +42,7 @@
                     android:maxLength="4"
                     android:fontFamily="sans-serif"
                     android:textSize="16sp"
-                    android:hint="Maximum hours"
+                    android:hint="Maximum"
                     android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -172,10 +172,11 @@
                 android:id="@+id/addCourse_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:fontFamily="sans-serif"
-                android:layout_marginBottom="12dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/transparent_btn"
+                android:fontFamily="monospace"
                 android:text="Create"
+                android:layout_marginBottom="30dp"
                 android:textAllCaps="false" />
         </LinearLayout>
 
