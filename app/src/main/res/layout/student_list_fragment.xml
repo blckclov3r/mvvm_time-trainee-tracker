@@ -16,6 +16,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/student_recyclerView"
         tools:listitem="@layout/student_list_item"
+        android:background="#ccc"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

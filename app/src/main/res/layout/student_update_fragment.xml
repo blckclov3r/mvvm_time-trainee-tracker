@@ -32,7 +32,10 @@
                     android:textSize="16sp"
                     android:clickable="false"
                     android:enabled="false"
+                    android:inputType="textPersonName"
                     android:fontFamily="sans-serif"
+                    android:maxLength="45"
+                    android:drawableEnd="@drawable/books_xml"
                     android:hint="Course Enrolled"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -49,6 +52,8 @@
                     android:layout_width="match_parent"
                     android:textSize="16sp"
                     android:inputType="textPersonName"
+                    android:maxLength="45"
+                    android:drawableEnd="@drawable/_user_xml"
                     android:fontFamily="sans-serif"
                     android:layout_height="wrap_content"
                     android:hint="Fullname" />
@@ -64,6 +69,8 @@
                     android:textSize="16sp"
                     android:fontFamily="sans-serif"
                     android:inputType="textEmailAddress"
+                    android:maxLength="50"
+                    android:drawableEnd="@drawable/envelope_xml"
                     android:layout_height="wrap_content"
                     android:hint="Email Address" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -80,6 +87,8 @@
                     android:textSize="16sp"
                     android:inputType="number"
                     android:fontFamily="sans-serif"
+                    android:maxLength="24"
+                    android:drawableEnd="@drawable/tele_xml"
                     android:layout_height="wrap_content"
                     android:hint="Contact Number" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -91,6 +100,8 @@
                 <EditText
                     android:id="@+id/address_editText"
                     android:textSize="16sp"
+                    android:drawableEnd="@drawable/map_xml"
+                    android:maxLength="499"
                     android:fontFamily="sans-serif"
                     android:layout_width="match_parent"
                     android:inputType="textMultiLine"

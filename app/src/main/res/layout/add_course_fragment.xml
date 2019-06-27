@@ -18,6 +18,8 @@
             android:orientation="vertical"
             android:paddingBottom="12dp">
 
+
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -25,6 +27,10 @@
                     android:id="@+id/course_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/books_xml"
+                    android:inputType="textPersonName"
+                    android:maxLength="45"
+                    android:singleLine="true"
                     android:fontFamily="sans-serif"
                     android:textSize="16sp"
                     android:hint="Course" />
@@ -40,6 +46,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLength="4"
+                    android:drawableEnd="@drawable/hourglass_xml"
                     android:fontFamily="sans-serif"
                     android:textSize="16sp"
                     android:hint="Maximum"
@@ -58,6 +65,7 @@
                     android:layout_height="200dp"
                     android:fontFamily="sans-serif"
                     android:textSize="16sp"
+                    android:maxLength="499"
                     android:gravity="start"
                     android:hint="Extra"
                     android:textAlignment="textStart" />
@@ -73,10 +81,11 @@
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/timeIn_button"
-                    android:layout_width="42dp"
-                    android:layout_height="40dp"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:scaleType="fitXY"
                     android:background="?attr/selectableItemBackground"
-                    android:src="@drawable/ic_timer" />
+                    android:src="@drawable/stopwatch_xml_up" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -112,7 +121,7 @@
 
                 <TextView
                     android:id="@+id/timein_term_textView"
-                    android:text=""
+                    android:text="am"
                     android:layout_marginStart="4dp"
                     android:textColor="@color/textColor"
                     android:layout_width="wrap_content"
@@ -121,10 +130,11 @@
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:layout_marginStart="10dp"
                     android:id="@+id/timeOut_button"
-                    android:layout_width="42dp"
-                    android:layout_height="40dp"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:scaleType="fitXY"
                     android:background="?attr/selectableItemBackground"
-                    android:src="@drawable/ic_timer" />
+                    android:src="@drawable/stopwatch_xml_down" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -160,7 +170,7 @@
 
                 <TextView
                     android:id="@+id/timeout_term_textView"
-                    android:text=""
+                    android:text="am"
                     android:textColor="@color/textColor"
                     android:layout_marginStart="4dp"
                     android:layout_width="wrap_content"

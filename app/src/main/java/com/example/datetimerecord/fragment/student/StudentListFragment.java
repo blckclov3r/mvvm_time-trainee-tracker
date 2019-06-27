@@ -66,7 +66,7 @@ public class StudentListFragment extends Fragment implements StudentRecyclerAdap
                 if(students.size() > 0) {
                     mAdapter.setmStudentList(students);
                 }else{
-                   Toast("Empty");
+                   Toast("List is empty");
                 }
             }
         });
@@ -86,6 +86,12 @@ public class StudentListFragment extends Fragment implements StudentRecyclerAdap
             }
         }).attachToRecyclerView(mRecyclerView);
 
+        searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchView.setIconified(false);
+            }
+        });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

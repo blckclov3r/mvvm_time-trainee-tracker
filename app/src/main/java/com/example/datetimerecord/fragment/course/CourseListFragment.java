@@ -74,7 +74,7 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
                 if(courses.size() > 0) {
                     mCourseAdapter.setCourseList(courses);
                 }else{
-                    Toast("Empty");
+                    Toast("List is empty");
                 }
 
             }
@@ -93,7 +93,12 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
         Log.d(COMMON_TAG, TAG + " onViewCreated invoked");
 
         mStudents = new ArrayList<>(mStudentViewModel.getStudent());
-
+        searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchView.setIconified(false);
+            }
+        });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

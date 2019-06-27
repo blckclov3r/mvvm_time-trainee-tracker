@@ -31,17 +31,24 @@
 
 
             <LinearLayout
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="12dp"
                 android:orientation="horizontal"
-                android:gravity="center_horizontal"
+                android:gravity="center_horizontal|center_vertical"
                 android:textAlignment="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:src="@drawable/_search_xml"
+                    android:layout_width="20dp"
+                    android:layout_height="18dp" />
+
                 <TextView
                     android:text="Id: "
                     android:textColor="@color/textColor"
                     android:layout_width="wrap_content"
                     android:textSize="16sp"
+                    android:layout_marginStart="4dp"
                     android:fontFamily="sans-serif-light"
                     android:layout_height="wrap_content" />
                 <TextView
@@ -63,11 +70,18 @@
                 android:textAlignment="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:src="@drawable/_user_xml"
+                    android:layout_width="20dp"
+                    android:layout_height="18dp" />
+
                 <TextView
                     android:text="Name:"
                     android:textColor="@color/textColor"
                     android:fontFamily="sans-serif-light"
                     android:layout_width="wrap_content"
+                    android:layout_marginStart="4dp"
                     android:textSize="16sp"
                     android:layout_height="wrap_content" />
                 <TextView
@@ -87,13 +101,20 @@
             <LinearLayout
                 android:layout_marginTop="7dp"
                 android:orientation="horizontal"
-                android:gravity="center_horizontal"
+                android:gravity="center_horizontal|center_vertical"
                 android:textAlignment="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:src="@drawable/books_xml"
+                    android:layout_width="20dp"
+                    android:layout_height="18dp" />
+
                 <TextView
                     android:text="Course:"
                     android:textColor="@color/textColor"
+                    android:layout_marginStart="4dp"
                     android:fontFamily="sans-serif-light"
                     android:layout_width="wrap_content"
                     android:textSize="16sp"
@@ -113,15 +134,21 @@
             <LinearLayout
                 android:layout_marginTop="7dp"
                 android:orientation="horizontal"
-                android:gravity="center_horizontal"
+                android:gravity="center_horizontal|center_vertical"
                 android:textAlignment="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:src="@drawable/envelope_xml"
+                    android:layout_width="20dp"
+                    android:layout_height="18dp" />
                 <TextView
                     android:text="Email:"
                     android:textColor="@color/textColor"
                     android:textSize="16sp"
                     android:fontFamily="sans-serif-light"
+                    android:layout_marginStart="4dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
@@ -140,15 +167,21 @@
             <LinearLayout
                 android:layout_marginTop="7dp"
                 android:orientation="horizontal"
-                android:gravity="center_horizontal"
+                android:gravity="center_horizontal|center_vertical"
                 android:textAlignment="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:src="@drawable/tele_xml"
+                    android:layout_width="20dp"
+                    android:layout_height="18dp" />
                 <TextView
                     android:text="Contact:"
                     android:textColor="@color/textColor"
                     android:textSize="16sp"
                     android:fontFamily="sans-serif-light"
+                    android:layout_marginStart="4dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
@@ -167,14 +200,19 @@
             <LinearLayout
                 android:layout_marginTop="7dp"
                 android:orientation="horizontal"
-                android:gravity="center_horizontal"
+                android:gravity="center_horizontal|center_vertical"
                 android:textAlignment="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:src="@drawable/map_xml"
+                    android:layout_width="20dp"
+                    android:layout_height="18dp" />
                 <TextView
                     android:text="Address:"
                     android:layout_width="wrap_content"
                     android:textColor="@color/textColor"
+                    android:layout_marginStart="4dp"
                     android:fontFamily="sans-serif-light"
                     android:textSize="16sp"
                     android:layout_height="wrap_content" />
@@ -195,15 +233,22 @@
             <LinearLayout
                 android:layout_marginTop="7dp"
                 android:orientation="horizontal"
-                android:gravity="center_horizontal"
+                android:gravity="center_horizontal|center_vertical"
                 android:textAlignment="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:src="@drawable/balance_xml"
+                    android:layout_width="20dp"
+                    android:layout_height="18dp" />
+
                 <TextView
                     android:text="Remaining:"
                     android:textColor="@color/textColor"
                     android:layout_width="wrap_content"
                     android:fontFamily="sans-serif-light"
+                    android:layout_marginStart="4dp"
                     android:textSize="16sp"
                     android:layout_height="wrap_content" />
                 <TextView
@@ -222,13 +267,18 @@
             <LinearLayout
                 android:layout_marginTop="7dp"
                 android:orientation="horizontal"
-                android:gravity="center_horizontal"
+                android:gravity="center_horizontal|center_vertical"
                 android:textAlignment="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:src="@drawable/hourglass_xml"
+                    android:layout_width="20dp"
+                    android:layout_height="18dp" />
                 <TextView
                     android:text="Timestamp:"
                     android:textSize="16sp"
+                    android:layout_marginStart="4dp"
                     android:textColor="@color/textColor"
                     android:layout_width="wrap_content"
                     android:fontFamily="sans-serif-light"

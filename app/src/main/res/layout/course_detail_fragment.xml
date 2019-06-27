@@ -32,20 +32,27 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/head"
                 android:layout_marginTop="7dp"
+                android:gravity="center_vertical"
                 android:orientation="vertical"
                 android:paddingBottom="10dp">
 
                 <LinearLayout
+                    android:layout_marginTop="12dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:orientation="horizontal">
 
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:src="@drawable/_search_xml"
+                        android:layout_width="20dp"
+                        android:layout_height="16dp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-
+                        android:layout_marginStart="4dp"
                         android:textSize="16sp"
                         android:text="Id:"
                         android:textColor="@color/textColor" />
@@ -69,11 +76,17 @@
                     android:gravity="center_horizontal"
                     android:orientation="horizontal">
 
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:src="@drawable/books_xml"
+                        android:layout_width="20dp"
+                        android:layout_height="16dp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
                         android:text="Course:"
+                        android:layout_marginStart="4dp"
                         android:fontFamily="sans-serif-light"
                         android:textColor="@color/textColor" />
 
@@ -96,12 +109,17 @@
                     android:layout_marginTop="7dp"
                     android:gravity="center_horizontal"
                     android:orientation="horizontal">
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:src="@drawable/balance_xml"
+                        android:layout_width="20dp"
+                        android:layout_height="16dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-                        android:text="Time:"
+                        android:text="Maximum:"
+                        android:layout_marginStart="4dp"
                         android:textSize="16sp"
                         android:textColor="@color/textColor" />
 
@@ -124,8 +142,14 @@
                     android:gravity="center_horizontal"
                     android:orientation="horizontal">
 
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:src="@drawable/stopwatch_xml_up"
+                        android:layout_width="20dp"
+                        android:layout_height="16dp" />
+
                     <TextView
                         android:layout_width="wrap_content"
+                        android:layout_marginStart="4dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:textSize="16sp"
@@ -162,11 +186,17 @@
                     android:gravity="center_horizontal"
                     android:orientation="horizontal">
 
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:src="@drawable/stopwatch_xml_down"
+                        android:layout_width="20dp"
+                        android:layout_height="16dp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:textSize="16sp"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
+                        android:layout_marginStart="4dp"
                         android:text="To:"
                         android:textColor="@color/textColor" />
 
@@ -201,6 +231,8 @@
                     android:gravity="center_horizontal"
                     android:layout_marginBottom="12dp"
                     android:orientation="vertical">
+
+
 
                     <TextView
                         android:layout_width="wrap_content"

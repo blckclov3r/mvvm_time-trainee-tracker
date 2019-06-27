@@ -30,21 +30,36 @@
             android:textSize="21sp"
             android:ellipsize="end"
             android:layout_marginEnd="4dp"
-            android:textColor="#333"
+            android:textColor="@color/textColor"
             android:singleLine="true"
             android:layout_toStartOf="@+id/student_id_textView"
             android:layout_alignParentStart="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/course_textView"
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_below="@id/studentName_textView"
-            android:singleLine="true"
-            android:ellipsize="end"
-            android:text="Course"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Enrolled:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/course_textView"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:text=""
+                android:textColor="@color/textColor"
+                android:layout_marginStart="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
 
     </RelativeLayout>
 

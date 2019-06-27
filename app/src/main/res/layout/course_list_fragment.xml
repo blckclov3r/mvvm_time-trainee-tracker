@@ -16,6 +16,7 @@
         android:id="@+id/course_recyclerView"
         android:orientation="vertical"
         android:layout_width="match_parent"
+        android:background="#ccc"
         tools:listitem="@layout/course_list_item"
         android:layout_height="match_parent"/>
 
