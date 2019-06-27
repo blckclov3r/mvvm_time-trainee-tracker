@@ -1,5 +1,6 @@
 package com.example.datetimerecord.fragment.course;
 
+import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,20 +16,26 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.datetimerecord.R;
+import com.example.datetimerecord.model.AppLog;
 import com.example.datetimerecord.model.Course;
 import com.example.datetimerecord.model.Student;
 import com.example.datetimerecord.utils.LineEditText;
 import com.example.datetimerecord.viewmodel.CourseViewModel;
+import com.example.datetimerecord.viewmodel.LogViewModel;
 import com.example.datetimerecord.viewmodel.StudentViewModel;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProviders;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class CourseUpdateFragment extends DialogFragment {
 
@@ -47,6 +54,7 @@ public class CourseUpdateFragment extends DialogFragment {
 
     private volatile int mHour, mMinute;
     private StudentViewModel mStudentViewModel;
+    private LogViewModel mLogViewModel;
 
     public CourseUpdateFragment() {
     }
@@ -79,6 +87,8 @@ public class CourseUpdateFragment extends DialogFragment {
 
         mStudentViewModel = ViewModelProviders.of(this).get(StudentViewModel.class);
         mCourseViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
+        mLogViewModel = ViewModelProviders.of(this).get(LogViewModel.class);
+
         Log.d(COMMON_TAG, TAG + " onCreateView");
         if (getArguments() != null) {
             mCourse = getArguments().getParcelable("selected_course");
@@ -128,6 +138,22 @@ public class CourseUpdateFragment extends DialogFragment {
         String timein_minute = mTimeInMinute_tv.getText().toString().trim();
         String timeout_hour = mTimeOut_hour_tv.getText().toString().trim();
         String timeout_minute = mTimeOut_minute_tv.getText().toString().trim();
+
+
+        if(course.isEmpty()){
+            course_et.requestFocus();
+            return;
+        }
+        if(time.isEmpty() || timein_hour.isEmpty() || timein_minute.isEmpty() || timeout_hour.isEmpty() || timeout_minute.isEmpty()){
+            new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.ERROR_TYPE)
+                    .setTitleText("Error")
+                    .setContentText("Something went wrong")
+                    .show();
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+            String dateFormat = simpleDateFormat.format(new Date());
+            mLogViewModel.insert(new AppLog("There's something wrong in course update fragment",dateFormat));
+            return;
+        }
 
 
         //timein reverse <-> 12hr to 24hr
@@ -237,6 +263,7 @@ public class CourseUpdateFragment extends DialogFragment {
         List<Student> studentList = mStudentViewModel.getStudentCourse(mCourse.getCourse());
         for (Student student : studentList) {
 //            student.setRemaining(Integer.parseInt(time)); //we don't set time it cause reset to the student remaining time
+            student.setCourse(course);
             student.setTimein_hour(Integer.parseInt(timein_hour));
             student.setTimeout_hour(Integer.parseInt(timeout_hour));
             student.setTimein_minute(Integer.parseInt(timein_minute));
@@ -250,9 +277,21 @@ public class CourseUpdateFragment extends DialogFragment {
             update_btn.setClickable(false);
             update_btn.setEnabled(false);
             update_btn.setTextColor(Color.GRAY);
-            Toast.makeText(getActivity(), "Successfully Updated", Toast.LENGTH_SHORT).show();
+            new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.SUCCESS_TYPE)
+                    .setTitleText("Course Update")
+                    .setContentText("Course successfully updated")
+                    .show();
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+            String dateFormat = simpleDateFormat.format(new Date());
+            mLogViewModel.insert(new AppLog("Course successfuly update, name: "+course,dateFormat));
         } else {
-            Toast.makeText(getActivity(), "Something wen't wrong", Toast.LENGTH_SHORT).show();
+            new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.ERROR_TYPE)
+                    .setTitleText("Error")
+                    .setContentText("Course not update")
+                    .show();
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+            String dateFormat = simpleDateFormat.format(new Date());
+            mLogViewModel.insert(new AppLog("There's something wrong in course update fragment"+course,dateFormat));
             return;
         }
     }

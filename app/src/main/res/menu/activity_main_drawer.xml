@@ -10,12 +10,12 @@
             android:title="Home" />
         <item
             android:id="@+id/nav_add"
-            android:icon="@drawable/_user_xml"
+            android:icon="@drawable/user"
             android:title="Add Student" />
 
         <item
             android:id="@+id/nav_add_course"
-            android:icon="@drawable/books_xml"
+            android:icon="@drawable/books"
             android:title="Add Course"/>
         <item
             android:id="@+id/nav_student_list"

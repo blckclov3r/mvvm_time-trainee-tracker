@@ -18,6 +18,7 @@ import com.example.datetimerecord.fragment.course.CourseAddFragment;
 import com.example.datetimerecord.fragment.course.CourseDetailFragment;
 import com.example.datetimerecord.fragment.course.CourseListFragment;
 import com.example.datetimerecord.fragment.course.CourseUpdateFragment;
+import com.example.datetimerecord.fragment.log.LogFragment;
 import com.example.datetimerecord.fragment.student.StudentAddFragment;
 import com.example.datetimerecord.fragment.student.StudentDetailFragment;
 import com.example.datetimerecord.fragment.student.StudentListFragment;
@@ -111,6 +112,18 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         }
+        if(id == R.id.log_menu){
+            if (mFragment != null) {
+                for (int i = 0; i < mFragmentManager.getBackStackEntryCount(); i++) {
+                    mFragmentManager.popBackStackImmediate();
+                }
+            }
+            mFragment = new LogFragment();
+            FragmentTransaction ft = mFragmentManager.beginTransaction();
+            ft.replace(R.id.main_frameLayout, mFragment);
+            ft.addToBackStack(null);
+            ft.commit();
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -140,7 +153,7 @@ public class MainActivity extends AppCompatActivity
                 mFragment = new CourseAddFragment();
             }
             break;
-            case R.id.nav_share:
+            case R.id.nav_share: {
                 new Handler().post(new Runnable() {
                     @Override
                     public void run() {
@@ -152,23 +165,21 @@ public class MainActivity extends AppCompatActivity
                         startActivity(Intent.createChooser(intent, "Share app via"));
                     }
                 });
-                break;
-            default:
-                break;
+            }
+            break;
         }
         if (mFragment != null) {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     FragmentTransaction ft = mFragmentManager.beginTransaction();
-                    ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
                     ft.replace(R.id.main_frameLayout, mFragment);
                     for (int i = 0; i < mFragmentManager.getBackStackEntryCount(); i++) {
                         mFragmentManager.popBackStackImmediate();
                     }
                     ft.commitNow();
                 }
-            },500);
+            }, 250);
         }
         hideSoftKeyboard();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -187,7 +198,6 @@ public class MainActivity extends AppCompatActivity
         }
         mFragment = CourseDetailFragment.newInstance(course);
         FragmentTransaction ft = mFragmentManager.beginTransaction();
-        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         ft.replace(R.id.main_frameLayout, mFragment);
         ft.addToBackStack(null);
         ft.commit();
@@ -202,7 +212,6 @@ public class MainActivity extends AppCompatActivity
         }
         mFragment = CourseUpdateFragment.newInstance(course);
         FragmentTransaction ft = mFragmentManager.beginTransaction();
-        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         ft.replace(R.id.main_frameLayout, mFragment);
         ft.addToBackStack(null);
         ft.commit();
@@ -220,7 +229,6 @@ public class MainActivity extends AppCompatActivity
         }
         mFragment = StudentDetailFragment.newInstance(student);
         FragmentTransaction ft = mFragmentManager.beginTransaction();
-        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         ft.replace(R.id.main_frameLayout, mFragment);
         ft.addToBackStack(null);
         ft.commit();
@@ -235,7 +243,6 @@ public class MainActivity extends AppCompatActivity
         }
         mFragment = StudentUpdateFragment.newInstance(student);
         FragmentTransaction ft = mFragmentManager.beginTransaction();
-        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         ft.replace(R.id.main_frameLayout, mFragment);
         ft.addToBackStack(null);
         ft.commit();
@@ -254,7 +261,6 @@ public class MainActivity extends AppCompatActivity
     public void onStudentDetailFragment(Student student) {
         mFragment = StudentTimeUpdateFragment.newInstance(student);
         FragmentTransaction ft = mFragmentManager.beginTransaction();
-        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         ft.replace(R.id.main_frameLayout, mFragment);
         ft.addToBackStack(null);
         if (mFragment != null) {

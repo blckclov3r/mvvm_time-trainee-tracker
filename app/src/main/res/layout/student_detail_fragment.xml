@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:src="@drawable/_search_xml"
+                    android:src="@drawable/search"
                     android:layout_width="20dp"
                     android:layout_height="18dp" />
 
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:src="@drawable/_user_xml"
+                    android:src="@drawable/user"
                     android:layout_width="20dp"
                     android:layout_height="18dp" />
 
@@ -107,7 +107,7 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:src="@drawable/books_xml"
+                    android:src="@drawable/books"
                     android:layout_width="20dp"
                     android:layout_height="18dp" />
 
@@ -239,7 +239,7 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:src="@drawable/balance_xml"
+                    android:src="@drawable/balance"
                     android:layout_width="20dp"
                     android:layout_height="18dp" />
 

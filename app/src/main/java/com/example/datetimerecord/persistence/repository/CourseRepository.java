@@ -1,9 +1,10 @@
-package com.example.datetimerecord.persistence;
+package com.example.datetimerecord.persistence.repository;
 
 import android.app.Application;
 import android.os.AsyncTask;
 
 import com.example.datetimerecord.model.Course;
+import com.example.datetimerecord.persistence.MyDatabase;
 import com.example.datetimerecord.persistence.dao.CourseDao;
 
 import java.util.List;

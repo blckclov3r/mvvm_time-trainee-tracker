@@ -27,7 +27,7 @@
                     android:id="@+id/course_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableEnd="@drawable/books_xml"
+                    android:drawableEnd="@drawable/books"
                     android:inputType="textPersonName"
                     android:maxLength="45"
                     android:singleLine="true"

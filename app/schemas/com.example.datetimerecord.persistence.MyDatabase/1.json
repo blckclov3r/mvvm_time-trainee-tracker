@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "eb4300488a61a7c8ea809aa958403d86",
+    "identityHash": "c1f61ed85ae3e970ccfb7422b4047056",
     "entities": [
       {
         "tableName": "student_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`t_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `course` TEXT, `email` TEXT, `contact` TEXT, `address` TEXT, `created_timestamp` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`t_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `course` TEXT, `email` TEXT, `contact` TEXT, `address` TEXT, `timestamp` TEXT, `remaining` INTEGER NOT NULL, `timein_hour` INTEGER NOT NULL, `timein_minute` INTEGER NOT NULL, `timeout_hour` INTEGER NOT NULL, `timeout_minute` INTEGER NOT NULL, `elapse_minute` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "t_id",
@@ -46,9 +46,45 @@
           },
           {
             "fieldPath": "timestamp",
-            "columnName": "created_timestamp",
+            "columnName": "timestamp",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "remaining",
+            "columnName": "remaining",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timein_hour",
+            "columnName": "timein_hour",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timein_minute",
+            "columnName": "timein_minute",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timeout_hour",
+            "columnName": "timeout_hour",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timeout_minute",
+            "columnName": "timeout_minute",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "elapse_minute",
+            "columnName": "elapse_minute",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -62,7 +98,7 @@
       },
       {
         "tableName": "course_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`c_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `mcourse` TEXT, `course_time` INTEGER NOT NULL, `description` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`c_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `course` TEXT, `course_time` INTEGER NOT NULL, `description` TEXT, `timein_hour` INTEGER NOT NULL, `timein_minute` INTEGER NOT NULL, `timeout_hour` INTEGER NOT NULL, `timeout_minute` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "c_id",
@@ -72,7 +108,7 @@
           },
           {
             "fieldPath": "course",
-            "columnName": "mcourse",
+            "columnName": "course",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -87,6 +123,30 @@
             "columnName": "description",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "timein_hour",
+            "columnName": "timein_hour",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timein_minute",
+            "columnName": "timein_minute",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timeout_hour",
+            "columnName": "timeout_hour",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timeout_minute",
+            "columnName": "timeout_minute",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -97,12 +157,44 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "log_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`log_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `message` TEXT, `timestamp` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "log_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "message",
+            "columnName": "message",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "timestamp",
+            "columnName": "timestamp",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "log_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'eb4300488a61a7c8ea809aa958403d86')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c1f61ed85ae3e970ccfb7422b4047056')"
     ]
   }
 }

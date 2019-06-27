@@ -6,4 +6,8 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/log_menu"
+        android:title="Log"
+        app:showAsAction="never"/>
 </menu>

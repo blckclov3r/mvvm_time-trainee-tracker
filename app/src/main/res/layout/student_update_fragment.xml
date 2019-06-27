@@ -35,7 +35,7 @@
                     android:inputType="textPersonName"
                     android:fontFamily="sans-serif"
                     android:maxLength="45"
-                    android:drawableEnd="@drawable/books_xml"
+                    android:drawableEnd="@drawable/books"
                     android:hint="Course Enrolled"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -53,7 +53,7 @@
                     android:textSize="16sp"
                     android:inputType="textPersonName"
                     android:maxLength="45"
-                    android:drawableEnd="@drawable/_user_xml"
+                    android:drawableEnd="@drawable/user"
                     android:fontFamily="sans-serif"
                     android:layout_height="wrap_content"
                     android:hint="Fullname" />

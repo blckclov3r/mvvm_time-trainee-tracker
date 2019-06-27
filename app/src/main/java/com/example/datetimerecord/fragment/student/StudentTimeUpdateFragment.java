@@ -1,5 +1,6 @@
 package com.example.datetimerecord.fragment.student;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,13 +10,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.datetimerecord.R;
+import com.example.datetimerecord.model.AppLog;
 import com.example.datetimerecord.model.Student;
+import com.example.datetimerecord.viewmodel.LogViewModel;
 import com.example.datetimerecord.viewmodel.StudentViewModel;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Objects;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 //https://www.calculatorsoup.com/calculators/time/hours.php
 
@@ -30,6 +40,7 @@ public class StudentTimeUpdateFragment extends Fragment {
     private TextView mTimein_term_tv, mTimeout_term_tv;
     private Button elapse_btn;
     private StudentViewModel mStudentViewModel;
+    private LogViewModel mLogViewModel;
     private Student mStudent;
 
     //vars
@@ -68,6 +79,7 @@ public class StudentTimeUpdateFragment extends Fragment {
         mTimeout_term_tv = view.findViewById(R.id.timeout_term_textView);
 
         mStudentViewModel = ViewModelProviders.of(this).get(StudentViewModel.class);
+        mLogViewModel = ViewModelProviders.of(this).get(LogViewModel.class);
 
         return view;
     }
@@ -85,23 +97,19 @@ public class StudentTimeUpdateFragment extends Fragment {
                 mTimeout_hour = mStudent.getTimeout_hour();
                 mRemaining = mStudent.getRemaining();
                 mStudentId = mStudent.getT_id();
-                if(mRemaining <= 0){
+                if (mRemaining <= 0) {
                     elapse_btn.setEnabled(false);
                     elapse_btn.setClickable(false);
                     elapse_btn.setTextColor(Color.GRAY);
                 }
+                id_tv.setText(String.valueOf(mStudent.getT_id()));
+                name_tv.setText(mStudent.getName());
+                course_tv.setText(mStudent.getCourse());
+                email_tv.setText(mStudent.getEmail());
+                contact_tv.setText(mStudent.getContact());
+                address_tv.setText(mStudent.getAddress());
+                remaining_tv.setText(String.valueOf(mStudent.getRemaining()));
             }
-
-
-            assert mStudent != null;
-            id_tv.setText(String.valueOf(mStudent.getT_id()));
-            name_tv.setText(mStudent.getName());
-            course_tv.setText(mStudent.getCourse());
-            email_tv.setText(mStudent.getEmail());
-            contact_tv.setText(mStudent.getContact());
-            address_tv.setText(mStudent.getAddress());
-            remaining_tv.setText(String.valueOf(mStudent.getRemaining()));
-
 
             //set 24hr to 12hr
             timein_timeout_hour(mTimein_hour, mTimeout_hour);
@@ -117,21 +125,39 @@ public class StudentTimeUpdateFragment extends Fragment {
                 mTimeOut_minute_tv.setText(String.valueOf(mTimeout_minute));
             }
 
-            elapse_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String timein_hour = mTimeIn_hour_tv.getText().toString();
-                    String timeout_hour = mTimeOut_hour_tv.getText().toString();
-                    setElapseTime(Integer.parseInt(timein_hour), mTimein_minute, Integer.parseInt(timeout_hour), mTimeout_minute);
-                }
-            });
-        }else{
+            setElapse_btn();
+        } else {
             Toast("Something went wrong");
         }
     }
 
-    private void Toast(String s){
-        Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();;
+    private void setElapse_btn() {
+        elapse_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.CUSTOM_IMAGE_TYPE)
+                        .setTitleText("Time Update")
+                        .setContentText("Are you sure?")
+                        .setConfirmText("Yes")
+                        .setCustomImage(R.drawable.notepad_xml)
+                        .setCancelText("No")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.dismissWithAnimation();
+                                String timein_hour = mTimeIn_hour_tv.getText().toString();
+                                String timeout_hour = mTimeOut_hour_tv.getText().toString();
+                                setElapseTime(Integer.parseInt(timein_hour), mTimein_minute, Integer.parseInt(timeout_hour), mTimeout_minute);
+                            }
+                        })
+                        .show();
+            }
+        });
+    }
+
+    private void Toast(String s) {
+        Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
+
     }
 
     private void setElapseTime(int timein_hour, int timein_minute, int timeout_hour, int timeout_minute) {
@@ -298,15 +324,20 @@ public class StudentTimeUpdateFragment extends Fragment {
             mStudentViewModel.time_elapse(mStudentId, result, mElapseMinute);
         } else {
             remaining_tv.setText(String.valueOf(result));
-            Toast.makeText(getActivity(), "Time Elapse: " + mElapseTime + " hr. and " + mElapseMinute + " min.", Toast.LENGTH_LONG).show();
             mStudentViewModel.time_elapse(mStudentId, result, mElapseMinute);
         }
+        new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.SUCCESS_TYPE)
+                .setTitleText("Success")
+                .setContentText("Elapse time: "+mElapseTime+" hr. and "+mElapseMinute+" min.")
+                .show();
         elapse_btn.setEnabled(false);
         elapse_btn.setClickable(false);
         elapse_btn.setTextColor(Color.GRAY);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+        String dateFormat = simpleDateFormat.format(new Date());
+        mLogViewModel.insert(new AppLog("Student name: "+name_tv.getText()+" time update, remaining: "+result+" hr.",dateFormat));
         Log.d(COMMON_TAG, TAG + " mResult: " + result + ", mRemaining: " + mRemaining + ", mElapseTime: " + mElapseTime + ", elapse minute: " + mElapseMinute);
     }
-
 
 
     private void timein_timeout_hour(int timein_hour, int timeout_hour) {

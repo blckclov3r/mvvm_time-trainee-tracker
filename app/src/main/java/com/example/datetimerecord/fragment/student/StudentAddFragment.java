@@ -12,15 +12,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
 import com.example.datetimerecord.R;
+import com.example.datetimerecord.model.AppLog;
 import com.example.datetimerecord.model.Course;
 import com.example.datetimerecord.model.Student;
 import com.example.datetimerecord.utils.LineEditText;
 import com.example.datetimerecord.viewmodel.CourseViewModel;
+import com.example.datetimerecord.viewmodel.LogViewModel;
 import com.example.datetimerecord.viewmodel.StudentViewModel;
 
 import java.text.SimpleDateFormat;
@@ -52,6 +53,7 @@ public class StudentAddFragment extends Fragment implements View.OnClickListener
     private ArrayAdapter<String> mArrayAdapter;
     private List<String> mArrayList;
     private String mCourse;
+    private LogViewModel mLogViewModel;
 
     public StudentAddFragment() {
     }
@@ -72,6 +74,8 @@ public class StudentAddFragment extends Fragment implements View.OnClickListener
         addStudent_Btn.setOnClickListener(this);
         mStudentViewModel = ViewModelProviders.of(this).get(StudentViewModel.class);
         mCourseViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
+        mLogViewModel = ViewModelProviders.of(this).get(LogViewModel.class);
+
 
 
         mCourseViewModel.getAllCourse().observe(getViewLifecycleOwner(), new Observer<List<Course>>() {
@@ -157,7 +161,7 @@ public class StudentAddFragment extends Fragment implements View.OnClickListener
                 .setTitleText("Add Student")
                 .setContentText("Are you sure?")
                 .setConfirmText("Yes")
-                .setCustomImage(R.drawable._user_xml)
+                .setCustomImage(R.drawable.user)
                 .setCancelText("No")
                 .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
@@ -180,15 +184,17 @@ public class StudentAddFragment extends Fragment implements View.OnClickListener
                             addStudent_Btn.setEnabled(false);
                             addStudent_Btn.setTextColor(Color.GRAY);
                             new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.SUCCESS_TYPE)
-                                    .setTitleText("Success")
+                                    .setTitleText("Add Student")
                                     .setContentText("Student successfully created")
                                     .show();
                             setClear();
+                            mLogViewModel.insert(new AppLog("Student successfully created, name: "+name,dateFormat));
                         }else{
                             new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.ERROR_TYPE)
                                     .setTitleText("Error")
                                     .setContentText("Student not created")
                                     .show();
+                            mLogViewModel.insert(new AppLog("Something went wrong in add student fragment: "+name,dateFormat));
                         }
                     }
                 })

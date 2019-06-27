@@ -3,7 +3,7 @@ package com.example.datetimerecord.viewmodel;
 import android.app.Application;
 
 import com.example.datetimerecord.model.Student;
-import com.example.datetimerecord.persistence.StudentRepository;
+import com.example.datetimerecord.persistence.repository.StudentRepository;
 
 import java.util.List;
 

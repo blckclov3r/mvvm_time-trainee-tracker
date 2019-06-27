@@ -3,9 +3,11 @@ package com.example.datetimerecord.persistence;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.example.datetimerecord.model.AppLog;
 import com.example.datetimerecord.model.Course;
 import com.example.datetimerecord.model.Student;
 import com.example.datetimerecord.persistence.dao.CourseDao;
+import com.example.datetimerecord.persistence.dao.LogDao;
 import com.example.datetimerecord.persistence.dao.StudentDao;
 
 import androidx.annotation.NonNull;
@@ -14,11 +16,12 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Student.class, Course.class}, version = 2)
+@Database(entities = {Student.class, Course.class, AppLog.class}, version = 1)
 public abstract class MyDatabase extends RoomDatabase {
 
     public abstract CourseDao mCourseDao();
     public abstract StudentDao mStudentDao();
+    public abstract LogDao mLogDao();
 
     public static final String MYDATABASE = "mydatabase.db";
 
@@ -29,8 +32,8 @@ public abstract class MyDatabase extends RoomDatabase {
             mInstance = Room.databaseBuilder(context.getApplicationContext(), MyDatabase.class, MYDATABASE)
                     .allowMainThreadQueries()
                     .fallbackToDestructiveMigration()
-                    .addCallback(courseRoomCallback)
-                    .addCallback(studentRoomCallback)
+//                    .addCallback(courseRoomCallback)
+//                    .addCallback(studentRoomCallback)
                     .build();
         }
         return mInstance;

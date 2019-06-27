@@ -1,7 +1,9 @@
 package com.example.datetimerecord.fragment.student;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +11,17 @@ import android.widget.Toast;
 
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.adapter.StudentRecyclerAdapter;
+import com.example.datetimerecord.model.AppLog;
+import com.example.datetimerecord.model.Course;
 import com.example.datetimerecord.model.Student;
+import com.example.datetimerecord.viewmodel.CourseViewModel;
+import com.example.datetimerecord.viewmodel.LogViewModel;
 import com.example.datetimerecord.viewmodel.StudentViewModel;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +32,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class StudentListFragment extends Fragment implements StudentRecyclerAdapter.OnStudentClickListener {
 
@@ -33,6 +43,7 @@ public class StudentListFragment extends Fragment implements StudentRecyclerAdap
     private StudentRecyclerAdapter mAdapter;
     private StudentViewModel mStudentViewModel;
     private SearchView searchView;
+    private LogViewModel mLogViewModel;
 
     public StudentListFragment() {
     }
@@ -49,11 +60,12 @@ public class StudentListFragment extends Fragment implements StudentRecyclerAdap
         mAdapter.setOnStudentClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
         mStudentViewModel = ViewModelProviders.of(this).get(StudentViewModel.class);
+        mLogViewModel = ViewModelProviders.of(this).get(LogViewModel.class);
 
         return view;
     }
 
-    private void Toast(String s){
+    private void Toast(String s) {
         Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
     }
 
@@ -63,10 +75,13 @@ public class StudentListFragment extends Fragment implements StudentRecyclerAdap
         mStudentViewModel.getmAllStudents().observe(getViewLifecycleOwner(), new Observer<List<Student>>() {
             @Override
             public void onChanged(List<Student> students) {
-                if(students.size() > 0) {
+                if (students.size() > 0) {
                     mAdapter.setmStudentList(students);
-                }else{
-                   Toast("List is empty");
+                } else {
+                    new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Empty")
+                            .setContentText("Student list is empty")
+                            .show();
                 }
             }
         });
@@ -78,11 +93,35 @@ public class StudentListFragment extends Fragment implements StudentRecyclerAdap
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                int position = viewHolder.getAdapterPosition();
+                final int position = viewHolder.getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
-                    mStudentViewModel.delete(mAdapter.getNoteAt(position));
-                    Toast.makeText(getActivity(), "Student successfully deleted", Toast.LENGTH_SHORT).show();
+                    new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.CUSTOM_IMAGE_TYPE)
+                            .setTitleText(mAdapter.getNoteAt(position).getName())
+                            .setContentText("Are you sure, you want to delete this student?")
+                            .setConfirmText("Yes")
+                            .setCustomImage(R.drawable.user)
+                            .setCancelText("No")
+                            .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                    sweetAlertDialog.dismissWithAnimation();
+                                }
+                            })
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sDialog) {
+                                    sDialog.dismissWithAnimation();
+                                    mStudentViewModel.delete(mAdapter.getNoteAt(position));
+                                    @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+                                    String dateFormat = simpleDateFormat.format(new Date());
+                                    String name = mAdapter.getNoteAt(position).getName();
+                                    mLogViewModel.insert(new AppLog("Student successfully deleted, name: " + name, dateFormat));
+
+                                }
+                            })
+                            .show();
                 }
+                mAdapter.notifyDataSetChanged();
             }
         }).attachToRecyclerView(mRecyclerView);
 
@@ -100,20 +139,20 @@ public class StudentListFragment extends Fragment implements StudentRecyclerAdap
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if(!newText.isEmpty()) {
+                if (!newText.isEmpty()) {
                     mStudentViewModel.setSearch(newText).observe(getViewLifecycleOwner(), new Observer<List<Student>>() {
                         @Override
                         public void onChanged(List<Student> students) {
-                            if(students.size() > 0) {
+                            if (students.size() > 0) {
                                 mAdapter.setmStudentList(students);
                             }
                         }
                     });
-                }else{
+                } else {
                     mStudentViewModel.getmAllStudents().observe(getViewLifecycleOwner(), new Observer<List<Student>>() {
                         @Override
                         public void onChanged(List<Student> students) {
-                            if(students.size() > 0) {
+                            if (students.size() > 0) {
                                 mAdapter.setmStudentList(students);
                             }
                         }

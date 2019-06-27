@@ -1,5 +1,6 @@
 package com.example.datetimerecord.fragment.course;
 
+import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -14,11 +15,15 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.datetimerecord.R;
+import com.example.datetimerecord.model.AppLog;
 import com.example.datetimerecord.model.Course;
 import com.example.datetimerecord.utils.LineEditText;
 import com.example.datetimerecord.viewmodel.CourseViewModel;
+import com.example.datetimerecord.viewmodel.LogViewModel;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -46,6 +51,7 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
     //vars
     private volatile int mHour;
     private volatile int mMinute;
+    private LogViewModel mLogViewModel;
 
     public CourseAddFragment() {
     }
@@ -70,6 +76,7 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
         mTimeOut_minute_tv = view.findViewById(R.id.timeOut_minute_textView);
 
         mViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
+        mLogViewModel = ViewModelProviders.of(this).get(LogViewModel.class);
 
         //setOnClick
         addCourse_btn.setOnClickListener(this);
@@ -233,7 +240,7 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
                         .setTitleText("Add Course")
                         .setContentText("Are you sure?")
                         .setConfirmText("Yes")
-                        .setCustomImage(R.drawable.books_xml)
+                        .setCustomImage(R.drawable.books)
                         .setCancelText("No")
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
@@ -244,9 +251,12 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
                                 if(mCourse != null) {
                                     Log.d(COMMON_TAG, TAG + " mCourse: " + mCourse.toString());
                                     mViewModel.insert(mCourse);
+                                    @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+                                    String dateFormat = simpleDateFormat.format(new Date());
+                                    mLogViewModel.insert(new AppLog("Course successfully created, name: "+course,dateFormat));
                                     setClear();
                                     new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.SUCCESS_TYPE)
-                                            .setTitleText("Success")
+                                            .setTitleText("Add Course")
                                             .setContentText("Course successfully created")
                                             .show();
                                 }else{
@@ -254,6 +264,9 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
                                             .setTitleText("Error")
                                             .setContentText("Course not created")
                                             .show();
+                                    @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+                                    String dateFormat = simpleDateFormat.format(new Date());
+                                    mLogViewModel.insert(new AppLog("Something went wrong in the add course fragment",dateFormat));
                                 }
                             }
                         })

@@ -44,7 +44,7 @@
                     android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:src="@drawable/_search_xml"
+                        android:src="@drawable/search"
                         android:layout_width="20dp"
                         android:layout_height="16dp" />
 
@@ -77,7 +77,7 @@
                     android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:src="@drawable/books_xml"
+                        android:src="@drawable/books"
                         android:layout_width="20dp"
                         android:layout_height="16dp" />
 
@@ -110,7 +110,7 @@
                     android:gravity="center_horizontal"
                     android:orientation="horizontal">
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:src="@drawable/balance_xml"
+                        android:src="@drawable/balance"
                         android:layout_width="20dp"
                         android:layout_height="16dp" />
 
@@ -131,6 +131,15 @@
                         android:textStyle="bold"
                         android:fontFamily="sans-serif-light"
                         android:text="null"
+                        android:textSize="16sp"
+                        android:textColor="@color/textColor" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="hr."
+                        android:layout_marginStart="2dp"
                         android:textSize="16sp"
                         android:textColor="@color/textColor" />
                 </LinearLayout>

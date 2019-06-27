@@ -1,5 +1,6 @@
 package com.example.datetimerecord.fragment.course;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,13 +11,17 @@ import android.widget.Toast;
 
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.adapter.CourseRecyclerAdapter;
+import com.example.datetimerecord.model.AppLog;
 import com.example.datetimerecord.model.Course;
 import com.example.datetimerecord.model.Student;
-import com.example.datetimerecord.persistence.CourseRepository;
+import com.example.datetimerecord.persistence.repository.CourseRepository;
 import com.example.datetimerecord.viewmodel.CourseViewModel;
+import com.example.datetimerecord.viewmodel.LogViewModel;
 import com.example.datetimerecord.viewmodel.StudentViewModel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,6 +34,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class CourseListFragment extends Fragment implements CourseRecyclerAdapter.OnCourseClickListener {
 
@@ -41,10 +47,11 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
     private CourseViewModel mCourseViewModel;
     private OnCourseListFragmentListener mListFragmentListener;
     private StudentViewModel mStudentViewModel;
-
+    private LogViewModel mLogViewModel;
     private boolean mCheck = false;
     private List<Student> mStudents;
     private CourseRepository mCourseRepository;
+
 
     public CourseListFragment() {
     }
@@ -65,6 +72,7 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
 
         mStudentViewModel = ViewModelProviders.of(this).get(StudentViewModel.class);
         mCourseViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
+        mLogViewModel = ViewModelProviders.of(this).get(LogViewModel.class);
 
         mCourseRepository = new CourseRepository(Objects.requireNonNull(getActivity()).getApplication());
 
@@ -74,9 +82,12 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
                 if (courses.size() > 0) {
                     mCourseAdapter.setCourseList(courses);
                 } else {
-                    Toast("List is empty");
+                    new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Empty")
+                            .setContentText("Course list is empty")
+                            .show();
                 }
-                Log.d(COMMON_TAG,TAG+" onChanged");
+                Log.d(COMMON_TAG, TAG + " onChanged");
 
             }
         });
@@ -115,7 +126,7 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
                             mCourseAdapter.setCourseList(courses);
                         }
                     });
-                    Log.d(COMMON_TAG,TAG+" onChanged: if, onQueryTextChange");
+                    Log.d(COMMON_TAG, TAG + " onChanged: if, onQueryTextChange");
                 } else {
                     mCourseViewModel.getAllCourse().observe(getViewLifecycleOwner(), new Observer<List<Course>>() {
                         @Override
@@ -125,7 +136,7 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
                             }
                         }
                     });
-                    Log.d(COMMON_TAG,TAG+" onChanged: else, onQueryTextChange");
+                    Log.d(COMMON_TAG, TAG + " onChanged: else, onQueryTextChange");
                 }
                 return false;
             }
@@ -140,27 +151,51 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 mCheck = false;
-                int position = viewHolder.getAdapterPosition();
-                if (position != -1) {
-                    for (int i = 0; i < mStudents.size(); i++) {
-                        Student student = mStudents.get(i);
-                        if (student.getCourse().equals(mCourseAdapter.getCourseAt(position).getCourse())) {
-                            mCheck = true;
-                            break;
-                        }
-                    }
+                final int position = viewHolder.getAdapterPosition();
 
-                    if (!mCheck) {
-                        mCourseViewModel.delete(mCourseAdapter.getCourseAt(position));
-                        Toast.makeText(getActivity(), "Course successfully deleted", Toast.LENGTH_SHORT).show();
-                        Log.d(COMMON_TAG, TAG + " mCheck invoked: " + mCheck);
-                    } else {
-                        Toast.makeText(getActivity(), "Please delete all student who enrolled this course", Toast.LENGTH_SHORT).show();
-                        Log.d(COMMON_TAG, TAG + " mCheck invoked: " + mCheck);
-                        mCourseAdapter.notifyCourse();
-                    }
-                    mCheck = false;
-                }
+
+                new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.CUSTOM_IMAGE_TYPE)
+                        .setTitleText(mCourseAdapter.getCourseAt(position).getCourse())
+                        .setContentText("Are you sure, you want to delete this course?")
+                        .setConfirmText("Yes")
+                        .setCustomImage(R.drawable.books)
+                        .setCancelText("No")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.dismissWithAnimation();
+                                if (position != -1) {
+                                    for (int i = 0; i < mStudents.size(); i++) {
+                                        Student student = mStudents.get(i);
+                                        if (student.getCourse().equals(mCourseAdapter.getCourseAt(position).getCourse())) {
+                                            mCheck = true;
+                                            break;
+                                        }
+                                    }
+
+                                    if (!mCheck) {
+                                        mCourseViewModel.delete(mCourseAdapter.getCourseAt(position));
+                                        Toast.makeText(getActivity(), "Course successfully deleted", Toast.LENGTH_SHORT).show();
+                                        Log.d(COMMON_TAG, TAG + " mCheck invoked: " + mCheck);
+                                        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+                                        String dateFormat = simpleDateFormat.format(new Date());
+                                        mLogViewModel.insert(new AppLog("Course successfully deleted, name: "+mCourseAdapter.getCourseAt(position).getCourse(),dateFormat));
+                                    } else {
+                                        new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.ERROR_TYPE)
+                                                .setTitleText("Error")
+                                                .setContentText("Please delete all student whose enrolled this course")
+                                                .show();
+                                        Log.d(COMMON_TAG, TAG + " mCheck invoked: " + mCheck);
+                                    }
+                                    mCheck = false;
+                                }
+
+
+                            }
+                        })
+                        .show();
+                    mCourseAdapter.notifyDataSetChanged();
+
             }
         }).attachToRecyclerView(mRecyclerView);
     }
