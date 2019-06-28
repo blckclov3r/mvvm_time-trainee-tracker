@@ -77,9 +77,9 @@ public abstract class MyDatabase extends RoomDatabase {
         protected Void doInBackground(Void... voids) {
             studentDao.insert(new Student("Aljun Abrenica","????","aljun_abrenica@yahoo.com",
                     "09555076271","???","???",0,0,0,0,0));
-            studentDao.insert(new Student("Nujla Acinerba","????++","blckclov3r@gmail.com",
+            studentDao.insert(new Student("Nujla Acinerba","????","blckclov3r@gmail.com",
                     "09555076271","???","???",0,0,0,0,0));
-            studentDao.insert(new Student("Junz D Silenthacker","????#","blckclov3r@gmail.com",
+            studentDao.insert(new Student("Junz D Silenthacker","????","blckclov3r@gmail.com",
                     "09555076271","???","???",0,0,0,0,0));
             return null;
         }
