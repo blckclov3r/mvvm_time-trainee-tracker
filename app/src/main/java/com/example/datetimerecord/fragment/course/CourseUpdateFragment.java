@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.model.AppLog;
 import com.example.datetimerecord.model.Course;
@@ -161,6 +163,16 @@ public class CourseUpdateFragment extends DialogFragment {
             course_et.requestFocus();
             return;
         }
+        String oldCourse = mCourse.getCourse();
+        if(!oldCourse.equals(course)) {
+            Course lcourse = mCourseViewModel.getCourse(course);
+            if (lcourse != null) {
+                Toast.makeText(getActivity(), "Course is already exist, please choose another", Toast.LENGTH_LONG).show();
+                return;
+            }
+        }
+
+
         if (time.isEmpty() || timein_hour.isEmpty() || timein_minute.isEmpty() || timeout_hour.isEmpty() || timeout_minute.isEmpty()) {
             new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.ERROR_TYPE)
                     .setTitleText("Error")
@@ -171,6 +183,8 @@ public class CourseUpdateFragment extends DialogFragment {
             mLogViewModel.insert(new AppLog("There's something wrong in course update fragment", dateFormat));
             return;
         }
+
+
 
 
         //timein reverse <-> 12hr to 24hr
