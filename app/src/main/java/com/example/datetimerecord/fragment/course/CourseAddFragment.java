@@ -41,7 +41,6 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
     private LineEditText description_et;
     private Button addCourse_btn;
     private Course mCourse;
-    private CourseViewModel mViewModel;
     private AppCompatImageButton mTimeIn_btn, mTimeOut_btn;
     private TextView mTimeIn_hour_tv, mTimeInMinute_tv, mTimeOut_hour_tv, mTimeOut_minute_tv;
     private TextView mTimein_term_tv, mTimeout_term_tv;
@@ -49,6 +48,7 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
     //vars
     private volatile int mHour;
     private volatile int mMinute;
+    private CourseViewModel mCourseViewModel;
     private LogViewModel mLogViewModel;
     private long mLastClick = 0;
 
@@ -74,7 +74,7 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
         mTimeOut_hour_tv = view.findViewById(R.id.timeOut_hour_textView);
         mTimeOut_minute_tv = view.findViewById(R.id.timeOut_minute_textView);
 
-        mViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
+        mCourseViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
         mLogViewModel = ViewModelProviders.of(this).get(LogViewModel.class);
 
         //setOnClick
@@ -127,6 +127,15 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
                     Toast.makeText(getActivity(), "Timeout hour is invalid", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+                Course lcourse = mCourseViewModel.getCourse(course);
+                if(lcourse!=null) {
+                    Toast.makeText(getActivity(), "Course is already exist", Toast.LENGTH_SHORT).show();
+                    return;
+                }else {
+                    Log.d(COMMON_TAG,TAG+" course is not exist in out database");
+                }
+
 
                 final int time = Integer.parseInt(courseTime);
                 if (desc.isEmpty()) {
@@ -254,7 +263,7 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
                                         Integer.parseInt(finalTimein_hour), Integer.parseInt(timein_minute), Integer.parseInt(finalTimeout_hour), Integer.parseInt(timeout_minute));
                                 if(mCourse != null) {
                                     Log.d(COMMON_TAG, TAG + " mCourse: " + mCourse.toString());
-                                    mViewModel.insert(mCourse);
+                                    mCourseViewModel.insert(mCourse);
                                     @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
                                     String dateFormat = simpleDateFormat.format(new Date());
                                     mLogViewModel.insert(new AppLog("Course successfully created, name: "+course,dateFormat));
@@ -440,7 +449,7 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
         description_et = null;
         addCourse_btn = null;
         mCourse = null;
-        mViewModel = null;
+        mCourseViewModel = null;
         mTimeIn_btn = null;
         mTimeOut_btn = null;
         mTimeIn_hour_tv = null;

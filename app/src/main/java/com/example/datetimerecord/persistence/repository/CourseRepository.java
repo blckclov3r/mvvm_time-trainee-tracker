@@ -58,6 +58,7 @@ public class CourseRepository {
         new DeleteAllCourse(mCourseDao).execute();
     }
 
+
     public static class DeleteAllCourse extends AsyncTask<Void,Void,Void>{
         private CourseDao courseDao;
 
@@ -71,8 +72,6 @@ public class CourseRepository {
             return null;
         }
     }
-
-
 
     private static class InsertAsyncTask extends AsyncTask<Course, Void, Void> {
         private CourseDao courseDao;
