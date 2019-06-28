@@ -62,6 +62,7 @@ public class StudentListFragment extends Fragment implements StudentRecyclerAdap
         mStudentViewModel = ViewModelProviders.of(this).get(StudentViewModel.class);
         mLogViewModel = ViewModelProviders.of(this).get(LogViewModel.class);
 
+
         return view;
     }
 

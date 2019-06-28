@@ -307,7 +307,7 @@
 
             <Button
                 android:id="@+id/timeUpdate_button"
-                android:layout_width="match_parent"
+                android:layout_width="200dp"
                 android:layout_gravity="center_horizontal"
                 android:text="Set"
                 android:fontFamily="sans-serif"

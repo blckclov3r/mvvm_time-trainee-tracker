@@ -136,12 +136,6 @@ public class StudentTimeUpdateFragment extends Fragment {
         elapse_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(SystemClock.elapsedRealtime() - mlastClick < 1000){
-                    return;
-                }
-                mlastClick = SystemClock.elapsedRealtime();
-
                 new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.CUSTOM_IMAGE_TYPE)
                         .setTitleText("Time Update")
                         .setContentText("Are you sure?")
@@ -155,7 +149,7 @@ public class StudentTimeUpdateFragment extends Fragment {
                                     return;
                                 }
                                 mlastClick = SystemClock.elapsedRealtime();
-                                sDialog.dismissWithAnimation();
+                                sDialog.dismiss();
                                 String timein_hour = mTimeIn_hour_tv.getText().toString();
                                 String timeout_hour = mTimeOut_hour_tv.getText().toString();
                                 setElapseTime(Integer.parseInt(timein_hour), mTimein_minute, Integer.parseInt(timeout_hour), mTimeout_minute);

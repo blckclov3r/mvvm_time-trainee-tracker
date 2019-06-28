@@ -1,11 +1,14 @@
 package com.example.datetimerecord.fragment.course;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.model.Course;
@@ -18,7 +21,10 @@ public class CourseDetailFragment extends Fragment {
 
     private static final String COMMON_TAG = "mAppLog";
     private static final String TAG = "CourseDetailFragment";
+
+    //components
     private TextView mId_tv, mCourse_tv, mTime_tv, mDesc_tv, mTimein_tv, mTimeout_tv, mTimein_term_tv, mTimeout_term_tv;
+    private Button courseEnrollee_btn;
 
     //vars
     private String mTimein_minute;
@@ -48,6 +54,7 @@ public class CourseDetailFragment extends Fragment {
         mTimeout_tv = view.findViewById(R.id.timeout_textView);
         mTimein_term_tv = view.findViewById(R.id.timein_term_textView);
         mTimeout_term_tv = view.findViewById(R.id.timeout_term_textView);
+        courseEnrollee_btn = view.findViewById(R.id.course_enrollee_button);
 
         if (getArguments() != null) {
             Course course = getArguments().getParcelable("selected_course");
@@ -192,9 +199,42 @@ public class CourseDetailFragment extends Fragment {
 
         }
 
+        courseEnrollee_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mListener != null) {
+                    if(!mCourse_tv.getText().toString().trim().equals("")){
+                        mListener.onClickSearch(mCourse_tv.getText().toString().trim());
+                    }
+                }
+            }
+        });
         return view;
     }
 
+    public interface OnClickDetailSearch{
+        void onClickSearch(String course);
+    }
+    private OnClickDetailSearch mListener;
+    public void setonClickDetailSearchListener(OnClickDetailSearch listener){
+        mListener = listener;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if(context instanceof OnClickDetailSearch){
+            mListener = (OnClickDetailSearch) getActivity();
+        }else{
+            throw new RuntimeException(context.toString()+" must implement OnClickDetailSearch");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
 
     @Override
     public void onDestroy() {

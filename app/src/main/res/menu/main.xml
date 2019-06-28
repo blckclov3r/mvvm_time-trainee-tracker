@@ -5,9 +5,16 @@
         android:id="@+id/delete_menu"
         android:orderInCategory="100"
         android:title="Delete"
+        android:icon="@drawable/delete"
         app:showAsAction="never" />
     <item
         android:id="@+id/log_menu"
         android:title="Log"
         app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/back_menu"
+        android:title="back"
+        android:icon="@drawable/ic_arrow"
+        app:showAsAction="ifRoom"/>
 </menu>

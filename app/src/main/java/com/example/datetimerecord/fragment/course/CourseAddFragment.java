@@ -89,10 +89,6 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onClick(View v) {
 
-        if(SystemClock.elapsedRealtime() - mLastClick < 1000){
-            return;
-        }
-        mLastClick = SystemClock.elapsedRealtime();
         switch (v.getId()) {
             case R.id.addCourse_button: {
                 final String course = course_et.getText().toString().trim();
@@ -253,7 +249,7 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
                                     return;
                                 }
                                 mLastClick = SystemClock.elapsedRealtime();
-                                sDialog.dismissWithAnimation();
+                                sDialog.dismiss();
                                 mCourse = new Course(course, time, finalDesc,
                                         Integer.parseInt(finalTimein_hour), Integer.parseInt(timein_minute), Integer.parseInt(finalTimeout_hour), Integer.parseInt(timeout_minute));
                                 if(mCourse != null) {

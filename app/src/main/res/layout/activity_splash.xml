@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_vertical"
     tools:context=".activity.SplashActivity">
 
     <ScrollView
@@ -25,7 +26,6 @@
                 android:id="@+id/title_textView"
                 android:text="Lorem Ipsum"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="60dp"
                 android:textColor="#333"
                 android:textSize="30sp"
                 android:fontFamily="sans-serif-light"
@@ -38,6 +38,7 @@
                 android:id="@+id/subTitle_textView"
                 android:layout_centerHorizontal="true"
                 android:text="Trainee Time Tracker"
+                android:textSize="18sp"
                 android:fontFamily="sans-serif-light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -48,7 +49,8 @@
                 android:src="@mipmap/ic_launcher_round"
                 android:scaleType="fitXY"
                 android:layout_below="@id/subTitle_textView"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="12dp"
+                android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 android:layout_width="200dp"
                 android:layout_height="200dp" />

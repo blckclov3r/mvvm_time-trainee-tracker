@@ -121,10 +121,6 @@ public class StudentAddFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        if (SystemClock.elapsedRealtime() - mLastClick < 1000) {
-            return;
-        }
-        mLastClick = SystemClock.elapsedRealtime();
         final String name = mName_et.getText().toString().trim();
         Log.d(COMMON_TAG, TAG + " mCourse: " + mCourse);
         final String email = mEmail_et.getText().toString().trim();
@@ -186,16 +182,16 @@ public class StudentAddFragment extends Fragment implements View.OnClickListener
                 .setTitleText("Add Student")
                 .setContentText("Are you sure?")
                 .setConfirmText("Yes")
-                .setCustomImage(R.drawable.user)
+                .setCustomImage(R.drawable.man_a)
                 .setCancelText("No")
                 .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
-                        if (SystemClock.elapsedRealtime() - mLastClick < 1000) {
+                        if (SystemClock.elapsedRealtime() - mLastClick < 300) {
                             return;
                         }
                         mLastClick = SystemClock.elapsedRealtime();
-                        sDialog.dismissWithAnimation();
+                        sDialog.dismiss();
                         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
                         String dateFormat = simpleDateFormat.format(new Date());
                         Course lCourse = mCourseViewModel.getCourse(mCourse);

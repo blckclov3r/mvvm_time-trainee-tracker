@@ -6,7 +6,7 @@
     android:height="60dp">
     <path
         android:pathData="M59 29A29 29 0 0 1 30 58 29 29 0 0 1 1 29 29 29 0 0 1 30 0 29 29 0 0 1 59 29Z"
-        android:fillColor="#3c97d3" />
+        android:fillColor="#2D5F6D" />
     <path
         android:pathData="M30 60C13.458 60 0 46.542 0 30 0 22.007 3.107 14.486 8.749 8.824 9.528 8.039 10.796 8.039 11.577 8.818c0.783 0.78 0.785 2.046 0.006 2.828C6.693 16.555 4 23.072 4 30 4 44.337 15.663 56 30 56 44.337 56 56 44.337 56 30 56 16.337 45.405 5.101 32 4.076l0 10.757c0 1.104 -0.896 2 -2 2 -1.104 0 -2 -0.896 -2 -2L28 2C28 0.896 28.896 0 30 0 46.542 0 60 13.458 60 30 60 46.542 46.542 60 30 60Z"
         android:fillColor="#b1d3ef" />
@@ -15,7 +15,7 @@
         android:fillColor="#b1d3ef" />
     <path
         android:pathData="M38 37.980999l22 0 0 22 -22 0z"
-        android:fillColor="#21ae5e" />
+        android:fillColor="#006699" />
     <path
         android:pathData="M48 39.567001l2 0 0 16 -2 0z"
         android:fillColor="#ffffff" />

@@ -127,10 +127,7 @@ public class CourseUpdateFragment extends DialogFragment {
         update_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(SystemClock.elapsedRealtime() - mLastClick < 1000){
-                    return;
-                }
-                mLastClick = SystemClock.elapsedRealtime();
+
                 new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.CUSTOM_IMAGE_TYPE)
                         .setTitleText("Course Update")
                         .setContentText("Are you sure?")
@@ -144,7 +141,7 @@ public class CourseUpdateFragment extends DialogFragment {
                                     return;
                                 }
                                 mLastClick = SystemClock.elapsedRealtime();
-                                sDialog.dismissWithAnimation();
+                                sDialog.dismiss();
                                 setUpdate_btn();
                             }
                         })

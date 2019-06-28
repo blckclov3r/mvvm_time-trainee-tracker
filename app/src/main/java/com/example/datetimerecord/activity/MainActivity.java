@@ -12,12 +12,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.activity.dialog.DeleteCustomDialog;
 import com.example.datetimerecord.fragment.HomeFragment;
 import com.example.datetimerecord.fragment.course.CourseAddFragment;
 import com.example.datetimerecord.fragment.course.CourseDetailFragment;
+import com.example.datetimerecord.fragment.course.CourseEnrolleFragment;
 import com.example.datetimerecord.fragment.course.CourseListFragment;
 import com.example.datetimerecord.fragment.course.CourseUpdateFragment;
 import com.example.datetimerecord.fragment.log.LogFragment;
@@ -29,9 +31,9 @@ import com.example.datetimerecord.fragment.student.StudentUpdateFragment;
 import com.example.datetimerecord.model.Course;
 import com.example.datetimerecord.model.Student;
 import com.google.android.material.navigation.NavigationView;
-
 import java.io.File;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -40,10 +42,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, CourseListFragment.OnCourseListFragmentListener,
-        StudentListFragment.OnStudentClickListListener, StudentDetailFragment.setOnUpdateListener {
+        StudentListFragment.OnStudentClickListListener, StudentDetailFragment.setOnUpdateListener ,
+        CourseDetailFragment.OnClickDetailSearch {
 
     //vars
     private FragmentManager mFragmentManager;
@@ -75,8 +79,10 @@ public class MainActivity extends AppCompatActivity
         //course list listener
         CourseListFragment courseListFragment = new CourseListFragment();
         StudentListFragment studentListFragment = new StudentListFragment();
+        CourseDetailFragment courseDetailFragment = new CourseDetailFragment();
         courseListFragment.setOnCourseListFragmentListener(this);
         studentListFragment.setOnStudentClickListListener(this);
+        courseDetailFragment.setonClickDetailSearchListener(this);
 
 
         if (savedInstanceState == null) {
@@ -91,10 +97,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        if(SystemClock.elapsedRealtime() - mLastClick < 1000){
-            return;
-        }
-        mLastClick = SystemClock.elapsedRealtime();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -117,10 +119,10 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         if (id == R.id.delete_menu) {
             DeleteCustomDialog dialog = new DeleteCustomDialog();
-             dialog.show(getSupportFragmentManager(),null);
+            dialog.show(getSupportFragmentManager(), null);
             return true;
         }
-        if(id == R.id.log_menu){
+        if (id == R.id.log_menu) {
             if (mFragment != null) {
                 for (int i = 0; i < mFragmentManager.getBackStackEntryCount(); i++) {
                     mFragmentManager.popBackStackImmediate();
@@ -132,14 +134,20 @@ public class MainActivity extends AppCompatActivity
             ft.addToBackStack(null);
             ft.commit();
         }
+        if(id == R.id.back_menu){
+            onBackPressed();
+        }
 
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-
+        if (SystemClock.elapsedRealtime() - mLastClick < 1000) {
+            return false;
+        }
+        mLastClick = SystemClock.elapsedRealtime();
         switch (id) {
             case R.id.nav_home: {
                 mFragment = new HomeFragment();
@@ -173,6 +181,23 @@ public class MainActivity extends AppCompatActivity
                         startActivity(Intent.createChooser(intent, "Share app via"));
                     }
                 });
+            }
+            break;
+            case R.id.nav_exit: {
+                new SweetAlertDialog(this, SweetAlertDialog.CUSTOM_IMAGE_TYPE)
+                        .setTitleText("Add Student")
+                        .setContentText("Are you sure?")
+                        .setConfirmText("Yes")
+                        .setCustomImage(R.drawable.exit_o)
+                        .setCancelText("No")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.dismissWithAnimation();
+                                finish();
+                            }
+                        })
+                        .show();
             }
             break;
         }
@@ -287,4 +312,17 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    public void onClickSearch(String course) {
+        mFragment = CourseEnrolleFragment.newInstance(course);
+        FragmentTransaction ft = mFragmentManager.beginTransaction();
+        ft.replace(R.id.main_frameLayout,mFragment);
+        ft.addToBackStack(null);
+        if (mFragment != null) {
+            for (int i = 0; i < mFragmentManager.getBackStackEntryCount(); i++) {
+                mFragmentManager.popBackStackImmediate();
+            }
+        }
+        ft.commit();
+    }
 }

@@ -25,7 +25,6 @@ public class StudentDetailFragment extends Fragment {
     private Button timeUpdate_btn;
 
     //vars
-    private  long mLastClick = 0;
     public StudentDetailFragment() {
     }
 
@@ -54,10 +53,6 @@ public class StudentDetailFragment extends Fragment {
         timeUpdate_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(SystemClock.elapsedRealtime() - mLastClick < 1000){
-                    return;
-                }
-                mLastClick = SystemClock.elapsedRealtime();
                 if (getArguments() != null) {
                     Student student = getArguments().getParcelable("selected_student");
                     listener.onStudentDetailFragment(student);

@@ -84,14 +84,18 @@ public class StudentRecyclerAdapter extends RecyclerView.Adapter<StudentRecycler
         public void onClick(View v) {
             int position = getAdapterPosition();
             Student student = mStudentList.get(position);
-            listener.onClick(student);
+            if(listener!=null && position != RecyclerView.NO_POSITION) {
+                listener.onClick(student);
+            }
         }
 
         @Override
         public boolean onLongClick(View v) {
             int position = getAdapterPosition();
             Student student = mStudentList.get(position);
-            listener.onLongClick(student);
+            if(listener != null && position != RecyclerView.NO_POSITION) {
+                listener.onLongClick(student);
+            }
             return true;
         }
     }

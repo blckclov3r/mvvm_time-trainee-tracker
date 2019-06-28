@@ -15,6 +15,7 @@
             android:layout_marginTop="32dp"
             android:layout_marginLeft="7dp"
             android:layout_marginRight="7dp"
+            android:gravity="center_vertical"
             android:orientation="vertical"
             android:paddingBottom="12dp">
 
@@ -189,7 +190,8 @@
 
             <Button
                 android:id="@+id/addCourse_button"
-                android:layout_width="match_parent"
+                android:layout_width="200dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/transparent_btn"

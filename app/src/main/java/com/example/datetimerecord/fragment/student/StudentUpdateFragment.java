@@ -9,7 +9,6 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -91,10 +90,7 @@ public class StudentUpdateFragment extends Fragment {
         studentUpdate_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(SystemClock.elapsedRealtime() - mLastClick < 1000){
-                    return;
-                }
-                mLastClick = SystemClock.elapsedRealtime();
+
                 new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.CUSTOM_IMAGE_TYPE)
                         .setTitleText("Student Update")
                         .setContentText("Are you sure?")
