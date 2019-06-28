@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.adapter.CourseRecyclerAdapter;
 import com.example.datetimerecord.model.AppLog;
@@ -18,13 +17,11 @@ import com.example.datetimerecord.persistence.repository.CourseRepository;
 import com.example.datetimerecord.viewmodel.CourseViewModel;
 import com.example.datetimerecord.viewmodel.LogViewModel;
 import com.example.datetimerecord.viewmodel.StudentViewModel;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
@@ -79,17 +76,7 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
         mCourseViewModel.getAllCourse().observe(getViewLifecycleOwner(), new Observer<List<Course>>() {
             @Override
             public void onChanged(List<Course> courses) {
-                if (courses.size() > 0) {
-                    mCourseAdapter.setCourseList(courses);
-                } else {
-                    new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.CUSTOM_IMAGE_TYPE)
-                            .setTitleText("Empty")
-                            .setCustomImage(R.drawable.books_xml)
-                            .setContentText("Course list is empty")
-                            .show();
-                }
-                Log.d(COMMON_TAG, TAG + " onChanged");
-
+                mCourseAdapter.submitList(courses);
             }
         });
 
@@ -124,7 +111,7 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
                     mCourseRepository.setSearch(newText).observe(getViewLifecycleOwner(), new Observer<List<Course>>() {
                         @Override
                         public void onChanged(List<Course> courses) {
-                            mCourseAdapter.setCourseList(courses);
+                            mCourseAdapter.submitList(courses);
                         }
                     });
                     Log.d(COMMON_TAG, TAG + " onChanged: if, onQueryTextChange");
@@ -133,7 +120,7 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
                         @Override
                         public void onChanged(List<Course> courses) {
                             if (courses.size() > 0) {
-                                mCourseAdapter.setCourseList(courses);
+                                mCourseAdapter.submitList(courses);
                             }
                         }
                     });
@@ -153,7 +140,6 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 mCheck = false;
                 final int position = viewHolder.getAdapterPosition();
-
 
                 new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.CUSTOM_IMAGE_TYPE)
                         .setTitleText(mCourseAdapter.getCourseAt(position).getCourse())
@@ -195,7 +181,7 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
                             }
                         })
                         .show();
-                    mCourseAdapter.notifyDataSetChanged();
+                    mCourseAdapter.notifyItemChanged(position);
 
             }
         }).attachToRecyclerView(mRecyclerView);

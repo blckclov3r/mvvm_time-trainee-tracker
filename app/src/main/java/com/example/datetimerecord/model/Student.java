@@ -2,7 +2,6 @@ package com.example.datetimerecord.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -238,6 +237,7 @@ public class Student implements Parcelable {
         dest.writeInt(elapse_minute);
     }
 
+    @Ignore
     protected Student(Parcel in) {
         t_id = in.readInt();
         name = in.readString();
@@ -254,6 +254,7 @@ public class Student implements Parcelable {
         elapse_minute = in.readInt();
     }
 
+    @Ignore
     public static final Creator<Student> CREATOR = new Creator<Student>() {
         @Override
         public Student createFromParcel(Parcel in) {
@@ -266,6 +267,7 @@ public class Student implements Parcelable {
         }
     };
 
+    @Ignore
     @Override
     public String toString() {
         return "Student{" +

@@ -5,35 +5,43 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.model.Course;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAdapter.ViewHolder> {
+public class CourseRecyclerAdapter extends ListAdapter<Course,CourseRecyclerAdapter.ViewHolder> {
+
     private static final String COMMON_TAG = "mAppLog";
     private static final String TAG = "CourseRecyclerAdapter";
-    private List<Course> courseList = new ArrayList<>();
     private OnCourseClickListener listener;
 
-    public void setCourseList(List<Course> courseList){
-        this.courseList = courseList;
-        notifyDataSetChanged();
+    public CourseRecyclerAdapter() {
+        super(DIFF_CALLBACK);
     }
 
+
+    private static final DiffUtil.ItemCallback<Course> DIFF_CALLBACK = new DiffUtil.ItemCallback<Course>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Course oldItem, @NonNull Course newItem) {
+            return oldItem.getC_id() == newItem.getC_id();
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Course oldItem, @NonNull Course newItem) {
+            return oldItem.getCourse().equals(newItem.getCourse()) && oldItem.getCourse_time() == newItem.getCourse_time() &&
+                    oldItem.getDescription().equals(newItem.getDescription()) && oldItem.getTimein_hour() == newItem.getTimein_hour() &&
+                    oldItem.getTimein_minute() == newItem.getTimein_minute() && oldItem.getTimeout_hour() == newItem.getTimeout_hour() &&
+                    oldItem.getTimeout_minute() == newItem.getTimeout_minute();
+        }
+    };
 
     public Course getCourseAt(int pos){
-        return courseList.get(pos);
+        return getItem(pos);
     }
 
-    public void notifyCourse(){
-        notifyDataSetChanged();
-    }
 
 
     @NonNull
@@ -45,7 +53,7 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Course course = courseList.get(position);
+        Course course = getItem(position);
         int id = course.getC_id();
         String name = course.getCourse();
         int time = course.getCourse_time();
@@ -56,10 +64,7 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
         holder.id_tv.setText(String.valueOf(id));
     }
 
-    @Override
-    public int getItemCount() {
-        return courseList.size();
-    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private TextView course_tv,time_tv,description_tv,id_tv;
@@ -80,8 +85,8 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
         public void onClick(View v) {
             Log.d(COMMON_TAG,TAG+" onClick");
             int position = getAdapterPosition();
-            if(listener!=null ) {
-                Course course = courseList.get(position);
+            if(listener!=null && position != RecyclerView.NO_POSITION) {
+                Course course = getItem(position);
                 listener.onCourseClick(course);
             }else{
                 Log.d(COMMON_TAG,TAG+" something went wrong");
@@ -92,8 +97,8 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
         public boolean onLongClick(View v) {
             Log.d(COMMON_TAG,TAG+" onLongClick");
             int position = getAdapterPosition();
-            if(listener!=null ){
-                Course course = courseList.get(position);
+            if(listener!=null && position != RecyclerView.NO_POSITION){
+                Course course = getItem(position);
                 listener.onCourseLongClick(course);
                 return true;
             }else{

@@ -4,24 +4,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.model.AppLog;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class LogRecyclerAdapter extends RecyclerView.Adapter<LogRecyclerAdapter.ViewHolder> {
+public class LogRecyclerAdapter extends ListAdapter<AppLog,LogRecyclerAdapter.ViewHolder> {
 
-    private List<AppLog> appLogList = new ArrayList<>();
 
-    public void setAppLogList(List<AppLog> appLogList){
-        this.appLogList = appLogList;
-        notifyDataSetChanged();
+    public LogRecyclerAdapter() {
+        super(DIFF_CALLBACK);
     }
+
+    private static final DiffUtil.ItemCallback DIFF_CALLBACK = new DiffUtil.ItemCallback<AppLog>(){
+
+        @Override
+        public boolean areItemsTheSame(@NonNull AppLog oldItem, @NonNull AppLog newItem) {
+            return oldItem.getId() == newItem.getId();
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull AppLog oldItem, @NonNull AppLog newItem) {
+            return oldItem.getMessage().equals(newItem.getMessage()) && oldItem.getTimestamp().equals(newItem.getTimestamp());
+        }
+    };
 
     @NonNull
     @Override
@@ -32,17 +40,13 @@ public class LogRecyclerAdapter extends RecyclerView.Adapter<LogRecyclerAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        AppLog appLog = appLogList.get(position);
+        AppLog appLog = getItem(position);
         String message = appLog.getMessage();
         String timestamp = appLog.getTimestamp();
         holder.message_tv.setText(message);
         holder.timestamp_tv.setText(timestamp);
     }
 
-    @Override
-    public int getItemCount() {
-        return appLogList.size();
-    }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView message_tv,timestamp_tv;

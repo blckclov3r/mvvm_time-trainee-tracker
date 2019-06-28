@@ -1,10 +1,7 @@
 package com.example.datetimerecord.persistence.dao;
 
-import com.example.datetimerecord.model.Course;
 import com.example.datetimerecord.model.Student;
-
 import java.util.List;
-
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;

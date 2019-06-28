@@ -1,20 +1,16 @@
 package com.example.datetimerecord.fragment.course;
 
 import android.os.Bundle;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.adapter.StudentRecyclerAdapter;
 import com.example.datetimerecord.model.Student;
 import com.example.datetimerecord.viewmodel.StudentViewModel;
-
 import java.util.List;
 import java.util.Objects;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
@@ -26,10 +22,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class CourseEnrolleFragment extends Fragment  {
 
+    //vars
     private static final String COURSENAME = "course";
-
-
     private StudentViewModel mStudentViewModel;
+
+    //components
     private RecyclerView mRecyclerView;
     private StudentRecyclerAdapter mAdapter;
     private SearchView mSearchView;
@@ -65,7 +62,7 @@ public class CourseEnrolleFragment extends Fragment  {
         if(getArguments()!=null){
             String course = getArguments().getString(COURSENAME);
             List<Student> studentList = mStudentViewModel.getStudentCourse(course);
-            mAdapter.setmStudentList(studentList);
+            mAdapter.submitList(studentList);
             Toast.makeText(getActivity(), course+" students", Toast.LENGTH_SHORT).show();
         }
 
@@ -89,14 +86,14 @@ public class CourseEnrolleFragment extends Fragment  {
                         @Override
                         public void onChanged(List<Student> students) {
                             if (students.size() > 0) {
-                                mAdapter.setmStudentList(students);
+                                mAdapter.submitList(students);
                             }
                         }
                     });
                 } else {
                     String course = Objects.requireNonNull(getArguments()).getString(COURSENAME);
                     List<Student> studentList = mStudentViewModel.getStudentCourse(course);
-                    mAdapter.setmStudentList(studentList);
+                    mAdapter.submitList(studentList);
                 }
                 return false;
             }

@@ -8,14 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.viewmodel.CourseViewModel;
 import com.example.datetimerecord.viewmodel.LogViewModel;
 import com.example.datetimerecord.viewmodel.StudentViewModel;
-
 import java.util.Objects;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -26,9 +23,11 @@ public class DeleteCustomDialog extends DialogFragment {
 
     private static final String TAG = DeleteCustomDialog.class.getSimpleName();
     private static final String COMMON_TAG = "mAppLog";
+
     private EditText delete_et;
     private Button delete_btn;
 
+    //vars
     private StudentViewModel mStudentViewModel;
     private LogViewModel mLogViewModel;
     private CourseViewModel mCourseViewModel;

@@ -2,7 +2,6 @@ package com.example.datetimerecord.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -28,17 +27,7 @@ public class AppLog implements Parcelable {
 
 
 
-    public static final Creator<AppLog> CREATOR = new Creator<AppLog>() {
-        @Override
-        public AppLog createFromParcel(Parcel in) {
-            return new AppLog(in);
-        }
 
-        @Override
-        public AppLog[] newArray(int size) {
-            return new AppLog[size];
-        }
-    };
 
     public int getId() {
         return id;
@@ -65,6 +54,7 @@ public class AppLog implements Parcelable {
     }
 
 
+    @Ignore
     @Override
     public String toString() {
         return "AppLog{" +
@@ -74,11 +64,13 @@ public class AppLog implements Parcelable {
                 '}';
     }
 
+    @Ignore
     @Override
     public int describeContents() {
         return 0;
     }
 
+    @Ignore
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
@@ -91,4 +83,17 @@ public class AppLog implements Parcelable {
         message = in.readString();
         timestamp = in.readString();
     }
+
+    @Ignore
+    public static final Creator<AppLog> CREATOR = new Creator<AppLog>() {
+        @Override
+        public AppLog createFromParcel(Parcel in) {
+            return new AppLog(in);
+        }
+
+        @Override
+        public AppLog[] newArray(int size) {
+            return new AppLog[size];
+        }
+    };
 }

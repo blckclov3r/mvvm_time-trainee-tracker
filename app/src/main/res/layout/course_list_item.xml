@@ -30,6 +30,8 @@
             android:layout_toStartOf="@id/course_id_textView"
             android:singleLine="true"
             android:ellipsize="end"
+            android:fontFamily="sans-serif-light"
+            android:textStyle="bold"
             android:layout_alignParentStart="true"
             android:textSize="18sp"
             android:layout_marginEnd="4dp"
@@ -49,6 +51,7 @@
                 android:text="Maximum:"
                 android:layout_below="@id/course_textView"
                 android:layout_width="wrap_content"
+                android:fontFamily="sans-serif-light"
                 android:layout_height="wrap_content" />
 
             <TextView
@@ -64,6 +67,7 @@
                 android:layout_below="@id/course_textView"
                 android:layout_marginStart="2dp"
                 android:layout_width="wrap_content"
+                android:fontFamily="sans-serif-light"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 

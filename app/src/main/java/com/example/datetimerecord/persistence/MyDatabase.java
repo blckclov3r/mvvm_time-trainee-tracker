@@ -2,14 +2,12 @@ package com.example.datetimerecord.persistence;
 
 import android.content.Context;
 import android.os.AsyncTask;
-
 import com.example.datetimerecord.model.AppLog;
 import com.example.datetimerecord.model.Course;
 import com.example.datetimerecord.model.Student;
 import com.example.datetimerecord.persistence.dao.CourseDao;
 import com.example.datetimerecord.persistence.dao.LogDao;
 import com.example.datetimerecord.persistence.dao.StudentDao;
-
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
@@ -63,9 +61,9 @@ public abstract class MyDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(Void... courses) {
             courseDao.insert(new Course("PHP",0,"Lorem Ipsum",5,0,10,0));
-            courseDao.insert(new Course("Dagger",0,"Lorem Ipsum",10,0,14,0));
+            courseDao.insert(new Course("Java",0,"Lorem Ipsum",10,0,14,0));
             courseDao.insert(new Course("Android",0,"Lorem Ipsum",2,0,4,0));
-            courseDao.insert(new Course("Django",0,"Lorem Ipsum",6,0,8,0));
+            courseDao.insert(new Course("Django",0,"Lorem Ipsum",6,0,9,0));
             return null;
         }
     }

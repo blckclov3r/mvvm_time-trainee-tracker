@@ -3,26 +3,20 @@ package com.example.datetimerecord.fragment.student;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.adapter.StudentRecyclerAdapter;
 import com.example.datetimerecord.model.AppLog;
-import com.example.datetimerecord.model.Course;
 import com.example.datetimerecord.model.Student;
-import com.example.datetimerecord.viewmodel.CourseViewModel;
 import com.example.datetimerecord.viewmodel.LogViewModel;
 import com.example.datetimerecord.viewmodel.StudentViewModel;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
@@ -76,15 +70,8 @@ public class StudentListFragment extends Fragment implements StudentRecyclerAdap
         mStudentViewModel.getmAllStudents().observe(getViewLifecycleOwner(), new Observer<List<Student>>() {
             @Override
             public void onChanged(List<Student> students) {
-                if (students.size() > 0) {
-                    mAdapter.setmStudentList(students);
-                } else {
-                    new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.CUSTOM_IMAGE_TYPE)
-                            .setTitleText("Empty")
-                            .setCustomImage(R.drawable.user)
-                            .setContentText("Student list is empty")
-                            .show();
-                }
+
+                mAdapter.submitList(students);
             }
         });
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -123,7 +110,7 @@ public class StudentListFragment extends Fragment implements StudentRecyclerAdap
                             })
                             .show();
                 }
-                mAdapter.notifyDataSetChanged();
+                mAdapter.notifyItemChanged(position);
             }
         }).attachToRecyclerView(mRecyclerView);
 
@@ -146,7 +133,7 @@ public class StudentListFragment extends Fragment implements StudentRecyclerAdap
                         @Override
                         public void onChanged(List<Student> students) {
                             if (students.size() > 0) {
-                                mAdapter.setmStudentList(students);
+                                mAdapter.submitList(students);
                             }
                         }
                     });
@@ -155,7 +142,7 @@ public class StudentListFragment extends Fragment implements StudentRecyclerAdap
                         @Override
                         public void onChanged(List<Student> students) {
                             if (students.size() > 0) {
-                                mAdapter.setmStudentList(students);
+                                mAdapter.submitList(students);
                             }
                         }
                     });

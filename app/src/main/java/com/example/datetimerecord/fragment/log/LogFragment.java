@@ -4,14 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.adapter.LogRecyclerAdapter;
 import com.example.datetimerecord.model.AppLog;
 import com.example.datetimerecord.viewmodel.LogViewModel;
-
 import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -21,7 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class LogFragment extends Fragment {
-    private LogViewModel mLogViewModel;
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -32,16 +30,18 @@ public class LogFragment extends Fragment {
         final LogRecyclerAdapter logAdapter = new LogRecyclerAdapter();
         recyclerView.setAdapter(logAdapter);
 
-        mLogViewModel = ViewModelProviders.of(this).get(LogViewModel.class);
+        LogViewModel mLogViewModel = ViewModelProviders.of(this).get(LogViewModel.class);
         mLogViewModel.getAllLog().observe(getViewLifecycleOwner(), new Observer<List<AppLog>>() {
             @Override
             public void onChanged(List<AppLog> appLogs) {
-                logAdapter.setAppLogList(appLogs);
+                logAdapter.submitList(appLogs);
             }
         });
         return view;
     }
 
-
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 }

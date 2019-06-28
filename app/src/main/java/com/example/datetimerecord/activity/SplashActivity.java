@@ -1,20 +1,18 @@
 package com.example.datetimerecord.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.Window;
-
 import com.example.datetimerecord.R;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class SplashActivity extends AppCompatActivity {
+
     private static final String TAG = "SplashActivity";
     private static final String COMMON_TAG ="mAppLog";
-    private static final int time = 2000;
+    private static final int time = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

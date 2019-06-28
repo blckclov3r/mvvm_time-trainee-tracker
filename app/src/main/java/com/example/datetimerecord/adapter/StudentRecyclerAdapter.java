@@ -1,27 +1,44 @@
 package com.example.datetimerecord.adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.model.Student;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class StudentRecyclerAdapter extends RecyclerView.Adapter<StudentRecyclerAdapter.ViewHolder> {
+public class StudentRecyclerAdapter extends ListAdapter<Student,StudentRecyclerAdapter.ViewHolder> {
 
     private static final String COMMON_TAG = "mAppLog";
     private static final String TAG = "StudentRecyclerAdapter";
 
-    private List<Student> mStudentList = new ArrayList<>();
     private OnStudentClickListener mListener;
+
+    public StudentRecyclerAdapter() {
+        super(DIFF_CALLBACK);
+    }
+
+    private static final DiffUtil.ItemCallback<Student> DIFF_CALLBACK = new DiffUtil.ItemCallback<Student>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Student oldItem, @NonNull Student newItem) {
+            return oldItem.getT_id() == newItem.getT_id();
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Student oldItem, @NonNull Student newItem) {
+            return oldItem.getName().equals(newItem.getName()) && oldItem.getCourse().equals(newItem.getCourse()) &&
+                    oldItem.getEmail().equals(newItem.getEmail()) && oldItem.getContact().equals(newItem.getContact()) &&
+                    oldItem.getAddress().equals(newItem.getAddress()) && oldItem.getTimestamp().equals(newItem.getTimestamp()) &&
+                    oldItem.getRemaining() == newItem.getRemaining() && oldItem.getTimein_hour() == newItem.getTimein_hour() &&
+                    oldItem.getTimein_minute() == newItem.getTimein_minute() && oldItem.getTimeout_hour() == newItem.getTimeout_hour() &&
+                    oldItem.getTimeout_minute() == newItem.getTimeout_minute() && oldItem.getElapse_minute() == newItem.getElapse_minute();
+        }
+    };
+
 
     public interface OnStudentClickListener {
         void onClick(Student student);
@@ -33,13 +50,9 @@ public class StudentRecyclerAdapter extends RecyclerView.Adapter<StudentRecycler
         mListener = listener;
     }
 
-    public void setmStudentList(List<Student> mStudentList) {
-        this.mStudentList = mStudentList;
-        notifyDataSetChanged();
-    }
 
     public Student getNoteAt(int position) {
-        return mStudentList.get(position);
+        return getItem(position);
     }
 
     @NonNull
@@ -51,13 +64,8 @@ public class StudentRecyclerAdapter extends RecyclerView.Adapter<StudentRecycler
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Student student = mStudentList.get(position);
+        Student student = getItem(position);
         holder.bind(student);
-    }
-
-    @Override
-    public int getItemCount() {
-        return mStudentList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
@@ -83,7 +91,7 @@ public class StudentRecyclerAdapter extends RecyclerView.Adapter<StudentRecycler
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-            Student student = mStudentList.get(position);
+            Student student = getItem(position);
             if(listener!=null && position != RecyclerView.NO_POSITION) {
                 listener.onClick(student);
             }
@@ -92,7 +100,7 @@ public class StudentRecyclerAdapter extends RecyclerView.Adapter<StudentRecycler
         @Override
         public boolean onLongClick(View v) {
             int position = getAdapterPosition();
-            Student student = mStudentList.get(position);
+            Student student = getItem(position);
             if(listener != null && position != RecyclerView.NO_POSITION) {
                 listener.onLongClick(student);
             }
