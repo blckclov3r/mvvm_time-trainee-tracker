@@ -3,6 +3,7 @@ package com.example.datetimerecord.fragment.student;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -42,6 +43,7 @@ public class StudentAddFragment extends Fragment implements View.OnClickListener
     private static final String TAG = "StudentAddFragment";
     private static final String COMMON_TAG = "mAppLog";
 
+    //components
     private EditText mName_et, mEmail_et, mContact_et;
     private LineEditText mAddress_et;
     private Button addStudent_Btn;
@@ -54,7 +56,7 @@ public class StudentAddFragment extends Fragment implements View.OnClickListener
     private List<String> mArrayList;
     private String mCourse;
     private LogViewModel mLogViewModel;
-
+    private long mLastClick = 0;
     public StudentAddFragment() {
     }
 
@@ -119,6 +121,10 @@ public class StudentAddFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
+        if (SystemClock.elapsedRealtime() - mLastClick < 1000) {
+            return;
+        }
+        mLastClick = SystemClock.elapsedRealtime();
         final String name = mName_et.getText().toString().trim();
         Log.d(COMMON_TAG, TAG + " mCourse: " + mCourse);
         final String email = mEmail_et.getText().toString().trim();
@@ -157,6 +163,25 @@ public class StudentAddFragment extends Fragment implements View.OnClickListener
             return;
         }
 
+        List<Student> studentList = mStudentViewModel.getStudentCourse(mCourse);
+        boolean check = false;
+        for(Student student : studentList){
+            String studentName = student.getName();
+            String studentCourse = student.getCourse();
+            Log.d(COMMON_TAG,TAG+" studentname: "+studentName+", student course: "+studentCourse);
+
+            if(studentName.equals(name) && studentCourse.equals(mCourse)){
+                Log.d(COMMON_TAG,TAG+" true");
+                check = true;
+                break;
+            }
+        }
+        if(check){
+            Toast("The student is already registered in course: "+mCourse);
+            check = false; //it reset to false without this :D, this is not necessary
+            return;
+        }
+
         new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.CUSTOM_IMAGE_TYPE)
                 .setTitleText("Add Student")
                 .setContentText("Are you sure?")
@@ -166,6 +191,10 @@ public class StudentAddFragment extends Fragment implements View.OnClickListener
                 .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
+                        if (SystemClock.elapsedRealtime() - mLastClick < 1000) {
+                            return;
+                        }
+                        mLastClick = SystemClock.elapsedRealtime();
                         sDialog.dismissWithAnimation();
                         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
                         String dateFormat = simpleDateFormat.format(new Date());
@@ -177,18 +206,23 @@ public class StudentAddFragment extends Fragment implements View.OnClickListener
                             int timeout_hour = lCourse.getTimeout_hour();
                             int timeout_minute = lCourse.getTimeout_minute();
 
-                            Student student = new Student(name, mCourse, email, contact, address, dateFormat, time, timein_hour, timein_minute, timeout_hour, timeout_minute);
+                            Student student = new Student(name, mCourse, email, contact, address, dateFormat, time,
+                                    timein_hour, timein_minute, timeout_hour, timeout_minute);
+
                             mStudentViewModel.insert(student);
+
                             Log.d(COMMON_TAG, TAG + " onCLick, status: " + student.toString());
-                            addStudent_Btn.setClickable(false);
-                            addStudent_Btn.setEnabled(false);
-                            addStudent_Btn.setTextColor(Color.GRAY);
+
+
                             new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.SUCCESS_TYPE)
                                     .setTitleText("Add Student")
                                     .setContentText("Student successfully created")
                                     .show();
+
                             setClear();
+
                             mLogViewModel.insert(new AppLog("Student successfully created, name: "+name,dateFormat));
+
                         }else{
                             new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.ERROR_TYPE)
                                     .setTitleText("Error")
@@ -206,6 +240,7 @@ public class StudentAddFragment extends Fragment implements View.OnClickListener
         mEmail_et.setText("");
         mContact_et.setText("");
         mAddress_et.setText("");
+        mName_et.requestFocus();
     }
 
     @Override

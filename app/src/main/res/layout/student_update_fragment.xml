@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
@@ -35,7 +36,7 @@
                     android:inputType="textPersonName"
                     android:fontFamily="sans-serif"
                     android:maxLength="45"
-                    android:drawableEnd="@drawable/books"
+                    android:drawableEnd="@drawable/books_xml"
                     android:hint="Course Enrolled"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -53,6 +54,7 @@
                     android:textSize="16sp"
                     android:inputType="textPersonName"
                     android:maxLength="45"
+                    android:imeOptions="flagNoExtractUi"
                     android:drawableEnd="@drawable/user"
                     android:fontFamily="sans-serif"
                     android:layout_height="wrap_content"
@@ -70,6 +72,7 @@
                     android:fontFamily="sans-serif"
                     android:inputType="textEmailAddress"
                     android:maxLength="50"
+                    android:imeOptions="flagNoExtractUi"
                     android:drawableEnd="@drawable/envelope_xml"
                     android:layout_height="wrap_content"
                     android:hint="Email Address" />
@@ -87,6 +90,7 @@
                     android:textSize="16sp"
                     android:inputType="number"
                     android:fontFamily="sans-serif"
+                    android:imeOptions="flagNoExtractUi"
                     android:maxLength="24"
                     android:drawableEnd="@drawable/tele_xml"
                     android:layout_height="wrap_content"
@@ -101,6 +105,7 @@
                     android:id="@+id/address_editText"
                     android:textSize="16sp"
                     android:maxLength="499"
+                    android:imeOptions="flagNoExtractUi"
                     android:fontFamily="sans-serif"
                     android:gravity="start"
                     android:layout_width="match_parent"
@@ -116,6 +121,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
                 android:layout_marginTop="16dp"
+                android:textStyle="bold"
                 android:layout_marginBottom="30dp"
                 android:background="@drawable/transparent_btn"
                 android:textColor="@color/textColor"

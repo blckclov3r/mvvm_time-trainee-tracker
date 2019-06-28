@@ -6,6 +6,7 @@ import android.content.pm.ApplicationInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity
     //vars
     private FragmentManager mFragmentManager;
     private Fragment mFragment = null;
-
+    private long mLastClick = 0;
     //component
 
     @Override
@@ -90,6 +91,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        if(SystemClock.elapsedRealtime() - mLastClick < 1000){
+            return;
+        }
+        mLastClick = SystemClock.elapsedRealtime();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);

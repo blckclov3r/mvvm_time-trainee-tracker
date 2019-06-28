@@ -2,6 +2,7 @@ package com.example.datetimerecord.fragment.student;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,8 @@ public class StudentDetailFragment extends Fragment {
     private TextView name_tv, course_tv, email_tv, contact_tv, address_tv, timestamp_tv, id_tv, remaining_tv;
     private Button timeUpdate_btn;
 
+    //vars
+    private  long mLastClick = 0;
     public StudentDetailFragment() {
     }
 
@@ -51,6 +54,10 @@ public class StudentDetailFragment extends Fragment {
         timeUpdate_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(SystemClock.elapsedRealtime() - mLastClick < 1000){
+                    return;
+                }
+                mLastClick = SystemClock.elapsedRealtime();
                 if (getArguments() != null) {
                     Student student = getArguments().getParcelable("selected_student");
                     listener.onStudentDetailFragment(student);

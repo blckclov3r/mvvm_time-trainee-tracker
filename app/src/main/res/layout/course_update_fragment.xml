@@ -24,7 +24,8 @@
                 <EditText
                     android:id="@+id/course_editText"
                     android:layout_width="match_parent"
-                    android:drawableEnd="@drawable/books"
+                    android:drawableEnd="@drawable/books_xml"
+                    android:imeOptions="flagNoExtractUi"
                     android:textSize="16sp"
                     android:fontFamily="sans-serif"
                     android:maxLength="30"
@@ -42,14 +43,15 @@
                 <EditText
                     android:id="@+id/time_editText"
                     android:layout_width="match_parent"
+                    android:imeOptions="flagNoExtractUi"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:fontFamily="sans-serif"
                     android:maxLength="4"
                     android:enabled="false"
-                    android:drawableEnd="@drawable/hourglass_xml"
+                    android:drawableEnd="@drawable/_calendar_"
                     android:clickable="false"
-                    android:hint="Maximum"
+                    android:hint="Maximum hr."
                     android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,6 +65,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:gravity="start"
+                    android:imeOptions="flagNoExtractUi"
                     android:textSize="16sp"
                     android:inputType="textMultiLine"
                     android:fontFamily="sans-serif"
@@ -100,6 +103,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
                     android:textColor="@color/textColor"
+                    android:textStyle="bold"
                     android:text="00"
                     android:textSize="16sp" />
 
@@ -116,6 +120,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/textColor"
                     android:text="00"
+                    android:textStyle="bold"
                     android:textSize="16sp" />
 
                 <TextView
@@ -123,6 +128,7 @@
                     android:text="am"
                     android:layout_marginStart="4dp"
                     android:textColor="@color/textColor"
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -149,6 +155,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/textColor"
                     android:layout_marginStart="7dp"
+                    android:textStyle="bold"
                     android:text="00"
                     android:textSize="16sp" />
 
@@ -165,11 +172,13 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/textColor"
                     android:text="00"
+                    android:textStyle="bold"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/timeout_term_textView"
                     android:text="am"
+                    android:textStyle="bold"
                     android:textColor="@color/textColor"
                     android:layout_marginStart="4dp"
                     android:layout_width="wrap_content"
@@ -183,9 +192,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="30dp"
+                android:fontFamily="sans-serif"
+                android:textStyle="bold"
                 android:background="@drawable/transparent_btn"
                 android:textColor="@color/textColor"
-                android:fontFamily="sans-serif"
                 android:text="Update"
                 android:textAllCaps="false" />
         </LinearLayout>

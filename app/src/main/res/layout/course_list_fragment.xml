@@ -10,6 +10,7 @@
         android:id="@+id/course_searchView"
         android:layout_width="match_parent"
         app:queryHint="Course Search"
+        android:imeOptions="flagNoExtractUi"
         android:layout_height="wrap_content"/>
 
     <androidx.recyclerview.widget.RecyclerView

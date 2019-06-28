@@ -37,4 +37,6 @@ public interface StudentDao {
     @Query("DELETE FROM student_table")
     void deleteAllStudents();
 
+
+
 }

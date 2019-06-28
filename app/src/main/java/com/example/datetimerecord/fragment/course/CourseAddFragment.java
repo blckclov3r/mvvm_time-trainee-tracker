@@ -3,6 +3,7 @@ package com.example.datetimerecord.fragment.course;
 import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,19 +14,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import com.example.datetimerecord.R;
 import com.example.datetimerecord.model.AppLog;
 import com.example.datetimerecord.model.Course;
 import com.example.datetimerecord.utils.LineEditText;
 import com.example.datetimerecord.viewmodel.CourseViewModel;
 import com.example.datetimerecord.viewmodel.LogViewModel;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
@@ -52,6 +50,7 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
     private volatile int mHour;
     private volatile int mMinute;
     private LogViewModel mLogViewModel;
+    private long mLastClick = 0;
 
     public CourseAddFragment() {
     }
@@ -59,7 +58,7 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.add_course_fragment, container, false);
+        View view = inflater.inflate(R.layout.course_add_fragment, container, false);
 
         course_et = view.findViewById(R.id.course_editText);
         time_et = view.findViewById(R.id.time_editText);
@@ -89,6 +88,11 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
+
+        if(SystemClock.elapsedRealtime() - mLastClick < 1000){
+            return;
+        }
+        mLastClick = SystemClock.elapsedRealtime();
         switch (v.getId()) {
             case R.id.addCourse_button: {
                 final String course = course_et.getText().toString().trim();
@@ -240,11 +244,15 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
                         .setTitleText("Add Course")
                         .setContentText("Are you sure?")
                         .setConfirmText("Yes")
-                        .setCustomImage(R.drawable.books)
+                        .setCustomImage(R.drawable.books_xml)
                         .setCancelText("No")
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
+                                if(SystemClock.elapsedRealtime() - mLastClick < 1000){
+                                    return;
+                                }
+                                mLastClick = SystemClock.elapsedRealtime();
                                 sDialog.dismissWithAnimation();
                                 mCourse = new Course(course, time, finalDesc,
                                         Integer.parseInt(finalTimein_hour), Integer.parseInt(timein_minute), Integer.parseInt(finalTimeout_hour), Integer.parseInt(timeout_minute));
@@ -451,6 +459,7 @@ public class CourseAddFragment extends Fragment implements View.OnClickListener 
         course_et.setText("");
         time_et.setText("");
         description_et.setText("");
+        course_et.requestFocus();
     }
 
 

@@ -103,7 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:src="@drawable/books"
+                    android:src="@drawable/books_xml"
                     android:layout_width="20dp"
                     android:layout_height="18dp" />
                 <TextView
@@ -387,6 +387,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"
                 android:layout_width="match_parent"
+                android:textStyle="bold"
                 android:background="@drawable/transparent_btn"
                 android:textColor="@color/textColor"
                 android:fontFamily="sans-serif"

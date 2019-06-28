@@ -11,6 +11,7 @@
         android:id="@+id/student_searchView"
         app:queryHint="Student Search..."
         android:layout_width="match_parent"
+        android:imeOptions="flagNoExtractUi"
         android:layout_height="wrap_content"/>
 
     <androidx.recyclerview.widget.RecyclerView

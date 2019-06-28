@@ -6,25 +6,25 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/home"
+            android:icon="@drawable/home_a"
             android:title="Home" />
         <item
             android:id="@+id/nav_add"
-            android:icon="@drawable/user"
+            android:icon="@drawable/man_a"
             android:title="Add Student" />
 
         <item
             android:id="@+id/nav_add_course"
-            android:icon="@drawable/books"
+            android:icon="@drawable/books_xml"
             android:title="Add Course"/>
         <item
             android:id="@+id/nav_student_list"
-            android:icon="@drawable/notebook_xml"
+            android:icon="@drawable/list_x"
             android:title="Student List" />
 
         <item
             android:id="@+id/nav_course_list"
-            android:icon="@drawable/notebook_xml"
+            android:icon="@drawable/document_a"
             android:title="Course List"/>
 
     </group>

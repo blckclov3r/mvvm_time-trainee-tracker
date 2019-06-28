@@ -84,7 +84,7 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
                 } else {
                     new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.CUSTOM_IMAGE_TYPE)
                             .setTitleText("Empty")
-                            .setCustomImage(R.drawable.books)
+                            .setCustomImage(R.drawable.books_xml)
                             .setContentText("Course list is empty")
                             .show();
                 }
@@ -159,7 +159,7 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
                         .setTitleText(mCourseAdapter.getCourseAt(position).getCourse())
                         .setContentText("Are you sure, you want to delete this course?")
                         .setConfirmText("Yes")
-                        .setCustomImage(R.drawable.books)
+                        .setCustomImage(R.drawable.books_xml)
                         .setCancelText("No")
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override

@@ -3,7 +3,9 @@ package com.example.datetimerecord.fragment.student;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +44,7 @@ public class StudentUpdateFragment extends Fragment {
     //vars
     private StudentViewModel mStudentViewModel;
     private LogViewModel mLogViewModel;
+    private long mLastClick = 0;
 
     public static StudentUpdateFragment newInstance(Student student) {
         StudentUpdateFragment fragment = new StudentUpdateFragment();
@@ -88,7 +91,10 @@ public class StudentUpdateFragment extends Fragment {
         studentUpdate_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(SystemClock.elapsedRealtime() - mLastClick < 1000){
+                    return;
+                }
+                mLastClick = SystemClock.elapsedRealtime();
                 new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.CUSTOM_IMAGE_TYPE)
                         .setTitleText("Student Update")
                         .setContentText("Are you sure?")
@@ -98,6 +104,10 @@ public class StudentUpdateFragment extends Fragment {
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
+                                if(SystemClock.elapsedRealtime() - mLastClick < 1000){
+                                    return;
+                                }
+                                mLastClick = SystemClock.elapsedRealtime();
                                 sDialog.dismissWithAnimation();
                                 if (getArguments() != null) {
                                     int timein_hour, timein_minute;
@@ -110,6 +120,39 @@ public class StudentUpdateFragment extends Fragment {
                                     String address = address_et.getText().toString().trim();
                                     String timestamp = Objects.requireNonNull(pStudent).getTimestamp();
                                     int remaining = pStudent.getRemaining();
+
+
+                                    if(name.isEmpty()){
+                                        Toast("Name is required");
+                                        name_et.requestFocus();
+                                        return;
+                                    }
+                                    if(course.isEmpty()){
+                                        Toast("Course is required");
+                                        course_et.requestFocus();
+                                        return;
+                                    }
+                                    if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                                        Toast("Email is invalid");
+                                        email_et.requestFocus();
+                                        return;
+                                    }
+                                    if(email.isEmpty()){
+                                        Toast("Email is required");
+                                        email_et.requestFocus();
+                                        return;
+                                    }
+                                    if(contact.isEmpty()){
+                                        Toast("Contact is required");
+                                        contact_et.requestFocus();
+                                        return;
+                                    }
+                                    if(address.isEmpty()){
+                                        Toast("Address is required");
+                                        address_et.requestFocus();
+                                        return;
+                                    }
+
 
                                     //timein and timeout
                                     timein_hour = pStudent.getTimein_hour();
@@ -137,6 +180,9 @@ public class StudentUpdateFragment extends Fragment {
 
                                 } else {
                                     Toast.makeText(getActivity(), "something wen't wrong", Toast.LENGTH_SHORT).show();
+                                    @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+                                    String dateFormat = simpleDateFormat.format(new Date());
+                                    mLogViewModel.insert(new AppLog("Something went wrong in student update fragment",dateFormat));
                                 }
                             }
                         })
@@ -146,6 +192,10 @@ public class StudentUpdateFragment extends Fragment {
 
             }
         });
+    }
+
+    private void Toast(String s){
+        Toast.makeText(getActivity(),s,Toast.LENGTH_LONG).show();
     }
 
     @Override

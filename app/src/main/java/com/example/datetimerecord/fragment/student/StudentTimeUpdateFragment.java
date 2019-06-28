@@ -3,6 +3,7 @@ package com.example.datetimerecord.fragment.student;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +48,7 @@ public class StudentTimeUpdateFragment extends Fragment {
     private int mStudentId;
     private int mTimein_hour, mTimein_minute, mTimeout_hour, mTimeout_minute;
     private int mElapseMinute, mRemaining, mElapseTime;
-
+    private long mlastClick = 0;
     public static StudentTimeUpdateFragment newInstance(Student student) {
         StudentTimeUpdateFragment fragment = new StudentTimeUpdateFragment();
         Bundle bundle = new Bundle();
@@ -135,6 +136,12 @@ public class StudentTimeUpdateFragment extends Fragment {
         elapse_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(SystemClock.elapsedRealtime() - mlastClick < 1000){
+                    return;
+                }
+                mlastClick = SystemClock.elapsedRealtime();
+
                 new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.CUSTOM_IMAGE_TYPE)
                         .setTitleText("Time Update")
                         .setContentText("Are you sure?")
@@ -144,6 +151,10 @@ public class StudentTimeUpdateFragment extends Fragment {
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
+                                if(SystemClock.elapsedRealtime() - mlastClick < 1000){
+                                    return;
+                                }
+                                mlastClick = SystemClock.elapsedRealtime();
                                 sDialog.dismissWithAnimation();
                                 String timein_hour = mTimeIn_hour_tv.getText().toString();
                                 String timeout_hour = mTimeOut_hour_tv.getText().toString();

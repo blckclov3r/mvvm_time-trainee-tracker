@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,6 +56,7 @@ public class CourseUpdateFragment extends DialogFragment {
     private volatile int mHour, mMinute;
     private StudentViewModel mStudentViewModel;
     private LogViewModel mLogViewModel;
+    private long mLastClick = 0;
 
     public CourseUpdateFragment() {
     }
@@ -125,7 +127,10 @@ public class CourseUpdateFragment extends DialogFragment {
         update_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(SystemClock.elapsedRealtime() - mLastClick < 1000){
+                    return;
+                }
+                mLastClick = SystemClock.elapsedRealtime();
                 new SweetAlertDialog(Objects.requireNonNull(getActivity()), SweetAlertDialog.CUSTOM_IMAGE_TYPE)
                         .setTitleText("Course Update")
                         .setContentText("Are you sure?")
@@ -135,6 +140,10 @@ public class CourseUpdateFragment extends DialogFragment {
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
+                                if(SystemClock.elapsedRealtime() - mLastClick < 1000){
+                                    return;
+                                }
+                                mLastClick = SystemClock.elapsedRealtime();
                                 sDialog.dismissWithAnimation();
                                 setUpdate_btn();
                             }
